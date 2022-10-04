@@ -1,0 +1,24 @@
+<%- include('includes/header')%>
+  <div class="container py-md-5 container--narrow">
+    <%- include('includes/flash') %>
+
+    <form action="/add-book" method="POST">
+      <div class="form-group">
+        <label for="book-title" class="text-muted mb-1"><small>Title</small></label>
+        <input required name="title" id="book-title" class="form-control form-control-lg form-control-title" type="text" placeholder="" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="book-author" class="text-muted mb-1"><small>Author</small></label>
+        <input required name="author" id="book-author" class="form-control form-control-lg" type="text" placeholder="" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="book-body" class="text-muted mb-1"><small>Body Content</small></label>
+        <textarea required name="body" id="book-body" class="body-content tall-textarea form-control" type="text"></textarea>
+      </div>
+      
+      <button class="btn btn-primary">Save New Book</button>
+    </form>
+  </div>
+  
+<%- include('includes/footer') %>
