@@ -1,1 +1,12 @@
-This README file shall be updated to contain info about the specific details of your app source code (how it is organized/structured, assumptions made etc.)
+
+## run locally
+1. goto backend folder
+   
+    `cd backend`
+2. dependency
+   
+    `npm install`
+
+3. run command
+
+    `npm run watch`

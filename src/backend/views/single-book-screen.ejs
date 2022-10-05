@@ -17,7 +17,7 @@
       
     <p class="text-muted small mb-4">
       <a href="#"><img class="avatar-tiny" src="<%= book.owner.avatar%>"></a>
-      Author: <strong><%= book.author %></strong>, added by <a href="#"><%= book.owner.username %></a> on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %></p>
+      Tags: <strong><%= book.author %></strong>, added by <a href="#"><%= book.owner.username %></a> on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %></p>
       
     <div class="body-content">
         <%- book.body %>
