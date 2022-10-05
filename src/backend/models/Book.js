@@ -116,8 +116,8 @@ Book.reusableBookQuery = function(uniqueOperations, visitorId, finalOperations =
 
 Book.findAll = function(){
     return new Promise(async function(resolve, reject){
-        let books = await booksCollection.find({}).toArray()
-        if(books.length)
+        let books = (await booksCollection.find({}).toArray()).reverse()
+        if(books.length >= 0)
             resolve(books)
         else reject()
     })
