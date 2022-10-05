@@ -18,7 +18,7 @@ exports.create = function(req, res) {
         // and the return value can be used directly as
         // the argument of the then() function(e.g., newId, here)
         // res.send("new book created")
-        req.flash("success", "new book created")
+        req.flash("success", "new post created")
         req.session.save(() => res.redirect(`/book/${newId}`))
     }).catch(function(errors) {
         // res.send(errors)
