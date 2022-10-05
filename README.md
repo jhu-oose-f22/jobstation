@@ -47,7 +47,7 @@
 [![MIT License][license-shield]][license-url]
 
 
-<!-- TABLE OF CONTENTS -->
+<!-- TABLE OF CONTENTS 
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -72,7 +72,7 @@
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
-
+-->
 
 
 <!-- ABOUT THE PROJECT -->
@@ -81,68 +81,57 @@
 
 
 ### Built With
-* [![React][React.js]][React-url]
+(Iteration 1)
+<!-- * [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
-* [![SpringBoot][SpringBoot]][SpringBoot-url]
+* [![JQuery][JQuery.com]][JQuery-url] -->
+* [![Express][Express]][Express-url]
+* [![MongoDB][MongoDB]][MongoDB-url]
 
 
 
 
 <!-- GETTING STARTED -->
 ## Getting Started
-TODO
+```bash
+cd src/backend
+npm run watch
+```
+
+The server would be running on http://localhost:3000/
 
 ### Prerequisites
 #### Frontend
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
 #### Backend
 
-### Deployment
+```bash
+cd src/backend
+npm install
+```
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-
+<!-- ### Deployment -->
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+For iteration1, you can CRUD your job posts!
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add SRS
+- [x] Add SRS
 - [ ] Add Job Forum
+  - [x] Add CRUD
+  - [x] Add frontend
+  - [ ] Add Recommendation System
+- [ ] Add Job Board
   - [ ] Add CRUD
   - [ ] Add frontend
   - [ ] Add Recommendation System
-- [ ] Add Job Memo
-- [ ] Add Job Board
+- [ ] Add User System
+- [ ] Add Job Tracking
 - [ ] More...
 
 See the [open projects](https://github.com/jhu-oose-f22/jobstation/projects) for a full list of proposed features for current iteration.
@@ -180,5 +169,7 @@ TBD
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
-[SpringBoot]: https://img.shields.io/badge/Spring_Boot-7DB150?style=for-the-badge&logo=springboot&logoColor=white
-[SpringBoot-url]: https://spring.io/projects/spring-boot
+[Express]: https://img.shields.io/badge/Express-7DB150?style=for-the-badge&logo=express&logoColor=white
+[Express-url]: https://expressjs.com/
+[MongoDB]: https://img.shields.io/badge/MongoDB-20232A?style=for-the-badge&logo=mongodb&logoColor=61DAFB
+[MongoDB-url]: https://mongodb.com/
