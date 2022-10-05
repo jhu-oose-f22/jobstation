@@ -1,8 +1,9 @@
-## run locally
+1. run locally
 
-### 1. build command
 `npm install`
 
-### 2. run command
+2. run command
 
 `npm run watch`
+
+3. open a browser and input `localhost:3000` in url.

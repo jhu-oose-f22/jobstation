@@ -3,26 +3,36 @@
 
     <%- include('includes/flash') %>
 
-    <div class="d-flex justify-content-between">
-      <h2><%= book.title %></h2>
-      <% if (book.isVisitorOwner) { %>
-        <span class="pt-2">
-          <a href="/book/<%= book._id %>/edit" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-          <form class="delete-book-form d-inline" action="/book/<%= book._id %>/delete" method="POST">
-            <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></button>
-          </form>
-        </span>
-      <% } %>
-    </div>
-      
-    <p class="text-muted small mb-4">
-      <a href="#"><img class="avatar-tiny" src="<%= book.owner.avatar%>"></a>
-      Tags: <strong><%= book.author %></strong>, added by <a href="#"><%= book.owner.username %></a> on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %></p>
-      
-    <div class="body-content">
+      <div class="d-flex justify-content-between">
+        <h2>
+          <%= book.title %>
+        </h2>
+        <% if (book.isVisitorOwner) { %>
+          <span class="pt-2">
+            <a href="/book/<%= book._id %>/edit" class="text-primary mr-2" data-toggle="tooltip" data-placement="top"
+              title="Edit"><i class="fas fa-edit"></i></a>
+            <form class="delete-book-form d-inline" action="/book/<%= book._id %>/delete" method="POST">
+              <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top"
+                title="Delete"><i class="fas fa-trash"></i></button>
+            </form>
+          </span>
+          <% } %>
+      </div>
+
+      <p class="text-muted small mb-4">
+        <a href="#"><img class="avatar-tiny" src="<%= book.owner.avatar%>"></a>
+        Tags: <strong>
+          <%= book.author %>
+        </strong>, added by <a href="#">
+          <%= book.owner.username %>
+        </a> on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %>
+      </p>
+
+
+      <div class="body-content">
         <%- book.body %>
-    </div>
+      </div>
 
   </div>
-  
+
   <%- include('includes/footer') %>

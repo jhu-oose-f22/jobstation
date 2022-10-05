@@ -16,7 +16,7 @@
       <% books.forEach(function(book) { %>
         <a href="/book/<%= book._id %>" class="list-group-item list-group-item-action">
           <img class="avatar-tiny" src="<%= book.owner.avatar %>">
-          <strong><%= book.title %></strong> written by <strong><%= book.author %></strong>, added on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %>
+          <strong><%= book.title %></strong> related topic:  <strong><%= book.author %></strong>, added on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %>
         </a>
       <% }) %>
       
