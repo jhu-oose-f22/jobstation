@@ -2,15 +2,7 @@
 
 ## run locally
 
-### 1. build command
 `npm install`
+`npm run watch`
 
-### 2. run command
-
-`node db.js`
-
-## visit the app deployed on free server
-
-https://my-books.onrender.com/
-
-**since it uses free service, it runs slow and the connection is unstable. you might want to try multiple times for a single operation** :(
+open a browser and input `localhost:3000` in url.
