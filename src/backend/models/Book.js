@@ -1,4 +1,4 @@
-const booksCollection = require('../db').db().collection("books")
+const booksCollection = require('../db').db().collection("posts")
 const ObjectID = require('mongodb').ObjectID
 const User = require('./User')
 const { book } = require('../router')
@@ -111,6 +111,15 @@ Book.reusableBookQuery = function(uniqueOperations, visitorId, finalOperations =
         })
         // console.log("reusable query resolve")
         resolve(books)
+    })
+}
+
+Book.findAll = function(){
+    return new Promise(async function(resolve, reject){
+        let books = await booksCollection.find({}).toArray()
+        if(books.length)
+            resolve(books)
+        else reject()
     })
 }
 
