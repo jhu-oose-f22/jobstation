@@ -93,45 +93,56 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
+### Install prerequisites and run locally
+
 ```bash
 cd src/backend
+npm install
 npm run watch
 ```
 
 The server would be running on http://localhost:3000/
 
-### Prerequisites
-#### Frontend
-
-#### Backend
-
-```bash
-cd src/backend
-npm install
-```
 
 <!-- ### Deployment -->
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Usage/Functionality Description
 
 For iteration1, you can CRUD your job posts!
+
+- Sign up,  log in, sign out
+  -  **sign up**: enter valid username, email, and password to sign up
+  - **sign in**: sign in using username and password
+  - **sign out**: click Sign out and user will be redirect to the sign up / log in page. 
+- Create, modify, delete, and search post
+  - **create**: After log in, user can create a new post by clicking the green button `Create Post`
+ on the topright of the page. All three fields(title, tags, body) are required to be posted.
+  - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can only view the post.
+  -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
 
 <!-- ROADMAP -->
 ## Roadmap
 
 - [x] Add SRS
+
+- [ ] Add Group Chat
+  - [x] Backend
+  - [x] Frontend
+
 - [ ] Add Job Forum
-  - [x] Add CRUD
-  - [x] Add frontend
-  - [ ] Add Recommendation System
-- [ ] Add Job Board
+  - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
+  - [x] Rewrite frontend using React
+  - [x] Add Recommendation System
+
+<!-- - [ ] Add Job Board
   - [ ] Add CRUD
   - [ ] Add frontend
-  - [ ] Add Recommendation System
-- [ ] Add User System
+  - [ ] Add Recommendation System -->
 - [ ] Add Job Tracking
+- [ ] Add User System
+
 - [ ] More...
 
 See the [open projects](https://github.com/jhu-oose-f22/jobstation/projects) for a full list of proposed features for current iteration.
