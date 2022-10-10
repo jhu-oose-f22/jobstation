@@ -109,7 +109,7 @@ The server would be running on http://localhost:3000/
 
 <!-- USAGE EXAMPLES -->
 ## Usage/Functionality Description
-you should include more about the specifics of how to use the app and what it does.   
+
 For iteration1, you can CRUD your job posts!
 
 - Sign up,  log in, sign out
