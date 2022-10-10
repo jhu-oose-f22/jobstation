@@ -128,13 +128,13 @@ For iteration1, you can CRUD your job posts!
 - [x] Add SRS
 
 - [ ] Add Group Chat
-  - [x] Backend
-  - [x] Frontend
+  - [ ] Backend
+  - [ ] Frontend
 
 - [ ] Add Job Forum
-  - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
-  - [x] Rewrite frontend using React
-  - [x] Add Recommendation System
+  - [ ] Refactor/Refine/Rewrite CRUD of Iteration 1
+  - [ ] Rewrite frontend using React
+  - [ ] Add Recommendation System
 
 <!-- - [ ] Add Job Board
   - [ ] Add CRUD
