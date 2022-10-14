@@ -5,7 +5,10 @@ const postSchema = mongoose.Schema({
     message: String,
     creator: String,
     tags: [String],
-    selectedFile: String,
+    selectedFile: {
+        type: String,
+        default: 0
+    },
     likeCount: {
         type: Number,
         default: 0
@@ -22,6 +25,11 @@ class PostClass {
         return posts;
       }
     
+    static async createPost(info){
+        newPost = await this.createPost(info)
+        //specify user in session as creator when added user model 
+    }
+
     static async listByTag({ tag } = {}) {
         const tagPosts = await this.find({ tag }).sort({ createdAt }).skip(offset).limit(limit);
         if (!tagPosts) {

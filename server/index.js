@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import postRoutes from "./routes/posts.js"
+import Routes from "./routes.js"
 
 // const express = require('express')
 
@@ -13,7 +13,7 @@ app.use(bodyParser.json({ limit: "30mb", extented: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extented: true}))
 app.use(cors());
 
-app.use('/posts', postRoutes)
+app.use(Routes)
 
 const CONNECTION_URL = 'mongodb+srv://lz:lz@bookscluster.vpq1p30.mongodb.net/?retryWrites=true&w=majority';
 const PORT = process.env.PORT || 5001;
