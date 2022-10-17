@@ -1,16 +1,16 @@
-const booksCollection = require('../db').db().collection("posts")
+const postsCollection = require('../db').db().collection("posts")
 const ObjectID = require('mongodb').ObjectID
 const User = require('./User')
-const { book } = require('../router')
-booksCollection.createIndex({title: "text", author: "text", body: "text"})
+const { book: post } = require('../router')
+postsCollection.createIndex({title: "text", author: "text", body: "text"})
 
-let Book = function(data, userid, requestedBookId) {
+let Post = function(data, userid, requestedBookId) {
     this.data = data
     this.errors = []
     this.userid = userid
     this.requestedBookId = requestedBookId
 }
-Book.prototype.cleanUp = function() {
+Post.prototype.cleanUp = function() {
     if (typeof(this.data.title) != "string") {
         this.data.title = ""
     }
@@ -31,18 +31,18 @@ Book.prototype.cleanUp = function() {
     }
 }
 
-Book.prototype.validate = function() {
-    if (this.data.title == "") {this.errors.push("title is required")}
-    if (this.data.body == "") {this.errors.push("body is required")}
+Post.prototype.validate = function() {
+    if (this.data.title === "") {this.errors.push("title is required")}
+    if (this.data.body === "") {this.errors.push("body is required")}
 }
  
-Book.prototype.create = function() {
+Post.prototype.create = function() {
     return new Promise((resolve, reject) => {
         this.cleanUp()
         this.validate()
         if (!this.errors.length) {
-            // save book to database
-            booksCollection.insertOne(this.data).then((info) => {
+            // save post to database
+            postsCollection.insertOne(this.data).then((info) => {
                 resolve(info.insertedId)
             }).catch(() => {
                 this.errors.push('unknown err')
@@ -54,10 +54,10 @@ Book.prototype.create = function() {
     })
 }
 
-Book.prototype.update = function() {
+Post.prototype.update = function() {
     return new Promise(async (resolve, reject) => {
       try {
-        let book = await Book.findSingleById(this.requestedBookId, this.userid)
+        let book = await Post.findSingleById(this.requestedBookId, this.userid)
         if (book.isVisitorOwner) {
           // actually update the db
           let status = await this.actuallyUpdate()
@@ -71,12 +71,12 @@ Book.prototype.update = function() {
     })
   }
 
-  Book.prototype.actuallyUpdate = function() {
+  Post.prototype.actuallyUpdate = function() {
     return new Promise(async (resolve, reject) => {
       this.cleanUp()
       this.validate()
       if (!this.errors.length) { 
-        await booksCollection.findOneAndUpdate({_id: new ObjectID(this.requestedBookId)}, {$set: {title: this.data.title, author: this.data.author, body: this.data.body}})
+        await postsCollection.findOneAndUpdate({_id: new ObjectID(this.requestedBookId)}, {$set: {title: this.data.title, author: this.data.author, body: this.data.body}})
         resolve("success")
       } else {
         resolve("failure")
@@ -84,7 +84,7 @@ Book.prototype.update = function() {
     })
   }
 
-Book.reusableBookQuery = function(uniqueOperations, visitorId, finalOperations = []) {
+Post.reusableBookQuery = function(uniqueOperations, visitorId, finalOperations = []) {
     return new Promise(async function(resolve, reject) {
         let aggOperations = uniqueOperations.concat([ 
             {$lookup: {from: "users", localField: "owner", foreignField: "_id", as: "ownerDocument"}},
@@ -98,7 +98,7 @@ Book.reusableBookQuery = function(uniqueOperations, visitorId, finalOperations =
             }}
         ]).concat(finalOperations)
         console.log("reusable begins")
-        let books = await booksCollection.aggregate(aggOperations).toArray()
+        let books = await postsCollection.aggregate(aggOperations).toArray()
         console.log("resuable ends")
         books = books.map(function(book) {
             book.isVisitorOwner = book.ownerId.equals(visitorId)
@@ -114,27 +114,27 @@ Book.reusableBookQuery = function(uniqueOperations, visitorId, finalOperations =
     })
 }
 
-Book.findAll = function(){
+Post.findAll = function(){
     return new Promise(async function(resolve, reject){
-        let books = await booksCollection.find({}).toArray()
+        let books = await postsCollection.find({}).toArray()
         if(books.length)
             resolve(books)
         else reject()
     })
 }
 
-Book.findSingleById = function(id, visitorId) {
+Post.findSingleById = function(id, visitorId) {
     return new Promise(async function(resolve, reject) {
         if (typeof(id) != "string" || !ObjectID.isValid(id)) {
             reject()
             return
         }
-        let books = await Book.reusableBookQuery([
+        let books = await Post.reusableBookQuery([
             {$match: {_id: new ObjectID(id)}}
         ], visitorId)
-        // { sample of returned book
+        // { sample of returned post
         //     _id: new ObjectId("6317fced299500f0846bcf28"),
-        //     title: 'another book',
+        //     title: 'another post',
         //     body: 'asdfasfd asdf asf \r\nasdfasf\r\nsadfzcvvvvzcvzcvzxv\\\r\n324234234',
         //     createdDate: 2022-09-07T02:07:41.661Z,
         //     authorId: undefined,
@@ -152,21 +152,21 @@ Book.findSingleById = function(id, visitorId) {
     })
 }
 
-Book.findByOwnerId = function(ownerId) {
+Post.findByOwnerId = function(ownerId) {
 
-    return Book.reusableBookQuery([
+    return Post.reusableBookQuery([
         {$match: {owner: ownerId}}, 
         {$sort: {addedDate: -1}}
     ])
 
 }
 
-Book.delete = function(bookIdToDelete, currentUserId) {
+Post.delete = function(bookIdToDelete, currentUserId) {
     return new Promise(async (resolve, reject) => {
         try {
-            let book = await Book.findSingleById(bookIdToDelete, currentUserId)
+            let book = await Post.findSingleById(bookIdToDelete, currentUserId)
             if (book.isVisitorOwner) {
-                await booksCollection.deleteOne({_id: new ObjectID(bookIdToDelete)})
+                await postsCollection.deleteOne({_id: new ObjectID(bookIdToDelete)})
                 resolve()
             } else {
                 reject()
@@ -177,10 +177,10 @@ Book.delete = function(bookIdToDelete, currentUserId) {
     }) 
 }
  
-Book.search = function(searchTerm) {
+Post.search = function(searchTerm) {
     return new Promise(async (resolve, reject) => {
       if (typeof(searchTerm) == "string") {
-        let books = await Book.reusableBookQuery([
+        let books = await Post.reusableBookQuery([
           {$match: {$text: {$search: searchTerm}}}
         ], undefined, [{$sort: {score: {$meta: "textScore"}}}])
         resolve(books)
@@ -191,4 +191,4 @@ Book.search = function(searchTerm) {
   }
 
 
-module.exports = Book
+module.exports = Post

@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const Book = require('../models/Book')
+const Book = require('../models/Post')
 const { book } = require('../router')
 const ObjectID = require('mongodb').ObjectID
 
@@ -79,18 +79,6 @@ exports.home = function(req, res) {
             // console.log("posts not found")
             res.render('404')
         })
-
-        // Book.findByOwnerId(req.profileUser._id).then(function(books) {
-        //     res.render('lib-dashboard', {
-        //         books: books,
-        //         profileUsername: req.profileUser.username,
-        //         profileAvatar: req.profileUser.avatar
-        //     })
-        //     // res.render('home-dashboard')
-        // }).catch(function() {
-        //     // console.log("posts not found")
-        //     res.render('404')
-        // })
         
     } else {
         res.render('home-guest', {regErrors: req.flash('regErrors')})

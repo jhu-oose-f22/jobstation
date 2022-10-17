@@ -1,5 +1,5 @@
 const { findConfigUpwards } = require('@babel/core/lib/config/files')
-const Book = require('../models/Book')
+const Post = require('../models/Post')
 const { book } = require('../router')
 exports.viewCreateScreen = function(req, res) {
     res.render('add-book')
@@ -12,7 +12,7 @@ exports.viewSearchScreen = function(req, res) {
       
 exports.create = function(req, res) {
     // console.log(req.body)
-    let book = new Book(req.body, req.session.user._id)
+    let book = new Post(req.body, req.session.user._id)
     book.create().then(function(newId) { 
         // the return value of book.create() is what it resolve(), 
         // and the return value can be used directly as
@@ -30,7 +30,7 @@ exports.create = function(req, res) {
 exports.viewSingle = async function(req, res) {
 
     try {
-        let book = await Book.findSingleById(req.params.id, req.visitorId)
+        let book = await Post.findSingleById(req.params.id, req.visitorId)
         res.render('single-book-screen', {book: book})
     } catch {
         // res.send("404 not found")
@@ -40,7 +40,7 @@ exports.viewSingle = async function(req, res) {
 
 exports.viewEditScreen = async function(req, res) {
     try {
-        let book = await Book.findSingleById(req.params.id, req.visitorId)
+        let book = await Post.findSingleById(req.params.id, req.visitorId)
         // { sample of returned book
         //     _id: new ObjectId("6317fced299500f0846bcf28"),
         //     title: 'another book',
@@ -65,7 +65,7 @@ exports.viewEditScreen = async function(req, res) {
 }
 
 exports.edit = function(req, res) {
-    let book = new Book(req.body, req.visitorId, req.params.id)
+    let book = new Post(req.body, req.visitorId, req.params.id)
     book.update().then((status) => {
         // the book was updated in the database
         // or user did have permission, but there were validation errors
@@ -96,7 +96,7 @@ exports.edit = function(req, res) {
 
 exports.search = function(req, res) {
     // console.log(" search by title: " + req.body.title)
-    Book.search(req.body.related).then(books => {
+    Post.search(req.body.related).then(books => {
         console.log(req.body)
         // res.render('search-result')
         // console.log(books)
@@ -111,7 +111,7 @@ exports.search = function(req, res) {
 }
 
 exports.delete = function(req, res) {
-    Book.delete(req.params.id, req.visitorId).then(() => {
+    Post.delete(req.params.id, req.visitorId).then(() => {
         req.flash("success", "successfully deleted")
         req.session.save(() => {res.redirect(`/profile/${req.session.user.username}`)})
     }).catch(() => {

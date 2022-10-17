@@ -5,13 +5,13 @@
 
       <div class="d-flex justify-content-between">
         <h2>
-          <%= book.title %>
+          <%= post.title %>
         </h2>
-        <% if (book.isVisitorOwner) { %>
+        <% if (post.isVisitorOwner) { %>
           <span class="pt-2">
-            <a href="/book/<%= book._id %>/edit" class="text-primary mr-2" data-toggle="tooltip" data-placement="top"
+            <a href="/post/<%= post._id %>/edit" class="text-primary mr-2" data-toggle="tooltip" data-placement="top"
               title="Edit"><i class="fas fa-edit"></i></a>
-            <form class="delete-book-form d-inline" action="/book/<%= book._id %>/delete" method="POST">
+            <form class="delete-post-form d-inline" action="/post/<%= post._id %>/delete" method="POST">
               <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top"
                 title="Delete"><i class="fas fa-trash"></i></button>
             </form>
@@ -20,17 +20,17 @@
       </div>
 
       <p class="text-muted small mb-4">
-        <a href="#"><img class="avatar-tiny" src="<%= book.owner.avatar%>"></a>
+        <a href="#"><img class="avatar-tiny" src="<%= post.owner.avatar%>"></a>
         Tags: <strong>
-          <%= book.author %>
+          <%= post.author %>
         </strong>, added by <a href="#">
-          <%= book.owner.username %>
-        </a> on <%= book.addedDate.getMonth() + 1 %>/<%= book.addedDate.getDate() %>/<%= book.addedDate.getFullYear() %>
+          <%= post.owner.username %>
+        </a> on <%= post.addedDate.getMonth() + 1 %>/<%= post.addedDate.getDate() %>/<%= post.addedDate.getFullYear() %>
       </p>
 
 
       <div class="body-content">
-        <%- book.body %>
+        <%- post.body %>
       </div>
 
   </div>

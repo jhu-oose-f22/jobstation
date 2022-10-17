@@ -5,7 +5,7 @@ const flash = require('connect-flash')
 const app = express()
 
 let sessionOptions = session({
-    secret: " javascript is good",
+    secret: " javascript is not good",
     store: MongoStore.create({client: require('./db')}),
     resave: false,
     saveUninitialized: false,
