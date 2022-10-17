@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { isLoggedIn, UserContext } from "../context/User";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Discussion() {
     const navigate = useNavigate();

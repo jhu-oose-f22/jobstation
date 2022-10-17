@@ -21,6 +21,7 @@ export default function Login(props) {
             remember: remember,
         };
         console.log(userLogin);
+        sessionStorage.setItem('userLogin', JSON.stringify(userLogin));
         toggleUser(userLogin);
 
         window.history.go(-1);

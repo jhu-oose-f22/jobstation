@@ -12,8 +12,11 @@ export const UserContext = React.createContext(defaultUser)
 export default function UserContextProvider(props) {
 
     const [userLogin, setUserLogin] = useState({});
-    //? ISSUE: how to read a previous session user context.
-
+    const userStorage = JSON.parse(sessionStorage.getItem('userLogin'));
+    // TODO get user status.
+    useEffect(() => {
+        if (!isLoggedIn(userLogin)) setUserLogin(userStorage);
+    }, [userLogin, userStorage])
     return (
         <UserContext.Provider value={{
             user: userLogin,

@@ -4,6 +4,7 @@ import PageNotFound from "./components/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
 import Navbar from "./components/Navbar";
 import ToDo from "./components/ToDo";
@@ -29,12 +30,12 @@ function App() {
                         <Route path='/group' />
 
                         <Route path='/login' element={<Login />} />
+                        <Route path='/logout' element={<Logout />} />
 
 
                         {/* TODO */}
                         <Route path='/dashboard' element={<ToDo />} />
                         <Route path='/settings' element={<ToDo />} />
-                        <Route path='/logout' element={<ToDo />} />
                         <Route path='/notifications' element={<ToDo />} />
 
                         {/* Errors */}
