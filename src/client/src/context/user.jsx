@@ -9,17 +9,11 @@ const defaultUser = {
 
 export const UserContext = React.createContext(defaultUser)
 
-function useUserLogin() {
-
-
-}
-
 export default function UserContextProvider(props) {
 
     const [userLogin, setUserLogin] = useState({});
     //? ISSUE: how to read a previous session user context.
 
-    console.log(userLogin);
     return (
         <UserContext.Provider value={{
             user: userLogin,
@@ -29,4 +23,13 @@ export default function UserContextProvider(props) {
         </UserContext.Provider>
     );
 
+}
+
+/**
+ *  Helper Function
+ * @param {Object} user in UserContext
+ * @returns {Boolean} is logged in.
+ */
+export function isLoggedIn(user) {
+    return user && Object.keys(user).length !== 0;
 }

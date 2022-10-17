@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { PageNotFound } from "./components/404";
+import PageNotFound from "./components/404";
+import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
-import { Login } from "./components/Login";
-import { MainPage } from "./components/MainPage";
+import Login from "./components/Login";
+import MainPage from "./components/MainPage";
 import Navbar from "./components/Navbar";
-import { ToDo } from "./components/ToDo";
+import ToDo from "./components/ToDo";
 import UserContextProvider from "./context/User";
 
 
@@ -20,7 +21,11 @@ function App() {
                     <Routes>
                         <Route index path='/' element={<MainPage />} />
 
-                        <Route path='/discussion' />
+                        <Route path='/discussion' element={<Discussion />}>
+                            <Route path=':postId' />
+                        </Route>
+
+
                         <Route path='/group' />
 
                         <Route path='/login' element={<Login />} />

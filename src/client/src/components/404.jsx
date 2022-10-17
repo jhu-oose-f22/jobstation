@@ -1,5 +1,5 @@
 
-export function PageNotFound() {
+export default function PageNotFound() {
     return <div className=" bg-image vh-100" style={{
         backgroundImage: "url(./imgs/404.jpg)",
         backgroundSize: "cover"

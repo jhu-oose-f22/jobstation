@@ -1,4 +1,4 @@
-export function ToDo() {
+export default function ToDo() {
     return <div className=" bg-image vh-100" style={{
         backgroundImage: "url(./imgs/InProgress.jpg)",
         backgroundSize: "cover"

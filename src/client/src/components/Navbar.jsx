@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { UserContext } from "../context/User";
+import { isLoggedIn, UserContext } from "../context/User";
 import Logo from "./Logo";
 
 export default function Navbar(props) {
@@ -17,9 +17,7 @@ export default function Navbar(props) {
     })
 
 
-    const userContext = useContext(UserContext);
-    const user = userContext.user;
-    console.log(userContext, user);
+    const { user } = useContext(UserContext);
 
     return (
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light'>
@@ -42,7 +40,7 @@ export default function Navbar(props) {
 
 
                 {/* profile */}
-                {user ?
+                {isLoggedIn(user) ?
                     <div className="d-flex flex-row">
                         <div className='nav-item d-flex align-items-center me-auto'>
                             <div className='dropdown ms-auto'>
@@ -50,7 +48,10 @@ export default function Navbar(props) {
                                     {user.username}
                                 </div>
                                 <ul className="dropdown-menu dropdown-menu-start dropdown-menu-lg-end align-items-start" aria-labelledby="navbarDropdown">
-
+                                    <li><Link className="dropdown-item" to="/profile">
+                                        <i className="fa-regular fa-user me-2"></i>
+                                        Profile
+                                    </Link></li>
                                     <li><Link className="dropdown-item" to="/settings">
                                         <i className="fa-solid fa-gear me-2"></i>
                                         Settings
