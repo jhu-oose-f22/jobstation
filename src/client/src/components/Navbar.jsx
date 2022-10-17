@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { UserContext } from "../context/user";
+import { UserContext } from "../context/User";
 import Logo from "./Logo";
 
 export default function Navbar(props) {
@@ -17,7 +17,9 @@ export default function Navbar(props) {
     })
 
 
-    const user = useContext(UserContext);
+    const userContext = useContext(UserContext);
+    const user = userContext.user;
+    console.log(userContext, user);
 
     return (
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light'>
@@ -27,7 +29,7 @@ export default function Navbar(props) {
                 </div>
 
                 {/* pages */}
-                <div className="collapse navbar-collapse nav-pills"
+                <div className="collapse navbar-collapse"
                     nav-pills-link-active-color='red'
                     component-active-bg='red'
 
@@ -38,14 +40,14 @@ export default function Navbar(props) {
                 </div>
 
 
-                <div className='d-flex align-items-center me-auto'>
 
-                    {/* profile */}
-                    <div className='nav-item'>
-                        {user !== {} ?
+                {/* profile */}
+                {user ?
+                    <div className="d-flex flex-row">
+                        <div className='nav-item d-flex align-items-center me-auto'>
                             <div className='dropdown ms-auto'>
                                 <div className=" nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {user.userName}
+                                    {user.username}
                                 </div>
                                 <ul className="dropdown-menu dropdown-menu-start dropdown-menu-lg-end align-items-start" aria-labelledby="navbarDropdown">
 
@@ -59,25 +61,27 @@ export default function Navbar(props) {
                                         Logout</Link></li>
                                 </ul>
                             </div>
-                            :
-                            <Link className='nav-link' to="/login">
-                                Login
+                        </div>
+                        {/* notification */}
+                        <div className="nav-item ms-4 me-auto me-lg-3">
+                            <Link className="nav-link " to="/notifications">
+                                <div className='fa-layers fa-lg'>
+                                    <i className="fa-regular fa-bell"></i>
+                                    <i className="fa-solid fa-circle" data-fa-transform='shrink-10 up-4 right-4' color='red' ></i>
+                                </div>
                             </Link>
-                        }
+                        </div>
                     </div>
 
-                    {/* notification */}
-                    <div className="nav-item ms-4 me-auto">
-                        <Link className="nav-link " to="/notifications">
-                            <div className='fa-layers fa-lg'>
-                                <i className="fa-regular fa-bell"></i>
-                                <i className="fa-solid fa-circle" data-fa-transform='shrink-10 up-4 right-4' color='red' ></i>
-                            </div>
-                        </Link>
-                    </div>
+                    :
+                    <Link className='nav-link' to="/login">
+                        Login
+                    </Link>
+                }
 
 
-                </div>
+
+
                 <button className="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

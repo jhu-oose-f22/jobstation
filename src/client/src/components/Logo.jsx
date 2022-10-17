@@ -1,5 +1,5 @@
 import React from "react";
-import { BRAND } from "../context/const";
+import { BRAND } from "../context/Const";
 
 
 export default function Logo(props) {

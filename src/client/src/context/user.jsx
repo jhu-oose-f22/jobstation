@@ -1,18 +1,30 @@
-import React, { useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { API_URL } from "./Const";
 
-export const UserContext = React.createContext({})
+const defaultUser = {
+    user: null,
+    toggleUser: () => { }
+};
+
+export const UserContext = React.createContext(defaultUser)
+
+function useUserLogin() {
+
+
+}
 
 export default function UserContextProvider(props) {
-    let userLogin = {
-        id: '123414',
-        userName: 'wby',
-        avatar: null,
-    };
 
-    // TODO: get user status from server.
+    const [userLogin, setUserLogin] = useState({});
+    //? ISSUE: how to read a previous session user context.
 
+    console.log(userLogin);
     return (
-        <UserContext.Provider value={userLogin}>
+        <UserContext.Provider value={{
+            user: userLogin,
+            toggleUser: setUserLogin
+        }}>
             {props.children}
         </UserContext.Provider>
     );

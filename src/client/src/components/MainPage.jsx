@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Logo from "./Logo";
 
 
 export function MainPage(props) {
@@ -14,7 +13,7 @@ export function MainPage(props) {
                 <img className="w-auto h-50" src="./imgs/LogoTransparent.png" alt="Logo of Job Station" />
                 <h1 className="mb-3">Your one-stop job preparation station</h1>
                 <Link to='/login'>
-                    <i class="fa-solid fa-angles-right fa-4x fa-beat-fade my-5 opacity-75"></i>
+                    <i className="fa-solid fa-angles-right fa-4x fa-beat-fade my-5 opacity-75 text-white"></i>
                 </Link>
             </div>
         </div>
