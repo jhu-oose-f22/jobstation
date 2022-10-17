@@ -1,16 +1,30 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/User";
 
 export default function Logout() {
     const navigate = useNavigate();
     const { toggleUser } = useContext(UserContext);
+    const [countdown, setCountdown] = useState(3);
+    const [timer, setTimer] = useState(null);
 
-    setTimeout(() => {
-        toggleUser({});
-        sessionStorage.setItem('userLogin', JSON.stringify({}));
-        navigate('/');
-    }, 3000)
+    useEffect(() => {
+        if (countdown > 0) {
+            setTimer(setTimeout(() => {
+                setCountdown(countdown - 1);
+            }, 1000));
+        } else {
+            navigate('/');
+        }
+
+        return () => {
+            toggleUser({});
+            sessionStorage.setItem('userLogin', JSON.stringify({}));
+            if (timer)
+                clearTimeout(timer);
+        }
+    }, [toggleUser, countdown, navigate, timer])
+
 
     return <div className='bg-image vh-100'
         style={{

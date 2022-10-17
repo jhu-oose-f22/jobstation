@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
 import Navbar from "./components/Navbar";
+import Post from "./components/Post";
 import ToDo from "./components/ToDo";
 import UserContextProvider from "./context/User";
 
@@ -22,9 +23,13 @@ function App() {
                     <Routes>
                         <Route index path='/' element={<MainPage />} />
 
-                        <Route path='/discussion' element={<Discussion />}>
-                            <Route path=':postId' />
-                        </Route>
+                        <Route path='/discussion' element={<Discussion />} />
+                        <Route path='/discussion/:postId'
+                            loader={async ({ request, params }) => {
+                                console.log(params);
+                                return params
+                            }}
+                            element={<Post />} />
 
 
                         <Route path='/group' />

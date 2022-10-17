@@ -15,7 +15,7 @@ export default function UserContextProvider(props) {
     const userStorage = JSON.parse(sessionStorage.getItem('userLogin'));
     // TODO get user status.
     useEffect(() => {
-        if (!isLoggedIn(userLogin)) setUserLogin(userStorage);
+        if (isLoggedIn(userStorage) && !isLoggedIn(userLogin)) setUserLogin(userStorage);
     }, [userLogin, userStorage])
     return (
         <UserContext.Provider value={{

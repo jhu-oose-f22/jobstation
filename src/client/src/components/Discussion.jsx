@@ -8,12 +8,14 @@ export default function Discussion() {
 
 
     useEffect(() => {
-        if (!isLoggedIn(user)) {
-            navigate('/login')
-        }
-    })
 
+    })
+    if (!isLoggedIn(user)) {
+        navigate('/login')
+    }
     // TODO get all discussions
+
+    // This is just a template
     const responds = [
         {
             id: '12u',
@@ -37,7 +39,7 @@ export default function Discussion() {
             ]
         },
         {
-            id: '12u',
+            id: '1asdf2u',
             title: "Interview",
             tag: ['Google', 'VO', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
             user: {
@@ -59,7 +61,9 @@ export default function Discussion() {
     // TODO: Extract a Post Card class.
     const posts = responds.map((res, idx) => {
         return <li className="list-group-item list-group-item-action" key={idx}>
-            <Link to={`./${res.id}`} className='text-dark text-decoration-none d-flex flex-column'>
+            <Link to={`./${res.id}`}
+                state={res}
+                className='text-dark text-decoration-none d-flex flex-column'>
                 <div className="d-flex flex-row align-items-center my-2 justify-content-start">
                     <img className="rounded-circle avatar-tiny me-3" width={30} src="https://img.wxcha.com/file/201812/01/c2d3964ccd.jpg" alt='avatar' />
                     <strong>{res.title}</strong>
