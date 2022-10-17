@@ -1,12 +1,15 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { PAGES } from "../context/const";
 import { UserContext } from "../context/user";
 import Logo from "./Logo";
 
 export default function Navbar(props) {
-    const pages = PAGES.map((value) => {
-        return (<li className='nav-item ' key={value}>
+    const pages = [
+        'Discussion',
+        'Group',
+        'Dashboard',
+    ].map((value) => {
+        return (<li className='nav-item ps-2' key={value}>
             <NavLink className='nav-link mx-lg-2' to={'/' + value.toLowerCase()}>
                 {value}
             </NavLink >
@@ -24,7 +27,11 @@ export default function Navbar(props) {
                 </div>
 
                 {/* pages */}
-                <div className="collapse navbar-collapse nav-pills" id='navbarSupportedContent'>
+                <div className="collapse navbar-collapse nav-pills"
+                    nav-pills-link-active-color='red'
+                    component-active-bg='red'
+
+                    id='navbarSupportedContent'>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
                         {pages}
                     </ul>
@@ -78,6 +85,6 @@ export default function Navbar(props) {
 
             </div>
 
-        </nav>
+        </nav >
     )
 }

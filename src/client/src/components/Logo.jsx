@@ -9,8 +9,8 @@ export default function Logo(props) {
         aria-label={BRAND + ', OOSE'}>
         <img src="favicon.ico"
             className=''
-            height="20"
-            width="20"
+            height={props.height || "20"}
+            width={props.width || "20"}
             alt="" />
         <span className={"ms-2 " + textStyle}>{BRAND}</span>
     </a>);
