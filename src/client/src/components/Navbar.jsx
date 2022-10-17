@@ -1,18 +1,15 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { PAGES } from "../context/const";
 import { UserContext } from "../context/user";
 import Logo from "./Logo";
 
 export default function Navbar(props) {
-    const pages = [
-        'Discussion',
-        'Group',
-        'Dashboard',
-    ].map((value) => {
+    const pages = PAGES.map((value) => {
         return (<li className='nav-item ' key={value}>
-            <Link className='nav-link mx-lg-2' to={'/' + value.toLowerCase()}>
+            <NavLink className='nav-link mx-lg-2' to={'/' + value.toLowerCase()}>
                 {value}
-            </Link>
+            </NavLink >
         </li>);
     })
 
@@ -22,15 +19,19 @@ export default function Navbar(props) {
     return (
         <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light'>
             <div className='container-fluid align-items-center'>
-                <div className='navbar-brand' href='/'>
+                <div className='navbar-brand'>
                     <Logo />
                 </div>
-                <div className="collapse navbar-collapse" id='navbarSupportedContent'>
+
+                {/* pages */}
+                <div className="collapse navbar-collapse nav-pills" id='navbarSupportedContent'>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
                         {pages}
                     </ul>
                 </div>
-                <div class='d-flex align-items-center me-auto'>
+
+
+                <div className='d-flex align-items-center me-auto'>
 
                     {/* profile */}
                     <div className='nav-item'>
@@ -47,7 +48,7 @@ export default function Navbar(props) {
                                     </Link></li>
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><Link className="dropdown-item" to="/logout">
-                                        <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                        <i className="fa-solid fa-right-from-bracket me-2"></i>
                                         Logout</Link></li>
                                 </ul>
                             </div>
