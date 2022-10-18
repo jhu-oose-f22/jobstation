@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useContext, useState } from "react";
+import { API_URL } from "../context/Const";
 import { isLoggedIn, UserContext } from "../context/User";
 
 
@@ -8,7 +10,6 @@ export default function Login(props) {
     const [remember, setRemember] = useState(false);
 
     const { user, toggleUser } = useContext(UserContext);
-
 
 
     const handleLogin = (e) => {

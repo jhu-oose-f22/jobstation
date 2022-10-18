@@ -20,10 +20,12 @@ export default function Logout() {
         return () => {
             toggleUser({});
             sessionStorage.setItem('userLogin', JSON.stringify({}));
-            if (timer)
+            if (timer) {
                 clearTimeout(timer);
+                setTimer(null);
+            }
         }
-    }, [toggleUser, countdown, navigate, timer])
+    }, [toggleUser, countdown, navigate,])
 
 
     return <div className='bg-image vh-100'
@@ -50,7 +52,7 @@ export default function Logout() {
                 <p className="my-5">
                     Automatically redirect to
                     <Link className="mx-2 text-reset" to='/'>main page</Link>
-                    in three seconds...
+                    in {countdown} seconds...
                 </p>
             </div></div>
     </div>

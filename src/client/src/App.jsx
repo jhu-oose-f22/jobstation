@@ -24,12 +24,7 @@ function App() {
                         <Route index path='/' element={<MainPage />} />
 
                         <Route path='/discussion' element={<Discussion />} />
-                        <Route path='/discussion/:postId'
-                            loader={async ({ request, params }) => {
-                                console.log(params);
-                                return params
-                            }}
-                            element={<Post />} />
+                        <Route path='/discussion/:postId' element={<Post />} />
 
 
                         <Route path='/group' />

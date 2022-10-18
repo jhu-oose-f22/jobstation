@@ -1,18 +1,16 @@
 import { useContext, useEffect } from "react";
 import { isLoggedIn, UserContext } from "../context/User";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function Discussion() {
     const navigate = useNavigate();
     const { user } = useContext(UserContext);
 
 
-    useEffect(() => {
-
-    })
     if (!isLoggedIn(user)) {
-        navigate('/login')
+        return <Navigate to='/login' />;
     }
+
     // TODO get all discussions
 
     // This is just a template
@@ -33,6 +31,13 @@ export default function Discussion() {
             comment: [
                 {
                     commentId: '13987',
+                    user: {
+                        username: 'wby'
+                    },
+                    body: `WOW!`
+                },
+                {
+                    commentId: 'a123',
                     user: {},
                     body: `WOW!`
                 },
@@ -58,10 +63,11 @@ export default function Discussion() {
             ]
         }
     ];
-    // TODO: Extract a Post Card class.
+    // TODO: Extract a Post Card class (Similar to Post.jsx).
     const posts = responds.map((res, idx) => {
         return <li className="list-group-item list-group-item-action" key={idx}>
             <Link to={`./${res.id}`}
+                // state need to be removed
                 state={res}
                 className='text-dark text-decoration-none d-flex flex-column'>
                 <div className="d-flex flex-row align-items-center my-2 justify-content-start">
