@@ -29,8 +29,10 @@ export default function Post(props) {
 
         <div className="text-muted small mb-4">
             <div className="d-flex flex-row align-items-center my-2 justify-content-start">
-                <img className="rounded-circle avatar-tiny me-3" width={30} src="https://img.wxcha.com/file/201812/01/c2d3964ccd.jpg" alt='avatar' />
-                <strong>{state.title}</strong>
+                <img className="avatar-tiny me-3" width={30}
+                    title={`${state.user.username}`}
+                    src={state.user.avatar || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />
+                <strong>{state.user.username}</strong>
                 <div className='text-muted ms-auto'>last updated {`${state.updatedTime.toLocaleTimeString()}  ${state.updatedTime.toLocaleDateString()}`}</div>
             </div>
             <div className="">

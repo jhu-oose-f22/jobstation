@@ -12,9 +12,14 @@ export default function Group(props) {
     }
 
 
-    return <div className="vh-100">
+    return <div className="">
         <Banner pageName='group' />
-        <GroupList listName='all' />
+        <div className="accordion">
+            <GroupList listName='recommended' />
+            <GroupList listName='join' />
+            <GroupList listName='all' />
+        </div>
+        
     </div>
 
 }

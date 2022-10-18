@@ -28,8 +28,6 @@ export default function Navbar(props) {
 
                 {/* pages */}
                 <div className="collapse navbar-collapse"
-                    nav-pills-link-active-color='red'
-                    component-active-bg='red'
 
                     id='navbarSupportedContent'>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
