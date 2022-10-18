@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
+    // ID: Number,
     title: String,
     message: String,
     creator: String,
@@ -13,7 +14,7 @@ const postSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    createAt: {
+    createdAt: {
         type: Date,
         default: new Date()
     },
@@ -21,13 +22,34 @@ const postSchema = mongoose.Schema({
 
 class PostClass {
     static async list({ offset = 0 } = {}) {
-        const posts = await this.find({}).sort({ createdAt }).skip(offset);
+        const posts = await this.find({}).skip(offset);
         return posts;
       }
     
-    static async createPost(info){
-        newPost = await this.create(info)
+    static async createPost({title, message, creator, tags}){
+        if(title && message && creator && tags){
+            const newPost = await this.create({
+                title,
+                message,
+                creator,
+                tags,
+            });
+            return newPost;
+        }
+        else{
+            throw new Error('Missing component of a post');
+        }
+        
+        
         //specify user in session as creator when added user model 
+    }
+
+    static async getByID({ id } = {}){
+        const targetPost = await this.find({ id });
+        if (!targetPost) {
+            throw new Error('The tag is not valid');
+        }
+        return targetPost;
     }
 
     static async listByTag({ tag } = {}) {
