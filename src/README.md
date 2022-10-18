@@ -1,6 +1,5 @@
 
-## 
-run chatserver
+##  run chat server
 
 cd chatserver
 npm i && npm start
