@@ -19,16 +19,22 @@ app.use(cors());
 app.use(router);
 
 connectDB();
-
+ 
 io.on('connect', (socket) => {
-  socket.on('join', ({ name, room }, callback) => {
+  socket.on('join', async ({ name, room }, callback) => {
     // this should be add to the group database
     const { error, user } = addUser({ id: socket.id, name, room });
 
     if(error) return callback(error);
 
     socket.join(user.room); 
+    // fetch chat history from db and pass to frontend to display
+      //   response1.data.map((obj) => ({ text: obj.text, user: obj.user }))
 
+    const msgs = await chatMessageController.fetchChatMessage(user.room, user.name);
+    const history = msgs.map((obj) => ({text: obj.content, user: obj.user }));
+    console.log(history);
+    socket.emit('history', history);
     // chatMessageController.createChatMessage(room,user.name);
 
     socket.emit('message', { user: 'NightBot', text: `${user.name}, welcome to room ${user.room}.`});
@@ -49,6 +55,7 @@ io.on('connect', (socket) => {
     io.to(user.room).emit('message', { user: user.name, text: message });
 
     chatMessageController.storeChatMessage(user.room,message,user.name);
+
     console.log(`a message: ${message} has been sent.`);
 
     callback(); 

@@ -4,7 +4,7 @@ import onlineIcon from "../../icons/onlineIcon.png";
 
 import "./TextContainer.css";
 // import "../Chat/Chat.css";
-
+ // :hover {}
 const TextContainer = ({ users }) => (
   <div className="userContainer">
     {users ? (

@@ -48,13 +48,18 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on("message", async (message) => {
+    socket.on("message", (message) => {
       // const response1 = await axios.get(dbURL || "http://localhost:3500/messages");
       // setMessages(
       //   response1.data.map((obj) => ({ text: obj.text, user: obj.user }))
       // );
       setMessages(messages => [...messages, message]);
     });
+
+    socket.on("history", history => {
+      setMessages(history);
+
+    })
 
     socket.on("roomData", ({ users }) => {
       setUsers(users);
@@ -72,7 +77,7 @@ const Chat = ({ location }) => {
       // socket.emit('connect');
     }
   };
-  console.log('rendered');
+  // console.log('rendered');
   return (
     <div className="outerContainer">
       <div className="container">

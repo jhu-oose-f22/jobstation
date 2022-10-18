@@ -11,9 +11,23 @@ const createChatMessage = (groupname, owner) => {
     //     const res = await GroupChatMessages.create()
     // } catch (error) {
         
-    // }
+    // } 
 
 
+}
+
+const fetchChatMessage = async (room, user) => {
+    try {
+        const history = await chatMessages.find({});
+        console.log("fecthed")
+        return history;
+
+        // const msgs = history.map((obj) => {user: obj.user, content: obj.content});
+        // console.log(`inserted ${content}`)
+    } catch (error) {
+        console.log("fetch failed")
+        console.error(error);
+    } 
 }
 
 const storeChatMessage = async (room,content,user) => {
@@ -24,12 +38,15 @@ const storeChatMessage = async (room,content,user) => {
             user: user,
             content:content
         });
+        console.log(`inserted ${content}`)
     } catch (error) {
+        console.log("insert failed")
         console.error(error);
-    }
+    } 
 }
 
 module.exports = {
     createChatMessage,
-    storeChatMessage
+    storeChatMessage,
+    fetchChatMessage
 }
