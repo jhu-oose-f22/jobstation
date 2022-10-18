@@ -28,7 +28,6 @@ exports.create = function(req, res) {
 }
 
 exports.viewSingle = async function(req, res) {
-
     try {
         let book = await Post.findSingleById(req.params.id, req.visitorId)
         res.render('single-book-screen', {book: book})

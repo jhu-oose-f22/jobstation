@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const Book = require('../models/Post')
+const Post = require('../models/Post')
 const { book } = require('../router')
 const ObjectID = require('mongodb').ObjectID
 
@@ -68,7 +68,7 @@ exports.home = function(req, res) {
         // console.log(req.params.username)
         // console.log(req.session)
 
-        Book.findAll(req.profileUser._id).then(function(books) {
+        Post.findAll(req.profileUser._id).then(function(books) {
             res.render('lib-dashboard', {
                 books: books,
                 profileUsername: req.profileUser.username,
@@ -117,7 +117,7 @@ exports.ifUserExists = function(req, res, next) {
 
 exports.profileBooksScreen = function(req, res) {
     // ask our post model for posts by a certain user by id
-    Book.findByOwnerId(req.profileUser._id).then(function(books) {
+    Post.findByOwnerId(req.profileUser._id).then(function(books) {
         // console.log("profile id: " + req.profileUser._id)
         console.log("profile books screen")
         console.log(books)

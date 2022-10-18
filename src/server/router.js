@@ -3,6 +3,7 @@ const router = express.Router()
 
 const userController = require('./controllers/userController')
 const postController = require('./controllers/postController')
+const groupController = require('./controllers/groupController');
 
 router.get('/', userController.userHome, userController.home)
 
@@ -22,7 +23,8 @@ router.post('/book/:id/delete', userController.mustBeLoggedIn, postController.de
 router.get('/search', userController.mustBeLoggedIn, postController.viewSearchScreen)
 router.post('/search', userController.mustBeLoggedIn, postController.search)
 
-router.get('/group/:id',userController.mustBeLoggedIn,groupController.joinGroup)
+// group related routes
+router.get('/group/:group-name:username',userController.mustBeLoggedIn,groupController.joinGroup)
 router.post('/create-group',userController.mustBeLoggedIn,groupController.create)
 router.post('group/:id/edit',userController.mustBeLoggedIn,groupController.edit)
 

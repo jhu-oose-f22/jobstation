@@ -18,13 +18,13 @@ User.prototype.validate = function() {
         if (!validator.isEmail(this.data.email)) {
             this.errors.push("not a valid email")
         }
-        if (this.data.username != "" && !validator.isAlphanumeric(this.data.username)) {
+        if (this.data.username !== "" && !validator.isAlphanumeric(this.data.username)) {
             this.errors.push("not a valid username")
         }
-        if (this.data.username == "") {
+        if (this.data.username === "") {
             this.errors.push("empty username. ")
         }
-        if (this.data.password == "") {this.errors.push("empty password")}
+        if (this.data.password === "") {this.errors.push("empty password")}
         if (this.data.password.length > 50) {this.errors.push("maximal length of password is 50")}
         // check if username is taken
         if (this.data.username.length > 2 && this.data.username.length < 31 && validator.isAlphanumeric(this.data.username)) {
