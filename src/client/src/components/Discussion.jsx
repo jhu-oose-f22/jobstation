@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { isLoggedIn, UserContext } from "../context/User";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import Banner from "./Banner";
 
 export default function Discussion() {
     const navigate = useNavigate();
@@ -88,22 +89,21 @@ export default function Discussion() {
     })
 
 
-    return <div className="container py-3 py-lg-5 vh-100 container--narrow">
-        <div className="text-dark">
-            <h1>Discussion</h1>
-        </div>
-        <div>
-            <div className="profile-nav nav nav-tabs pt-2 mb-4">
-                <Link to="#" className="profile-nav-link nav-item nav-link active">Posts</Link>
+    return <div className="vh-100">
+        <Banner className='h-50' pageName={'discussion'} />
+        <div className="container py-3 py-lg-5 container--narrow">
+            <div>
+                <div className="profile-nav nav nav-tabs pt-2 mb-4">
+                    <Link to="#" className="profile-nav-link nav-item nav-link active">Posts</Link>
+                </div>
+
+                <ul className="list-group">
+                    {posts}
+                </ul>
+
             </div>
 
-            <ul className="list-group">
-                {posts}
-            </ul>
 
-        </div>
-
-
-    </div>
+        </div></div>
 
 }

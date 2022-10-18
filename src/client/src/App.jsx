@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageNotFound from "./components/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
+import Group from "./components/Group";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
@@ -27,7 +28,7 @@ function App() {
                         <Route path='/discussion/:postId' element={<Post />} />
 
 
-                        <Route path='/group' />
+                        <Route path='/group' element={<Group />} />
 
                         <Route path='/login' element={<Login />} />
                         <Route path='/logout' element={<Logout />} />

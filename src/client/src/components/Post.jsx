@@ -2,13 +2,15 @@ import { useParams, useLocation, Link } from "react-router-dom";
 
 export default function Post(props) {
     const { postId } = useParams();
+
+    // getState
     const { state } = useLocation();
 
     if (!state || Object.keys(state).length === 0) {
         // TODO Retrieve postId from server
     }
 
-    return <div className="container py-lg-5 py-3 container--narrow">
+    return <div className="container py-lg-5 py-3 container--narrow vh-100">
         <div className='d-flex justify-content-between align-items-baseline'>
             <h1>{state.title}</h1>
             <div className='d-flex flex-row align-content-center justify-content-center'>
