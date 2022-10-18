@@ -31,7 +31,7 @@ io.on('connect', (socket) => {
     // fetch chat history from db and pass to frontend to display
       //   response1.data.map((obj) => ({ text: obj.text, user: obj.user }))
 
-    const msgs = await chatMessageController.fetchChatMessage(user.room, user.name);
+    const msgs = await chatMessageController.fetchChatMessage(user.room);
     const history = msgs.map((obj) => ({text: obj.content, user: obj.user }));
     console.log(history);
     socket.emit('history', history);

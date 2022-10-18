@@ -16,9 +16,9 @@ const createChatMessage = (groupname, owner) => {
 
 }
 
-const fetchChatMessage = async (room, user) => {
+const fetchChatMessage = async (room) => {
     try {
-        const history = await chatMessages.find({});
+        const history = await chatMessages.find({groupname: room});
         console.log("fecthed")
         return history;
 
