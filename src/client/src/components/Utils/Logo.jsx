@@ -1,6 +1,6 @@
 import React from "react";
-import { BRAND } from "../context/Const";
-import img from '../favicon.ico'
+import { BRAND } from "../../context/Const";
+import img from '../../favicon.ico'
 
 
 export default function Logo(props) {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { API_URL } from "../context/Const";
 import { isLoggedIn, UserContext } from "../context/User";
 
@@ -17,12 +18,13 @@ export default function Login(props) {
         let userLogin = {
             id: '123414',
             email: email,
+            avatar: null,
             username: 'wby',
             password: password,
             remember: remember,
         };
         console.log(userLogin);
-        sessionStorage.setItem('userLogin', JSON.stringify(userLogin));
+        localStorage.setItem('userLogin', JSON.stringify(userLogin));
         toggleUser(userLogin);
 
         window.history.go(-1);
@@ -41,10 +43,15 @@ export default function Login(props) {
 
         {/* Has Logged In */}
         {isLoggedIn(user) ?
+            <div className="d-flex flex-column align-items-center m-5 ">
+                <h1 className="">{user.username}, You Have Logged In!</h1>
+                <div className=" d-flex justify-content-between w-75 mt-5">To
+                    <Link to='/discussion' className="text-primary text-decoration-none"> Discussion</Link>
+                    <Link to='/group' className="text-primary text-decoration-none"> Group</Link>
+                    <Link to='/dashboard' className="text-primary text-decoration-none"> Dashboard</Link>
+                </div>
 
-            <h1>You Have Logged In!</h1>
-
-
+            </div>
             :
             // login
             < form className="col-auto form-group mt-4" onSubmit={handleLogin}>

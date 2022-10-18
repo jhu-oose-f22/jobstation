@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { isLoggedIn, UserContext } from "../context/User";
+import { isLoggedIn, UserContext } from "../../context/User";
 import Logo from "./Logo";
 
 export default function Navbar(props) {
@@ -41,11 +41,16 @@ export default function Navbar(props) {
 
                 {/* profile */}
                 {isLoggedIn(user) ?
-                    <div className="d-flex flex-row">
+                    <div className="d-flex flex-row align-items-center justify-content-around">
                         <div className='nav-item d-flex align-items-center me-auto'>
                             <div className='dropdown ms-auto'>
-                                <div className=" nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {user.username}
+                                <div className=" nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div className="d-flex flex-row text-light align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
+                                        <img className="avatar-tiny me-2" width={20}
+                                            title={`${user.username}`}
+                                            src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
+                                        {user.username}
+                                    </div>
                                 </div>
                                 <ul className="dropdown-menu dropdown-menu-start dropdown-menu-lg-end align-items-start" aria-labelledby="navbarDropdown">
                                     <li><Link className="dropdown-item" to="/profile">
@@ -64,7 +69,7 @@ export default function Navbar(props) {
                             </div>
                         </div>
                         {/* notification */}
-                        <div className="nav-item ms-4 me-auto me-lg-3">
+                        <div className="nav-item ms-2 me-auto me-lg-3 bg-light bg-opacity-10 py-1 px-2 rounded-2">
                             <Link className="nav-link " to="/notifications">
                                 <div className='fa-layers fa-lg'>
                                     <i className="fa-regular fa-bell"></i>

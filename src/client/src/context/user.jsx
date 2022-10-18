@@ -11,8 +11,8 @@ export const UserContext = React.createContext(defaultUser)
 
 export default function UserContextProvider(props) {
 
-    const [userLogin, setUserLogin] = useState(JSON.parse(sessionStorage.getItem('userLogin')));
-    const userStorage = JSON.parse(sessionStorage.getItem('userLogin'));
+    const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem('userLogin')));
+    const userStorage = JSON.parse(localStorage.getItem('userLogin'));
     // TODO get user status.
     useEffect(() => {
         if (isLoggedIn(userStorage) && !isLoggedIn(userLogin)) setUserLogin(userStorage);

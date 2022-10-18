@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PageNotFound from "./components/404";
+import PageNotFound from "./components/Utils/404";
 import Discussion from "./components/Discussion";
-import Footer from "./components/Footer";
+import Footer from "./components/Utils/Footer";
 import Group from "./components/Group";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Utils/Navbar";
 import Post from "./components/Post";
-import ToDo from "./components/ToDo";
+import ToDo from "./components/Utils/ToDo";
 import UserContextProvider from "./context/User";
 
 
@@ -20,6 +20,7 @@ function App() {
         <React.StrictMode>
             <UserContextProvider>
                 <BrowserRouter>
+
                     <Navbar />
                     <Routes>
                         <Route index path='/' element={<MainPage />} />
@@ -44,6 +45,7 @@ function App() {
 
                     </Routes>
                     <Footer />
+
                 </BrowserRouter>
             </UserContextProvider>
         </React.StrictMode>

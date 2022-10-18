@@ -1,5 +1,5 @@
 import React from "react";
-import { BRAND } from "../context/Const"
+import { BRAND } from "../../context/Const"
 import Logo from "./Logo";
 
 function Footer() {

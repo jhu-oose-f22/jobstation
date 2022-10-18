@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { isLoggedIn, UserContext } from "../context/User";
-import Banner from "./Banner";
+import GroupList from "./Group/GroupList";
+import Banner from "./Utils/Banner";
 
 export default function Group(props) {
     const { user } = useContext(UserContext);
@@ -10,18 +11,10 @@ export default function Group(props) {
         return <Navigate to='/login' />;
     }
 
-    const groupsResponds = [
-        {
-            groupId: '23',
-            groupname: 'Meta OA',
-            groupMember: '213123',
-            groupAvatar: ''
-        }
-    ]
 
     return <div className="vh-100">
         <Banner pageName='group' />
-
+        <GroupList listName='all' />
     </div>
 
 }
