@@ -4,6 +4,8 @@ import PageNotFound from "./components/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
+import Chat from "./components/GroupChat/Chat/Chat";
+import Join from "./components/GroupChat/Join/Join"
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
@@ -25,11 +27,17 @@ function App() {
                     <Routes>
                         <Route index path='/' element={<MainPage />} />
 
-                        <Route path='/discussion' element={<Discussion />} />
-                        <Route path='/discussion/:postId' element={<Post />} />
+                        <Route path='/discussion' >
+                            <Route index element={<Discussion />} />
+                            <Route path='/discussion/:postId' element={<Post />} />
+                        </Route>
 
 
-                        <Route path='/group' element={<Group />} />
+                        <Route path='/group'>
+                            <Route index element={<Group />} />
+                            <Route path='/group/join' element={<Join />} />
+                            <Route path='/group/chat' element={<Chat />} />
+                        </Route>
 
                         <Route path='/login' element={<Login />} />
                         <Route path='/logout' element={<Logout />} />
