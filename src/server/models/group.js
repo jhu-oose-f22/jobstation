@@ -8,10 +8,12 @@ const groupSchema = mongoose.Schema({
         default: []
     },
     tags: [String],
-    // memberCount: {
-    //     type: Number,
-    //     default: 1
-    // },
+    intro: String,
+    avatar: String,
+    memberCount: {
+        type: Number,
+        default: 1
+    },
     createdAt: {
         type: Date,
         default: new Date()
@@ -19,7 +21,7 @@ const groupSchema = mongoose.Schema({
 });
 
 class GroupClass{
-    static async createGroup({groupName, owner, member, tags}){
+    static async createGroup({groupName, owner, member, tags, intro, avatar}){
         if (groupName && owner && tags){
             // const memberCount = member.lenth;
             const newGroup = await this.create({
@@ -27,6 +29,8 @@ class GroupClass{
                 owner,
                 member,
                 tags,
+                intro,
+                avatar,
                 // memberCount,
             });
             return newGroup;
