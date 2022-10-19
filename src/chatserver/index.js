@@ -11,7 +11,13 @@ const chatMessageController = require('./controller/chatMessageController')
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = new socketio.Server(server,
+  {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  });
 
 const dotenv = require("dotenv")
 dotenv.config()
@@ -21,11 +27,11 @@ app.use(router);
 connectDB();
 
 io.on('connect', (socket) => {
+  // console.log(socket);
   socket.on('join', async ({ name, room }, callback) => {
     console.log(name, room);
     // this should be add to the group database
     const { error, user } = addUser({ id: socket.id, name, room });
-
     if (error) return callback(error);
 
     socket.join(user.room);

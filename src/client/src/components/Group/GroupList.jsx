@@ -31,7 +31,7 @@ export default function GroupList({ listName }) {
             groupIntro: 'This is a group for preparing for Amazon Vo'
         }, {
             groupId: '3',
-            groupname: 'Amazon VO',
+            groupname: 'Tiktok',
             groupMemberCount: 20,
             groupAvatar: null,
             groupIntro: 'This is a group for preparing for Amazon Vo'

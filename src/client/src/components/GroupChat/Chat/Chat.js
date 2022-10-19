@@ -8,14 +8,15 @@ import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar";
 import Input from "../Input/Input";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const ENDPOINT = "http://localhost:4000";
+const ENDPOINT = "localhost:4000";
 
 // const ENDPOINT = "http://localhost:3000";
 
 const Chat = (props) => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [users, setUsers] = useState("");
@@ -30,17 +31,21 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(io(ENDPOINT));
 
+
+
+
   useEffect(() => {
+    if (!state?.room || !state?.name) navigate('../');
     setRoom(state.room);
     setName(state.name);
-    console.log(socket);
+    socket.on('connect', (e) => { console.log(e) });
     socket.emit("join", { name, room }, (error) => {
       console.log(name, room);
       if (error) {
         alert(error);
       }
     });
-  }, [state.name, state.room, name, room, socket, setRoom, setName]);
+  }, [state, name, room, socket, setRoom, setName, navigate]);
 
   useEffect(() => {
     socket.on("message", (message) => {
@@ -72,6 +77,7 @@ const Chat = (props) => {
       // socket.emit('connect');
     }
   };
+
   // console.log('rendered');
   return (
     <div className="vh-100 d-flex align-items-center justify-content-center p-5 bg-img "
