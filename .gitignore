@@ -4,7 +4,9 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
-
+src/server/node_modules
+src/client/node_modules
+src/chatserver/node_modules
 # Local History for Visual Studio Code
 .history/
 
