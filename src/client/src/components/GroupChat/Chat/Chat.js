@@ -12,73 +12,47 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const ENDPOINT = "localhost:4000";
 
-// const ENDPOINT = "http://localhost:3000";
 
 const Chat = (props) => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+  const [name, setName] = useState(state.name);
+  const [room, setRoom] = useState(state.room);
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
-  // const { data, fetchError, isLoading } = useAxiosFetch(
-  //   "http://localhost:3500/messages"
-  // );
-  // const response1 = axios.get("http://localhost:3500/messages");
-
-  // npx json-server -p 3500 -w data/db.json
-
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(io(ENDPOINT));
-
-
-
-
   useEffect(() => {
     if (!state?.room || !state?.name) navigate('../');
     setRoom(state.room);
     setName(state.name);
     socket.on('connect', (e) => { console.log(e) });
     socket.emit("join", { name, room }, (error) => {
-      console.log(name, room);
+      console.log('emit');
       if (error) {
         console.log(error);
       }
     });
-
-    return () => {
-      // socket.close();
-    }
   }, [state, name, room, socket, setRoom, setName, navigate]);
 
   useEffect(() => {
     socket.on("message", (message) => {
-      // const response1 = await axios.get(dbURL || "http://localhost:3500/messages");
-      // setMessages(
-      //   response1.data.map((obj) => ({ text: obj.text, user: obj.user }))
-      // );
       setMessages(messages => [...messages, message]);
     });
 
     socket.on("history", history => {
       setMessages(history);
-
     })
 
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [message, socket, messages]);
+  }, [message, socket]);
 
   const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
-      // const response = await api.post("/messages", {
-      //   text: message,
-      //   user: name,
-      // });
       socket.emit("sendMessage", message, () => setMessage(""));
-      // socket.emit('connect');
     }
   };
 
