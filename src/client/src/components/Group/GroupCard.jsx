@@ -14,7 +14,7 @@ export default function GroupCard({ group }) {
 
     // TODO Modal
 
-    return <div className="card m-2 btn shadow-sm d-flex flex-row p-0"
+    return <div className="card btn shadow-sm d-flex flex-row p-0"
         style={
             {
                 width: 270, height: 200,
@@ -33,7 +33,7 @@ export default function GroupCard({ group }) {
                 }}
             >
                 <div className=" d-flex flex-column align-items-center justify-content-center h-100 m-2">
-                    <img src={group.avatar || `https://ui-avatars.com/api/?name=${group.groupname}&background=random&bold=true`}
+                    <img src={(group.groupAvatar !== '' && group.groupAvatar) || `https://ui-avatars.com/api/?name=${group.groupname}&background=random&bold=true`}
                         className="img-fluid rounded-3 mb-3" alt={group.groupname} />
                     <strong className="card-title">{group.groupname}</strong>
 

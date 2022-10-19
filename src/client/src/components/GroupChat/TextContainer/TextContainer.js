@@ -7,17 +7,7 @@ import "./TextContainer.css";
 // import "../Chat/Chat.css";
 // :hover {}
 const TextContainer = ({ users }) => {
-  if (!users || users.length === 0) {
-    users = [
-      { name: 'bot' },
-      { name: 'lskdfj' },
-    ]
-    users = users.concat(users);
-    users = users.concat(users);
-    users = users.concat(users);
-    users = users.concat(users);
 
-  }
   return (
     <div className="bg-secondary d-flex flex-column justify-content-between align-items-between h-100 col-2 bg-opacity-50  border border-light border-opacity-50 " style={
       {
@@ -26,12 +16,18 @@ const TextContainer = ({ users }) => {
     }>
       {users ? (
         <div className="h-100">
-          <div className="h-auto text-white text-center bg-primary bg-opacity-25 text-dark py-3 px-1 border border-light border-opacity-50">
-            Members
+          <div className="text-white text-wrap text-center  bg-primary bg-opacity-25 py-3 px-1"
+            style={
+              {
+                borderRadius: '0 18px 0 0',
+              }
+            }
+          >
+          <h3>Members</h3>  
           </div>
           <div className="my-2" style={
             {
-              height:"90%",
+              height: "90%",
               overflow: 'auto'
             }
           }>

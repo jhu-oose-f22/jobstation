@@ -19,7 +19,7 @@ const InfoBar = ({ room }) => {
           <h3 className='my-auto ms-3'>{room}</h3>
         </div>
       </div>
-      <Link className='btn btn-outline-light  ms-auto me-2' to="../"><CloseIcon /></Link>
+      <Link className='btn btn-close btn-close-white  ms-auto me-2' to="../"></Link>
     </div>
   )
 };

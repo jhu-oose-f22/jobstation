@@ -15,11 +15,12 @@ export default function Login(props) {
 
     const handleLogin = (e) => {
         e.preventDefault();
+        if (email === '' || password === '') return;
         let userLogin = {
             id: '123414',
             email: email,
             avatar: null,
-            username: 'wby',
+            username: email.slice(0, email.indexOf('@')),
             password: password,
             remember: remember,
         };
@@ -58,7 +59,7 @@ export default function Login(props) {
                 <h1>Sign In/Up right now!</h1>
                 <div className="d-flex flex-column w-100 form-outline mt-4">
                     <label className="form-label">Email</label>
-                    <input className=" form-control" type='email'
+                    <input className=" form-control " type='email' required={true}
                         placeholder='enter email'
                         aria-describedby="emailHelp"
                         value={email}
@@ -66,7 +67,7 @@ export default function Login(props) {
                 </div>
                 <div className="d-flex flex-column w-100 form-outline my-4">
                     <label className="form-label">Password</label>
-                    <input className=" form-control" type='password' placeholder='password' value={password} onChange={e => setPassword(e.target.value)} />
+                    <input className=" form-control" type='password' placeholder='password' required={true} value={password} onChange={e => setPassword(e.target.value)} />
                 </div>
                 <div className="form-group form-check">
                     <input type="checkbox" className="form-check-input" id="rememberMe"
