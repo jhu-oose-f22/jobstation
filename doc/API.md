@@ -120,6 +120,47 @@ Error:
 
 404: No post with id
 
+### 1.5 DELETE /discuss/post/:id
+
+respose:
+
+```json
+{
+    "message": "Post deleted successfully."
+}
+```
+
+### 1.6 PATCH discuss/update/:id
+
+Request:
+
+```json
+{
+    "title": "1post",
+    "message": "postman",
+    "creator": "Tom",
+    "tags": ["google", "meta", "update"]
+}
+```
+
+Response:
+
+```json
+{
+    "creator": "Tom",
+    "title": "1post",
+    "message": "postman",
+    "tags": [
+        "google",
+        "meta",
+        "update"
+    ],
+    "_id": "635058bf8dc3b7af48409eed"
+}
+```
+
+
+
 ## 2 group
 
 ### 2.1 POST /group/create/ 
