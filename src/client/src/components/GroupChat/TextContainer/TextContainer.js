@@ -19,25 +19,25 @@ const TextContainer = ({ users }) => {
 
   }
   return (
-    <div className="bg-secondary h-100 col-2 bg-opacity-50  border border-light border-opacity-50 " style={
+    <div className="bg-secondary d-flex flex-column justify-content-between align-items-between h-100 col-2 bg-opacity-50  border border-light border-opacity-50 " style={
       {
         borderRadius: '0 18px 18px 0',
       }
     }>
       {users ? (
         <div className="h-100">
-          <div className="text-white d-flex flex-row justify-content-center align-items-center bg-primary bg-opacity-25 text-dark py-3 px-1 border border-light border-opacity-50">
+          <div className="h-auto text-white text-center bg-primary bg-opacity-25 text-dark py-3 px-1 border border-light border-opacity-50">
             Members
           </div>
-          <div className="" style={
+          <div className="my-2" style={
             {
-              height: "100%",
+              height:"90%",
               overflow: 'auto'
             }
           }>
             <ul className="list-group p-2 text-white">
-              {users.map(({ name }) => (
-                <div key={name} className="my-1">
+              {users.map(({ name }, idx) => (
+                <div key={idx} className="my-1">
                   <OnlineIcon />
                   <span className="ms-1">{name}</span>
                 </div>
@@ -46,7 +46,6 @@ const TextContainer = ({ users }) => {
           </div>
         </div>
       ) : null}
-      {/* </div> */}
     </div>
   );
 }

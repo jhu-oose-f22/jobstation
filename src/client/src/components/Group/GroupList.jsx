@@ -44,7 +44,7 @@ export default function GroupList({ listName }) {
         }
     ].map(group => {
         return <li className="list-group" key={group.groupId}>
-            <Link to='./chat' state={{
+            <Link className="text-decoration-none" to='./chat' state={{
                 name: user.username,
                 room: group.groupname
             }} >
