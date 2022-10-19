@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 // import axios from "axios";
 
 // import api from "../api/posts";
 import TextContainer from "../TextContainer/TextContainer";
 import Messages from "../Messages/Messages";
-import InfoBar from "../InfoBar/InfoBar";
+import InfoBar from "../InfoBar";
 import Input from "../Input/Input";
 
-import "./Chat.css";
 import { useLocation } from "react-router-dom";
 
 const ENDPOINT = "http://localhost:4000";
 
 // const ENDPOINT = "http://localhost:3000";
-
-let socket;
 
 const Chat = (props) => {
   const { state } = useLocation();
@@ -31,19 +28,19 @@ const Chat = (props) => {
   // npx json-server -p 3500 -w data/db.json
 
   const [messages, setMessages] = useState([]);
-
+  const [socket, setSocket] = useState(io(ENDPOINT));
 
   useEffect(() => {
     setRoom(state.room);
     setName(state.name);
-    socket = io(ENDPOINT);
-
+    console.log(socket);
     socket.emit("join", { name, room }, (error) => {
+      console.log(name, room);
       if (error) {
         alert(error);
       }
     });
-  }, [state.name, state.room, name, room]);
+  }, [state.name, state.room, name, room, socket, setRoom, setName]);
 
   useEffect(() => {
     socket.on("message", (message) => {
@@ -62,7 +59,7 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, []);
+  }, [message, socket]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -77,8 +74,13 @@ const Chat = (props) => {
   };
   // console.log('rendered');
   return (
-    <div className="outerContainer">
-      <div className="container">
+    <div className="vh-100 d-flex align-items-center justify-content-center p-5 bg-img "
+      style={{
+        backgroundImage: `url(https://source.unsplash.com/random/?${room})`,
+        backgroundSize: 'cover',
+      }}
+    >
+      <div className="col-8 d-flex flex-column align-items-between justify-content-center h-100 ">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
         <Input

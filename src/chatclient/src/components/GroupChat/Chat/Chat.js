@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import queryString from "query-string";
 import io from "socket.io-client";
 // import axios from "axios";
 
@@ -16,8 +17,7 @@ const ENDPOINT = "http://localhost:4000";
 
 let socket;
 
-const Chat = (props) => {
-  const { location } = props;
+const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [users, setUsers] = useState("");
@@ -31,10 +31,14 @@ const Chat = (props) => {
 
   const [messages, setMessages] = useState([]);
 
+  const dbURL = null;
+
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
+    console.log(socket);
+    console.log(name, room);
 
     setRoom(room);
     setName(name);
@@ -43,7 +47,7 @@ const Chat = (props) => {
         alert(error);
       }
     });
-  }, [ENDPOINT, location.search]);
+  }, [location.search]);
 
   useEffect(() => {
     socket.on("message", (message) => {

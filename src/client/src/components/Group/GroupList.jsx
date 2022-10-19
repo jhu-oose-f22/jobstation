@@ -1,7 +1,11 @@
-import { Navigate, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, Navigate, NavLink } from "react-router-dom";
+import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
 
 export default function GroupList({ listName }) {
+
+    const { user } = useContext(UserContext);
 
     let groups, groupTitle;
     // TODO retrieve groups
@@ -40,7 +44,12 @@ export default function GroupList({ listName }) {
         }
     ].map(group => {
         return <li className="list-group" key={group.groupId}>
-            <GroupCard group={group} />
+            <Link to='./chat' state={{
+                name: user.username,
+                room: group.groupname
+            }} >
+                <GroupCard group={group} />
+            </Link>
         </li>
     })
     switch (listName) {
