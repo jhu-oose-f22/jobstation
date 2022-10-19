@@ -4,7 +4,7 @@ export default function Banner({ pageName = '', imgName = pageName }) {
     return <header>
         <div className='bg-image'
             style={{
-                backgroundImage: `url(./imgs/${imgName}.jpg)`,
+                backgroundImage: `url(/imgs/${imgName}.jpg)`,
                 height: '10%',
                 backgroundSize: '100%',
                 backgroundPosition: '25% 10%',

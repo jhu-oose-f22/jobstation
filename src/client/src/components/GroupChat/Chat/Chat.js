@@ -42,9 +42,13 @@ const Chat = (props) => {
     socket.emit("join", { name, room }, (error) => {
       console.log(name, room);
       if (error) {
-        alert(error);
+        console.log(error);
       }
     });
+
+    return () => {
+      // socket.close();
+    }
   }, [state, name, room, socket, setRoom, setName, navigate]);
 
   useEffect(() => {
@@ -64,7 +68,7 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [message, socket]);
+  }, [message, socket, messages]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -78,11 +82,10 @@ const Chat = (props) => {
     }
   };
 
-  // console.log('rendered');
   return (
     <div className="vh-100 d-flex align-items-center justify-content-center p-5 bg-img "
       style={{
-        backgroundImage: `url(https://source.unsplash.com/random/?${room})`,
+        backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',
       }}
     >

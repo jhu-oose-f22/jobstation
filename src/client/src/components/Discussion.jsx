@@ -1,21 +1,28 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { isLoggedIn, UserContext } from "../context/User";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Banner from "./Utils/Banner";
+import { getAllDiscussions } from "../api/discussion";
 
 export default function Discussion() {
-    const navigate = useNavigate();
     const { user } = useContext(UserContext);
+    const [discussion, setDiscussion] = useState([]);
+
+    useEffect(() => {
+        getAllDiscussions((res) => setDiscussion(res));
+        console.log(discussion);
+    }, [setDiscussion])
 
 
     if (!isLoggedIn(user)) {
         return <Navigate to='/login' />;
     }
 
+
     // TODO get all discussions
 
     // This is just a template
-    const responds = [
+    let responds = [
         {
             id: '12u',
             title: "OA",
@@ -75,7 +82,7 @@ export default function Discussion() {
                 <div className="d-flex flex-row align-items-center my-2 justify-content-start">
                     <img className="avatar-tiny me-3" width={30}
                         title={`${res.user.username}`}
-                        src={res.user.avatar || `https://ui-avatars.com/api/?name=${res.user.username}&background=random&bold=true&rounded=true`} alt={`user ${res.user.username}`} />
+                        src={(res.user.avatar !== '' && res.user.avatar) || `https://ui-avatars.com/api/?name=${res.user.username}&background=random&bold=true&rounded=true`} alt={`user ${res.user.username}`} />
                     <strong>{res.title}</strong>
                     <div className='text-muted ms-auto'>last updated {`${res.updatedTime.toLocaleTimeString()}  ${res.updatedTime.toLocaleDateString()}`}</div>
                 </div>

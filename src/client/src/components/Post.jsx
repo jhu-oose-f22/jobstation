@@ -31,7 +31,7 @@ export default function Post(props) {
             <div className="d-flex flex-row align-items-center my-2 justify-content-start">
                 <img className="avatar-tiny me-3" width={30}
                     title={`${state.user.username}`}
-                    src={state.user.avatar || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />
+                    src={(state.user.avatar !== '' && state.user.avatar) || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />
                 <strong>{state.user.username}</strong>
                 <div className='text-muted ms-auto'>last updated {`${state.updatedTime.toLocaleTimeString()}  ${state.updatedTime.toLocaleDateString()}`}</div>
             </div>
