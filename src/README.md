@@ -1,12 +1,10 @@
 
-## run locally
-1. goto backend folder
-   
-    `cd backend`
-2. dependency
-   
-    `npm install`
+##  run chat server
 
-3. run command
+cd chatserver
+npm i && npm start
 
-    `npm run watch`
+## run chat client
+cd client
+npm i && npm start
+
