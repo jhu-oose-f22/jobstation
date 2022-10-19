@@ -120,4 +120,57 @@ Error:
 
 404: No post with id
 
-### 
+## 2 group
+
+### 2.1 POST /group/create/ 
+
+create group
+
+Request:
+
+```json
+body:
+{
+    "groupName": "jobstation3",
+    "owner": "1010011",
+    "member": ["1010011", "00002", "00003"],
+    "tags": ["google", "meta", "oose"]
+}
+```
+
+Response:
+
+```json
+{
+    "groupName": "jobstation3",
+    "owner": "1010011",
+    "member": [
+        "1010011",
+        "00002",
+        "00003"
+    ],
+    "tags": [
+        "google",
+        "meta",
+        "oose"
+    ],
+    "createdAt": "2022-10-19T02:30:20.982Z",
+    "_id": "634f631b96e47c4fe8e87ae3",
+    "__v": 0
+}
+```
+
+
+
+### 2.2 GET /group/:id
+
+Request sample:
+
+`localhost:5001/group/634f51868707301d863e1584`
+
+### 2.2 PATCH /group/:groupId/user/:userId
+
+Request sample:
+
+`localhost:5001/group/634f51868707301d863e1584/user/1111111111112`
+

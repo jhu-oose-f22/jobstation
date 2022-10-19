@@ -4,6 +4,7 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+.VSCodeCounter/*
 src/server/node_modules
 src/client/node_modules
 src/chatserver/node_modules
