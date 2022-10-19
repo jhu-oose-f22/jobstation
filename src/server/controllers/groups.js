@@ -13,8 +13,8 @@ export const getGroup = async (req, res) => {
 }
 
 export const createGroup = async (req, res) => {
-    const {groupName, owner, member, tags} = req.body;
-    const newGroup = await Group.createGroup({groupName, owner, member, tags});
+    const {groupName, owner, member, tags, intro, avatar} = req.body;
+    const newGroup = await Group.createGroup({groupName, owner, member, tags, intro, avatar});
     try {
         await newGroup.save();
         res.status(201).json(newGroup);
