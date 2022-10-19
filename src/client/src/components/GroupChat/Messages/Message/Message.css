@@ -5,6 +5,7 @@
   color: white;
   display: inline-block;
   max-width: 80%;
+
 }
 
 .messageText {
@@ -13,6 +14,7 @@
   float: left;
   font-size: 1.1em;
   word-wrap: break-word;
+  margin: auto;
 }
 
 .messageText img {

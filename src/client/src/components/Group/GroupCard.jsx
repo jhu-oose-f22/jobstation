@@ -13,8 +13,8 @@ export default function GroupCard({ group }) {
      */
 
     // TODO Modal
-    
-    return <div className="card m-2 btn shadow-sm d-flex flex-row p-0 "
+
+    return <div className="card m-2 btn shadow-sm d-flex flex-row p-0"
         style={
             {
                 width: 270, height: 200,
@@ -24,10 +24,10 @@ export default function GroupCard({ group }) {
         }
     >
 
-        <div className=" mask d-flex flex-row g-0  p-0 h-100"
+        <div className=" mask d-flex flex-row g-0  p-0 h-100 "
 
         >
-            <div className=" col-4 p-1 text-dark h-100"
+            <div className=" col-4 p-1 text-dark h-100 "
                 style={{
                     backgroundColor: "rgba(69,69,69, 0.1)",
                 }}
@@ -40,7 +40,7 @@ export default function GroupCard({ group }) {
                 </div>
             </div>
 
-            <div className=" col-8 text-start flex-column  justify-md-content-center d-flex h-100">
+            <div className=" col-8 text-start flex-column    justify-md-content-center d-flex h-100">
                 {/* <img className="" src={
                     `https://source.unsplash.com/random/170x130/?${group.groupname}`
                 } alt='' /> */}

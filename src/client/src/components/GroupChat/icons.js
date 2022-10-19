@@ -1,6 +1,8 @@
 import React from 'react';
 
 
-export const onlineIcon = () => { return <i class="fa-solid fa-circle"></i>; }
+export const OnlineIcon = () => {
+    return <i className="fa-solid fa-circle fa-sm" color='lightgreen'></i>;
+}
 
-export const closeIcon = () => { return <i class="fa-solid fa-xmark"></i>; }
+export const CloseIcon = () => { return <i className="fa-solid fa-xmark" color='red'></i>; }

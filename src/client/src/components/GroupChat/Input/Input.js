@@ -3,7 +3,7 @@ import React from 'react';
 import './Input.css';
 
 const Input = ({ setMessage, sendMessage, message }) => (
-  <form className="form">
+  <form className="form d-flex justify-content-between">
     <input
       className="input"
       type="text"
@@ -12,7 +12,7 @@ const Input = ({ setMessage, sendMessage, message }) => (
       onChange={({ target: { value } }) => setMessage(value)}
       onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
     />
-    <button className="sendButton" onClick={e => sendMessage(e)}>Send</button>
+    <button className="btn btn-primary px-3 rounded-0" onClick={e => sendMessage(e)}>Send</button>
   </form>
 )
 
