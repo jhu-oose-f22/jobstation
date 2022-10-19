@@ -1,0 +1,71 @@
+
+
+.userList {
+  color: black;
+  /* display: grid; */
+    /* grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2em;
+    max-width: 1200px; */
+    /* margin: auto; */
+    padding: 5px;
+    display: table-column;
+    border: 1px solid lightgrey;
+    margin-left: 50px;
+
+
+}
+
+.membersBar {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  color:white;
+  /* position:relative; */
+  border-radius: 0 18px 0 0;
+  /* justify-content: space-between; */
+  background: #284577;
+  /* border-radius: 18px 18px 0 0; */
+  height: 60px;
+  width: 100%;
+}
+
+.memText {
+  color: white;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgb(186, 186, 198);
+  border-radius: 0 21px 18px 0;
+  height: 100%;
+  width: 10%;
+  /* border-style:solid; */
+}
+
+.activeContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50%;
+}
+
+.activeItem {
+  display: flex;
+  align-items: center;
+}
+
+.activeContainer img {
+  padding-left: 10px;
+}
+
+.textContainer h1 {
+  margin-bottom: 1px;
+}
+
+@media (min-width: 320px) and (max-width: 1200px) {
+  .textContainer {
+    display: none;
+  }
+}
