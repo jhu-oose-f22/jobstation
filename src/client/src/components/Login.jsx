@@ -43,12 +43,12 @@ export default function Login(props) {
 
         {/* Has Logged In */}
         {isLoggedIn(user) ?
-            <div className="d-flex flex-column align-items-center m-5 ">
+            <div className="d-flex flex-column align-items-center m-5 btn-group">
                 <h1 className="">{user.username}, You Have Logged In!</h1>
-                <div className=" d-flex justify-content-between w-75 mt-5">To
-                    <Link to='/discussion' className="text-primary text-decoration-none"> Discussion</Link>
-                    <Link to='/group' className="text-primary text-decoration-none"> Group</Link>
-                    <Link to='/dashboard' className="text-primary text-decoration-none"> Dashboard</Link>
+                <div className=" d-flex justify-content-between w-75 mt-5 align-items-center">To
+                    <Link to='/discussion' className="btn btn-outline-success text-decoration-none"> Discussion</Link>
+                    <Link to='/group' className="btn btn-outline-danger text-decoration-none"> Group</Link>
+                    <Link to='/dashboard' className="btn btn-outline-primary text-decoration-none"> Dashboard</Link>
                 </div>
 
             </div>

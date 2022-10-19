@@ -15,8 +15,8 @@ export default function Group(props) {
     return <div className="">
         <Banner pageName='group' />
         <div className="accordion">
-            <GroupList listName='recommended' />
             <GroupList listName='join' />
+            <GroupList listName='recommended' />
             <GroupList listName='all' />
         </div>
         

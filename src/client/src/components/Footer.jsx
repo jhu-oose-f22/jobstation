@@ -1,6 +1,6 @@
 import React from "react";
-import { BRAND } from "../../context/Const"
-import Logo from "./Logo";
+import { BRAND } from "../context/Const"
+import Logo from "./Utils/Logo";
 
 function Footer() {
 

@@ -5,6 +5,7 @@ export default function GroupList({ listName }) {
 
     let groups, groupTitle;
     // TODO retrieve groups
+    // TODO throttle all groups
     groups = [
         {
             groupId: '23',
@@ -13,25 +14,25 @@ export default function GroupList({ listName }) {
             groupAvatar: null,
             groupIntro: 'This is a group for practicing Meta OA on Oct.1\nThis is a group for practicing Meta OA on Oct.\nThis is a group for practicing Meta OA on Oct.'
         }, {
-            groupId: '23',
+            groupId: '1',
             groupname: 'System Design',
             groupMemberCount: 1024,
             groupAvatar: null,
             groupIntro: 'This is a group for All System Design'
         }, {
-            groupId: '23',
+            groupId: '2',
             groupname: 'Amazon VO',
             groupMemberCount: 20,
             groupAvatar: null,
             groupIntro: 'This is a group for preparing for Amazon Vo'
         }, {
-            groupId: '23',
+            groupId: '3',
             groupname: 'Amazon VO',
             groupMemberCount: 20,
             groupAvatar: null,
             groupIntro: 'This is a group for preparing for Amazon Vo'
         }, {
-            groupId: '23',
+            groupId: '4',
             groupname: 'Amazon VO',
             groupMemberCount: 20,
             groupAvatar: null,

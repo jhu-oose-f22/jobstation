@@ -11,7 +11,10 @@ export default function GroupCard({ group }) {
             }
      * 
      */
-    return <div className="card m-2 btn shadow d-flex flex-row p-0 "
+
+    // TODO Modal
+    
+    return <div className="card m-2 btn shadow-sm d-flex flex-row p-0 "
         style={
             {
                 width: 270, height: 200,

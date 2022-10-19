@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { isLoggedIn, UserContext } from "../../context/User";
-import Logo from "./Logo";
+import { isLoggedIn, UserContext } from "../context/User";
+import Logo from "./Utils/Logo";
 
 export default function Navbar(props) {
     const pages = [
@@ -43,7 +43,7 @@ export default function Navbar(props) {
                         <div className='nav-item d-flex align-items-center me-auto'>
                             <div className='dropdown ms-auto'>
                                 <div className=" nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div className="d-flex flex-row text-light align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
+                                    <div className="d-flex flex-row text-info align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
                                         <img className="avatar-tiny me-2" width={20}
                                             title={`${user.username}`}
                                             src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
@@ -78,7 +78,8 @@ export default function Navbar(props) {
                     </div>
 
                     :
-                    <Link className='nav-link' to="/login">
+                    <Link className='btn  rounded-3 px-2 py-1 bg-light bg-opacity-10 nav-link me-2 p-2 text-info' to="/login">
+                        <i className="fa-regular fa-face-smile me-2"></i>
                         Login
                     </Link>
                 }
