@@ -93,15 +93,25 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
-### Install prerequisites and run locally
+### Install prerequisites and run locally  
 
+- start chat server
 ```bash
-cd src/backend
-npm install
-npm run watch
+cd src/chatserver
+npm i && npm start
+```
+- frontend
+```bash
+cd src/client
+npm i && npm start
+```
+- backend
+```bash
+cd src/server
+npm i && npm start
 ```
 
-The server would be running on http://localhost:3000/
+- Go to http://localhost:3000/
 
 
 <!-- ### Deployment -->
@@ -110,8 +120,8 @@ The server would be running on http://localhost:3000/
 <!-- USAGE EXAMPLES -->
 ## Usage/Functionality Description
 
-For iteration1, you can CRUD your job posts!
-
+For iteration2,
+1.  you can CRUD your job posts
 - Sign up,  log in, sign out
   -  **sign up**: enter valid username, email, and password to sign up
   - **sign in**: sign in using username and password
@@ -122,18 +132,22 @@ For iteration1, you can CRUD your job posts!
   - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can only view the post.
   -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
 
+2. group live chat
+- View existing groups
+- join a group and chat with group members
+
 <!-- ROADMAP -->
 ## Roadmap
 
 - [x] Add SRS
 
 - [ ] Add Group Chat
-  - [ ] Backend
-  - [ ] Frontend
+  - [x] Backend
+  - [x] Frontend
 
 - [ ] Add Job Forum
-  - [ ] Refactor/Refine/Rewrite CRUD of Iteration 1
-  - [ ] Rewrite frontend using React
+  - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
+  - [x] Rewrite frontend using React
   - [ ] Add Recommendation System
 
 <!-- - [ ] Add Job Board
