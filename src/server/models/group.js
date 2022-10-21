@@ -18,7 +18,7 @@ const groupSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-});
+}, ['']);
 
 class GroupClass{
     static async createGroup({groupName, owner, member, tags, intro, avatar}){

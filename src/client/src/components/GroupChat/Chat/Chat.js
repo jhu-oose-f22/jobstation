@@ -37,7 +37,7 @@ const Chat = (props) => {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      setMessages(messages => [...messages, message]);
+      setMessages([...messages, message]);
     });
 
     socket.on("history", history => {
@@ -47,7 +47,7 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [message, socket]);
+  }, [socket, messages]);
 
   const sendMessage = (event) => {
     event.preventDefault();

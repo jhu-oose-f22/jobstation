@@ -66,6 +66,7 @@ io.on('connect', (socket) => {
 
     // console.log(user.room);
     console.log('sending------------')
+    
     io.to(user.room).emit('message', { user: user.name, text: message });
 
     chatMessageController.storeChatMessage(user.room, message, user.name);
