@@ -20,28 +20,37 @@ export default function Navbar(props) {
     const { user } = useContext(UserContext);
 
     return (
-        <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light'>
-            <div className='container-fluid align-items-center'>
+        <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light'
+            style={
+                {
+                    zIndex: "100",
+                    height: "5vh"
+                }
+            }
+        >
+            <div className='container-fluid bg-dark w-100'>
                 <div className='navbar-brand'>
                     <Logo />
                 </div>
 
                 {/* pages */}
                 <div className="collapse navbar-collapse"
+                    style={{
+
+                    }}
 
                     id='navbarSupportedContent'>
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
+                    <ul className="navbar-nav me-auto ">
                         {pages}
                     </ul>
                 </div>
 
 
-
                 {/* profile */}
                 {isLoggedIn(user) ?
-                    <div className="d-flex flex-row align-items-center justify-content-around">
-                        <div className='nav-item d-flex align-items-center me-auto'>
-                            <div className='dropdown ms-auto'>
+                    <div className="d-flex flex-row align-items-center justify-content-around  ms-auto">
+                        <div className='nav-item d-flex align-items-center'>
+                            <div className='dropdown'>
                                 <div className=" nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div className="d-flex flex-row text-info align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
                                         <img className="avatar-tiny me-2" width={20}
@@ -93,7 +102,6 @@ export default function Navbar(props) {
 
 
             </div>
-
         </nav >
     )
 }

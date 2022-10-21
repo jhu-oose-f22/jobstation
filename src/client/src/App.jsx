@@ -4,7 +4,7 @@ import PageNotFound from "./components/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
-import Chat from "./components/GroupChat/Chat/Chat";
+import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
@@ -23,37 +23,41 @@ function App() {
                 <BrowserRouter>
 
                     <Navbar />
-                    <Routes>
-                        <Route index path='/' element={<MainPage />} />
+                    <div style={{
+                        height: '90vh',
+                        width: '100%',
+                    }}>
+                        <Routes>
+                            <Route index path='/' element={<MainPage />} />
 
-                        <Route path='/discussion' >
-                            <Route index element={<Discussion />} />
-                            <Route path='/discussion/:postId' element={<Post />} />
-                        </Route>
-
-
-                        <Route path='/group'>
-                            <Route index element={<Group />} />
-                            <Route path='/group/chat' element={<Chat />} />
-                        </Route>
+                            <Route path='/discussion' >
+                                <Route index element={<Discussion />} />
+                                <Route path='/discussion/:postId' element={<Post />} />
+                            </Route>
 
 
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/logout' element={<Logout />} />
+                            <Route path='/group'>
+                                <Route index element={<Group />} />
+                                <Route path='/group/chat' element={<Chat />} />
+                            </Route>
 
 
-                        {/* TODO */}
-                        <Route path='/profile' element={<ToDo />} />
-                        <Route path='/dashboard' element={<ToDo />} />
-                        <Route path='/settings' element={<ToDo />} />
-                        <Route path='/notifications' element={<ToDo />} />
+                            <Route path='/login' element={<Login />} />
+                            <Route path='/logout' element={<Logout />} />
 
-                        {/* Errors */}
-                        <Route path='/*' element={<PageNotFound />} />
 
-                    </Routes>
+                            {/* TODO */}
+                            <Route path='/profile' element={<ToDo />} />
+                            <Route path='/dashboard' element={<ToDo />} />
+                            <Route path='/settings' element={<ToDo />} />
+                            <Route path='/notifications' element={<ToDo />} />
+
+                            {/* Errors */}
+                            <Route path='/*' element={<PageNotFound />} />
+
+                        </Routes>
+                    </div>
                     <Footer />
-
                 </BrowserRouter>
             </UserContextProvider>
         </React.StrictMode>

@@ -27,7 +27,13 @@ export default function Group(props) {
     )
 
 
-    return <div className="min-vh-100">
+    return <div className=" h-100"
+        style={
+            {
+            overflowY: "scroll"
+        }
+    }
+    >
         <Banner pageName='group' />
         <div className="accordion">
             <GroupList listName='join' groups={groups} />

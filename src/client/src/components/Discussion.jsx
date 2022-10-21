@@ -70,6 +70,78 @@ export default function Discussion() {
                     body: `WOW!`
                 },
             ]
+        }, {
+            id: '1asdf2u',
+            title: "Interview",
+            tag: ['Google', 'VO', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
+            user: {
+                userId: 'asldkjf',
+                username: 'By David',
+            },
+            createdTime: new Date(),
+            updatedTime: new Date(),
+            body: `TOO HARD!`,
+            comment: [
+                {
+                    commentId: '13987',
+                    user: {},
+                    body: `WOW!`
+                },
+            ]
+        }, {
+            id: '1asdf2u',
+            title: "Interview",
+            tag: ['Google', 'VO', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
+            user: {
+                userId: 'asldkjf',
+                username: 'By David',
+            },
+            createdTime: new Date(),
+            updatedTime: new Date(),
+            body: `TOO HARD!`,
+            comment: [
+                {
+                    commentId: '13987',
+                    user: {},
+                    body: `WOW!`
+                },
+            ]
+        }, {
+            id: '1asdf2u',
+            title: "Interview",
+            tag: ['Google', 'VO', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
+            user: {
+                userId: 'asldkjf',
+                username: 'By David',
+            },
+            createdTime: new Date(),
+            updatedTime: new Date(),
+            body: `TOO HARD!`,
+            comment: [
+                {
+                    commentId: '13987',
+                    user: {},
+                    body: `WOW!`
+                },
+            ]
+        }, {
+            id: '1asdf2u',
+            title: "Interview",
+            tag: ['Google', 'VO', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
+            user: {
+                userId: 'asldkjf',
+                username: 'By David',
+            },
+            createdTime: new Date(),
+            updatedTime: new Date(),
+            body: `TOO HARD!`,
+            comment: [
+                {
+                    commentId: '13987',
+                    user: {},
+                    body: `WOW!`
+                },
+            ]
         }
     ];
     // TODO: Extract a Post Card class (Similar to Post.jsx).
@@ -99,7 +171,13 @@ export default function Discussion() {
     })
 
 
-    return <div className="vh-100">
+    return <div className="h-100"
+        style={
+            {
+                overflowY: 'scroll'
+            }
+        }
+    >
         <Banner className='h-50' pageName={'discussion'} />
         <div className="container py-3 py-lg-5 container--narrow">
             <div>

@@ -1,8 +1,6 @@
 import React from "react";
 import { OnlineIcon } from "../icons";
 
-import onlineIcon from "../icons/onlineIcon.png";
-
 import "./TextContainer.css";
 // import "../Chat/Chat.css";
 // :hover {}
@@ -23,7 +21,7 @@ const TextContainer = ({ users }) => {
               }
             }
           >
-          <h3>Members</h3>  
+            <h3>Members</h3>
           </div>
           <div className="my-2" style={
             {

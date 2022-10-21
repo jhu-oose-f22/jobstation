@@ -3,10 +3,10 @@ import { io } from "socket.io-client";
 // import axios from "axios";
 
 // import api from "../api/posts";
-import TextContainer from "../TextContainer/TextContainer";
-import Messages from "../Messages/Messages";
-import InfoBar from "../InfoBar";
-import Input from "../Input/Input";
+import TextContainer from "./GroupChat/TextContainer/TextContainer";
+import Messages from "./GroupChat/Messages/Messages";
+import InfoBar from "./GroupChat/InfoBar";
+import Input from "./GroupChat/Input/Input";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -57,7 +57,7 @@ const Chat = (props) => {
   };
 
   return (
-    <div className="vh-100 d-flex align-items-center justify-content-center p-5 bg-img "
+    <div className="h-100 d-flex align-items-center justify-content-center p-5 bg-img "
       style={{
         backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',

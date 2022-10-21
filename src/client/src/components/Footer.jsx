@@ -5,7 +5,13 @@ import Logo from "./Utils/Logo";
 function Footer() {
 
     return (
-        <footer className="d-flex border-top border-3 border-opacity-50 py-3 bg-light justify-content-center">
+        <footer className="d-flex border-top border-3 border-opacity-50 py-3 bg-light justify-content-center align-items-center"
+            style={
+                {
+                    height: "5vh"
+                }
+            }
+        >
             <Logo textStyle='muted' />
             <div className='d-none d-lg-inline-flex text-muted'>
                 |<a href="https://github.com/jhu-oose-f22/jobstation" className='ms-2 text-muted text-decoration-none' target="Github">
@@ -16,6 +22,9 @@ function Footer() {
                     | Built with
                     <a href="https://reactjs.org/" className="text-muted  text-decoration-none" target="React">
                         <i className="fa-brands fa-react ms-1"></i>React
+                    </a>
+                    <a href="https://getbootstrap.com/" className="text-muted  text-decoration-none" target="React">
+                        <i className="fa-brands fa-bootstrap ms-1"></i>Bootstrap
                     </a>
                 </div>
             </div>
