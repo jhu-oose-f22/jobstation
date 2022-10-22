@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
-// import axios from "axios";
 
-// import api from "../api/posts";
+import { isLoggedIn, UserContext } from "../context/User";
+
 import Sidebar from "./GroupChat/Sidebar";
 import Messages from "./GroupChat/Messages/Messages";
 import InfoBar from "./GroupChat/InfoBar";
 import Input from "./GroupChat/Input/Input";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 const ENDPOINT = "localhost:4000";
 
@@ -16,23 +17,24 @@ const ENDPOINT = "localhost:4000";
 const Chat = (props) => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [name, setName] = useState('');
+  const { user } = useContext(UserContext);
+  const name = user.username;
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(io(ENDPOINT));
   useEffect(() => {
-    if (!state.room || !state.name) navigate('../');
+    if (!state.room) navigate('../');
     setRoom(state.room);
-    setName(state.name);
+    console.log(name, room);
     socket.on('connect', (e) => { console.log(e) });
     socket.emit("join", { name, room }, (error) => {
       if (error) {
         console.log(error);
       }
     });
-  }, [state, name, room, socket, setRoom, setName, navigate]);
+  }, [state, name, room, socket, setRoom, navigate]);
 
   useEffect(() => {
     socket.on("message", (message) => {
@@ -67,11 +69,7 @@ const Chat = (props) => {
         backgroundSize: 'cover',
       }}
     >
-      <div className="col-md-2 h-100 collapse show"
-        id='sidebar'
-      >
-        <Sidebar users={users} />
-      </div>
+
       <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
@@ -81,7 +79,11 @@ const Chat = (props) => {
           sendMessage={sendMessage}
         />
       </div>
-
+      <div className="col-md-2 h-100 collapse show"
+        id='sidebar'
+      >
+        <Sidebar users={users} />
+      </div>
     </div>
   );
 };
