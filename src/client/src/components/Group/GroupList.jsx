@@ -92,7 +92,7 @@ export default function GroupList({ listName, groups = null }) {
                         <button className="btn btn-outline-light w-100 text-center"
                             type='button'
                         >
-                            <i class="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
+                            <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
                         </button>
                         <button className="btn btn-outline-light w-100"
                             data-bs-toggle="modal"

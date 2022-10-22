@@ -1,13 +1,10 @@
 import React from "react";
-import { OnlineIcon } from "../icons";
+import { OnlineIcon } from "./icons";
 
-import "./TextContainer.css";
-// import "../Chat/Chat.css";
-// :hover {}
-const TextContainer = ({ users }) => {
-
+const Sidebar = ({ users }) => {
+  
   return (
-    <div className="bg-secondary d-flex flex-column justify-content-between align-items-between h-100 col-2 bg-opacity-50  border border-light border-opacity-50 " style={
+    <div className="bg-secondary d-flex flex-column justify-content-between align-items-between h-100 col-2 bg-opacity-50  border border-light border-opacity-50 w-100" style={
       {
         borderRadius: '0 18px 18px 0',
       }
@@ -44,4 +41,4 @@ const TextContainer = ({ users }) => {
   );
 }
 
-export default TextContainer;
+export default Sidebar;

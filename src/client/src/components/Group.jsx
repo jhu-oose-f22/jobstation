@@ -16,23 +16,23 @@ export default function Group(props) {
 
 
     // Get all groups
-    axios.get(API_URL + '/discussion').then(
-        res => {
-            console.log(res);
-        },
-        err => {
-            console.log(err);
-        }
+    // axios.get(API_URL + '/discussion').then(
+    //     res => {
+    //         console.log(res);
+    //     },
+    //     err => {
+    //         console.log(err);
+    //     }
 
-    )
+    // )
 
 
     return <div className=" h-100"
         style={
             {
-            overflowY: "scroll"
+                overflowY: "auto"
+            }
         }
-    }
     >
         <Banner pageName='group' />
         <div className="accordion">

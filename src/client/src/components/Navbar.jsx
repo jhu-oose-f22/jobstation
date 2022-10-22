@@ -10,7 +10,7 @@ export default function Navbar(props) {
         'Dashboard',
     ].map((value) => {
         return (<li className='nav-item ps-2' key={value}>
-            <NavLink className='nav-link mx-lg-2' to={'/' + value.toLowerCase()}>
+            <NavLink className='nav-link mx-md-2' to={'/' + value.toLowerCase()}>
                 {value}
             </NavLink >
         </li>);
@@ -20,7 +20,7 @@ export default function Navbar(props) {
     const { user } = useContext(UserContext);
 
     return (
-        <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light'
+        <nav className='navbar navbar-expand-md navbar-dark bg-dark text-light'
             style={
                 {
                     zIndex: "100",
@@ -59,7 +59,7 @@ export default function Navbar(props) {
                                         {user.username}
                                     </div>
                                 </div>
-                                <ul className="dropdown-menu dropdown-menu-start dropdown-menu-lg-end align-items-start" aria-labelledby="navbarDropdown">
+                                <ul className="dropdown-menu dropdown-menu-start dropdown-menu-md-end align-items-start" aria-labelledby="navbarDropdown">
                                     <li><Link className="dropdown-item" to="/profile">
                                         <i className="fa-regular fa-user me-2"></i>
                                         Profile
@@ -76,9 +76,9 @@ export default function Navbar(props) {
                             </div>
                         </div>
                         {/* notification */}
-                        <div className="nav-item ms-2 me-auto me-lg-3 bg-light bg-opacity-10 py-1 px-2 rounded-2">
+                        <div className="nav-item ms-2 me-auto me-md-3 bg-light bg-opacity-10 py-1 px-2 rounded-2">
                             <Link className="nav-link " to="/notifications">
-                                <div className='fa-layers fa-lg'>
+                                <div className='fa-layers fa-md'>
                                     <i className="fa-regular fa-bell"></i>
                                     <i className="fa-solid fa-circle" data-fa-transform='shrink-10 up-4 right-4' color='red' ></i>
                                 </div>

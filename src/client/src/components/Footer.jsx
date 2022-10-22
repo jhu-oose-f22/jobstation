@@ -13,7 +13,7 @@ function Footer() {
             }
         >
             <Logo textStyle='muted' />
-            <div className='d-none d-lg-inline-flex text-muted'>
+            <div className='d-none d-md-inline-flex text-muted'>
                 |<a href="https://github.com/jhu-oose-f22/jobstation" className='ms-2 text-muted text-decoration-none' target="Github">
                     <i className="fa-brands fa-github text-dark fa-xl"></i>
                     <span className='ms-2'>Team {BRAND}, OOSE, CS@JHU</span>

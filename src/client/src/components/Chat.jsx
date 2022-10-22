@@ -3,12 +3,12 @@ import { io } from "socket.io-client";
 // import axios from "axios";
 
 // import api from "../api/posts";
-import TextContainer from "./GroupChat/TextContainer/TextContainer";
+import Sidebar from "./GroupChat/Sidebar";
 import Messages from "./GroupChat/Messages/Messages";
 import InfoBar from "./GroupChat/InfoBar";
 import Input from "./GroupChat/Input/Input";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const ENDPOINT = "localhost:4000";
 
@@ -16,19 +16,18 @@ const ENDPOINT = "localhost:4000";
 const Chat = (props) => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [name, setName] = useState(state.name);
-  const [room, setRoom] = useState(state.room);
+  const [name, setName] = useState('');
+  const [room, setRoom] = useState('');
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [socket, setSocket] = useState(io(ENDPOINT));
   useEffect(() => {
-    if (!state?.room || !state?.name) navigate('../');
+    if (!state.room || !state.name) navigate('../');
     setRoom(state.room);
     setName(state.name);
     socket.on('connect', (e) => { console.log(e) });
     socket.emit("join", { name, room }, (error) => {
-      console.log('emit');
       if (error) {
         console.log(error);
       }
@@ -47,7 +46,7 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [socket, messages]);
+  }, [messages, socket]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -56,14 +55,24 @@ const Chat = (props) => {
     }
   };
 
+  if (!state) {
+    return <Navigate to='../' />
+  }
+
+
   return (
-    <div className="h-100 d-flex align-items-center justify-content-center p-5 bg-img "
+    <div className="h-100 d-flex bg-img m-0 w-100"
       style={{
         backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',
       }}
     >
-      <div className="col-8 d-flex flex-column align-items-between justify-content-center h-100 ">
+      <div className="col-md-2 h-100 collapse show"
+        id='sidebar'
+      >
+        <Sidebar users={users} />
+      </div>
+      <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
         <InfoBar room={room} />
         <Messages messages={messages} name={name} />
         <Input
@@ -72,7 +81,7 @@ const Chat = (props) => {
           sendMessage={sendMessage}
         />
       </div>
-      <TextContainer users={users} />
+
     </div>
   );
 };

@@ -17,6 +17,8 @@ import UserContextProvider from "./context/User";
 
 function App() {
 
+    // TODO replace local storage with cookies (react-cookie)
+
     return (
         <React.StrictMode>
             <UserContextProvider>
@@ -26,6 +28,7 @@ function App() {
                     <div style={{
                         height: '90vh',
                         width: '100%',
+                        // overflow: 'clip'
                     }}>
                         <Routes>
                             <Route index path='/' element={<MainPage />} />
