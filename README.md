@@ -81,7 +81,7 @@
 
 
 ### Built With
-(Iteration 1)
+
 * [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 <!--* [![JQuery][JQuery.com]][JQuery-url] -->
