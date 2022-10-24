@@ -82,9 +82,9 @@
 
 ### Built With
 (Iteration 1)
-<!-- * [![React][React.js]][React-url]
+* [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url] -->
+<!--* [![JQuery][JQuery.com]][JQuery-url] -->
 * [![Express][Express]][Express-url]
 * [![MongoDB][MongoDB]][MongoDB-url]
 
@@ -95,17 +95,20 @@
 ## Getting Started
 ### Install prerequisites and run locally  
 
-- start chat server
+- Start chat server.   
+  - chatserver creates a socket for every chatroom to support live chat, stores new messages to database and retrieves history messages from  database.
 ```bash
 cd src/chatserver
 npm i && npm start
 ```
-- frontend
+- client  
+  - all frontend pages
 ```bash
 cd src/client
 npm i && npm start
 ```
-- backend
+- start backend  
+  - backend for user/post/group CRUD operations
 ```bash
 cd src/server
 npm i && npm start
@@ -120,30 +123,32 @@ npm i && npm start
 <!-- USAGE EXAMPLES -->
 ## Usage/Functionality Description
 
-For iteration2,
-1.  you can CRUD your job posts
-- Sign up,  log in, sign out
-  -  **sign up**: enter valid username, email, and password to sign up
+So far,
+1.  you can CRUD post and group(chatroom)
+- Sign up,  sign in, sign out
+  - **sign up**: enter valid username, email, and password to sign up
   - **sign in**: sign in using username and password
   - **sign out**: click Sign out and user will be redirect to the sign up / log in page. 
-- Create, modify, delete, and search post
-  - **create**: After log in, user can create a new post by clicking the green button `Create Post`
+- Create, modify, delete, and search post/group. (Only backend supports these operations. Frontend and backend have yet to be integrated.)
+  - **create**: After log in, user can create a new post. 
  on the topright of the page. All three fields(title, tags, body) are required to be posted.
   - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can only view the post.
   -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
 
 2. group live chat
 - View existing groups
-- join a group and chat with group members
+- join a group and chat with group members, rich-text supported
 
 <!-- ROADMAP -->
 ## Roadmap
 
 - [x] Add SRS
 
-- [ ] Add Group Chat
+- [x] Add Group Chat
   - [x] Backend
+    - socket, database interaction
   - [x] Frontend
+    - rich-text supported
 
 - [ ] Add Job Forum
   - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
