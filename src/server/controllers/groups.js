@@ -34,3 +34,10 @@ export const addMember = async (req, res) => {
     await group.save();
     res.json(group);
 }
+
+export const removeGroup = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Group with id: ${id}`);
+    await Group.findByIdAndRemove(id);
+    res.json({ message: "Group removed successfully." });
+}

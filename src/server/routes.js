@@ -1,7 +1,7 @@
 import express from "express";
 
 import { getPosts, createPost, getPost, getPostsByTags, likePost, deletePost, updatePost } from "./controllers/posts.js";
-import { getGroup, createGroup, addMember } from "./controllers/groups.js";
+import { getGroup, createGroup, addMember, removeGroup } from "./controllers/groups.js";
 // import { signin, signup } from "./controllers/users.js";
 
 const router = express.Router();
@@ -18,7 +18,9 @@ router.delete('/discuss/post/:id', deletePost);
 //Group
 router.get('/group/:id', getGroup);
 router.post('/group/create', createGroup);
-router.patch('/group/:groupId/user/:userId', addMember) //need usercontroller "joinGroup" after adding user
+router.patch('/group/:groupId/user/:userId', addMember); //need usercontroller "joinGroup" after adding user
+router.delete('/group/:id', removeGroup); 
+
 
 //User
 // router.post("/signin", signin);
