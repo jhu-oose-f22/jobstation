@@ -3,6 +3,8 @@ const express = require('express');
 const socketio = require('socket.io');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const dotenv = require("dotenv")
+
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const router = require('./router');
@@ -19,7 +21,6 @@ const io = new socketio.Server(server,
     }
   });
 
-const dotenv = require("dotenv")
 dotenv.config()
 app.use(cors());
 app.use(router);
@@ -30,15 +31,11 @@ io.on('connect', (socket) => {
   // console.log(socket);
   socket.on('join', async ({ name, room }, callback) => {
     // console.log(name, room);
-    // this should be add to the group database
+    // this should be added to the group database
     // console.log(name, room);
-    console.log('-----------1-----------------------------------');
     const { error, user } = addUser({ id: socket.id, name, room });
     if (error) return callback(error);
-    console.log('2');
-    console.log(user);
     socket.join(user.room);
-    console.log('3. joined');
     // fetch chat history from db and pass to frontend to display
     const msgs = await chatMessageController.fetchChatMessage(user.room);
     console.log('fetched from db')
@@ -55,9 +52,7 @@ io.on('connect', (socket) => {
 
 
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
-    console.log('6');
     callback();
-    console.log('7');
 
   });
 
@@ -66,9 +61,10 @@ io.on('connect', (socket) => {
 
     // console.log(user.room);
     console.log('sending------------')
+    
     io.to(user.room).emit('message', { user: user.name, text: message });
 
-    chatMessageController.storeChatMessage(user.room, message, user.name);
+    await chatMessageController.storeChatMessage(user.room, message, user.name);
 
     // console.log(`a message: ${message} has been sent.`);
 

@@ -28,13 +28,13 @@ export default function Logout() {
     }, [toggleUser, countdown])
 
 
-    return <div className='bg-image vh-100'
+    return <div className='bg-image h-100'
         style={{
             backgroundImage: "url(./imgs/MainPage.jpg)",
             backgroundSize: "cover"
         }
         }>
-        <div className="vh-100 mask d-flex flex-column align-items-center justify-content-center "
+        <div className="h-100 mask d-flex flex-column align-items-center justify-content-center "
             style={{
                 backgroundColor: "rgba(0, 0, 0, 0.5)"
             }}
