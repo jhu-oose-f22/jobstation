@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 import UserModal from "../models/user.js";
 
@@ -46,3 +47,17 @@ export const signup = async (req, res) => {
     console.log(error);
   }
 };
+
+export const joinGroup = async (req, res) => {
+  const { userId, groupId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
+
+  if (!mongoose.Types.ObjectId.isValid(groupId)) return res.status(404).send(`No group with id: ${groupId}`);
+
+  const user = await UserModal.findById(userId);
+
+  user.groups.push(groupId);
+  await user.save();
+  res.json(user);
+}
