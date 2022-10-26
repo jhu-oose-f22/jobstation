@@ -13,9 +13,16 @@ const userSchema = mongoose.Schema({
     type: String, 
     required: true 
   },
+  avatar: String,
   groups: [String],
+  tags: [String],
+  posts:[String],
   id: { 
     type: String 
+  },
+  createdAt: {
+    type: Date,
+    default: new Date()
   },
 });
 
