@@ -61,3 +61,13 @@ export const joinGroup = async (req, res) => {
   await user.save();
   res.json(user);
 }
+
+export const removeUser = async (req, res) => {
+const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No User with userId: ${id}`);
+
+  await UserModal.findByIdAndRemove(id);
+
+  res.json({ message: "User removed successfully." });
+}

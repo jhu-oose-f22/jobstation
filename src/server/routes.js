@@ -2,7 +2,7 @@ import express from "express";
 
 import { getPosts, createPost, getPost, getPostsByTags, likePost, deletePost, updatePost } from "./controllers/posts.js";
 import { getGroup, createGroup, addMember, removeGroup } from "./controllers/groups.js";
-import { signin, signup, joinGroup } from "./controllers/users.js";
+import { signin, signup, joinGroup, removeUser } from "./controllers/users.js";
 
 const router = express.Router();
 
@@ -25,5 +25,6 @@ router.delete('/group/:id', removeGroup);
 //User
 router.post('/signin', signin);
 router.post('/signup', signup);
+router.delete('/user/:id', removeUser); 
 
 export default router;
