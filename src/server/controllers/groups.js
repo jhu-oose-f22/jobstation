@@ -27,7 +27,8 @@ export const addMember = async (req, res) => {
     const { groupId, userId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(groupId)) return res.status(404).send(`No group with id: ${groupId}`);
-    //check whether member is valid after adding users
+    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
+
     const group = await Group.findById(groupId);
 
     group.member.push(userId);
@@ -40,4 +41,14 @@ export const removeGroup = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Group with id: ${id}`);
     await Group.findByIdAndRemove(id);
     res.json({ message: "Group removed successfully." });
+}
+
+export const updateGroup = async (req, res) => {
+    const { id } = req.params;
+    const { groupName, owner, tags, intro, avatar } = req.body;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No group with id: ${id}`);
+    const updatedGroup = { groupName, owner, tags, intro, avatar, _id: id };
+    await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
+    res.json(updatedGroup);
 }

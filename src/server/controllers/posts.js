@@ -24,8 +24,16 @@ export const createPost = async (req, res) => {
 }
 
 export const getPostsByTags = async (req, res) => {
-    const tags = req.body.tags;
-    
+    try {
+        const {tags} = req.body;
+        console.log(tags);
+        const targetPosts = await Post.find( { tags: {$all: tags}});
+        res.status(201).json(targetPosts);
+        console.log(targetPosts);
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+
 }
 
 export const getPost = async (req, res) => {
