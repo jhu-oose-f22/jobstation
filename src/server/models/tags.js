@@ -14,4 +14,4 @@ const tagSchema = mongoose.Schema({
     },
   });
   
-  export default mongoose.model("User", tagSchema);
+  export default mongoose.model("Tag", tagSchema);
