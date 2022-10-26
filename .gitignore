@@ -7,7 +7,7 @@
 .VSCodeCounter/*
 .idea
 .github
-
+.DS_Store
 src/server/node_modules
 src/client/node_modules
 src/chatserver/node_modules
