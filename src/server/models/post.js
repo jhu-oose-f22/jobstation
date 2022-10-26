@@ -8,7 +8,7 @@ const postSchema = mongoose.Schema({
     tags: [String],
     selectedFile: {
         type: String,
-        default: 0
+        default: ''
     },
     likeCount: {
         type: Number,
@@ -22,19 +22,17 @@ const postSchema = mongoose.Schema({
 
 class PostClass {
     static async list({ offset = 0 } = {}) {
-        const posts = await this.find({}).skip(offset);
-        return posts;
+        return await this.find({}).skip(offset);
       }
     
     static async createPost({title, message, creator, tags}){
         if(title && message && creator && tags){
-            const newPost = await this.create({
+            return await this.create({
                 title,
                 message,
                 creator,
                 tags,
             });
-            return newPost;
         }
         else{
             throw new Error('Missing component of a post');

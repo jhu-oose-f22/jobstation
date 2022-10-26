@@ -11,7 +11,7 @@ export default function PageNotFound() {
                     <i className="fa fa-regular fa-circle-exclamation me-2" color='red'></i>
                     404 Not Found.</h1>
                 <h2 className="mb-3">Oops! Looks like we are in an outer space.</h2>
-                <a className="btn btn-outline-warning" href="/" role="button">Back to Main Page</a>
+                <a href="/" role="button">Back to Main Page</a>
             </div>
         </div>
     </div >

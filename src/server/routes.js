@@ -1,15 +1,18 @@
+// TODO
+// can delete this file
 import express from "express";
 
-import { getPosts, createPost, getPost, getPostsByTags, likePost, deletePost, updatePost } from "./controllers/posts.js";
-import { getGroup, createGroup, addMember } from "./controllers/groups.js";
+
+import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost } from "./controllers/posts.js";
+import { getGroup, createGroup, addMember, removeGroup } from "./controllers/groups.js";
 // import { signin, signup } from "./controllers/users.js";
 
 const router = express.Router();
 
 //Discuss 
-router.get('/discuss', getPosts);
+router.get('/discuss', getAllPosts);
 router.post('/discuss/create', createPost);
-router.get('/discuss/post/:id', getPost);
+router.get('/discuss/post/:id', getPostById);
 router.patch('/discuss/like/:id', likePost);
 router.patch('/discuss/update/:id', updatePost);
 router.delete('/discuss/post/:id', deletePost);
