@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const tagSchema = mongoose.Schema({
     name: { 
-      type: String, 
-      required:  true 
+        type: String, 
+        required:  true 
     },
     createdAt: {
-      type: Date,
-      default: new Date()
+        type: Date,
+        default: new Date()
     },
   });
   
-  export default mongoose.model("Tag", tagSchema);
+export default mongoose.model("Tag", tagSchema);

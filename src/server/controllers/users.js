@@ -71,3 +71,13 @@ const { id } = req.params;
 
   res.json({ message: "User removed successfully." });
 }
+
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { tags, groups } = req.body;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No user with id: ${id}`);
+  const updatedUser = { tags, groups };
+  await User.findByIdAndUpdate(id, updatedUser, { new: true });
+  res.json(updatedUser);
+}

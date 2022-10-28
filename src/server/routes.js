@@ -5,7 +5,7 @@ import express from "express";
 
 import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost } from "./controllers/posts.js";
 import { getGroup, createGroup, addMember, removeGroup, updateGroup } from "./controllers/groups.js";
-import { signin, signup, joinGroup, removeUser } from "./controllers/users.js";
+import { signin, signup, joinGroup, removeUser, updateUser } from "./controllers/users.js";
 
 const router = express.Router();
 
@@ -28,8 +28,10 @@ router.patch('/group/update/:id', updateGroup);
 
 
 //User
-router.post("/signin", signin);
-router.post("/signup", signup);
+router.post('/signin', signin);
+router.post('/signup', signup);
 router.delete('/user/:id', removeUser);
+router.patch('/user/update/:id', updateUser);
+
 
 export default router;
