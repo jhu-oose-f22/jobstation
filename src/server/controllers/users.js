@@ -48,7 +48,7 @@ export const signup = async (req, res) => {
     }
 };
 
-export const joinGroup = async (req, res) => {
+export const joinGroup = async (req, res, next) => {
     const { userId, groupId } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
@@ -59,7 +59,7 @@ export const joinGroup = async (req, res) => {
 
     user.groups.push(groupId);
     await user.save();
-    res.json(user);
+    next();
 }
 
 export const removeUser = async (req, res) => {
