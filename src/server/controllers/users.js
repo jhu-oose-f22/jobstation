@@ -83,3 +83,12 @@ export const updateUser = async (req, res) => {
     const user = await User.findById(id);
     res.json(user);
 }
+export const getUser = async (req, res) => {
+    try {
+        const targetUser = await User.findById(req.params.id);
+        res.status(200).json(targetUser);
+        
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}
