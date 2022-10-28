@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, Navigate, NavLink } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
@@ -6,6 +6,8 @@ import GroupCard from "./GroupCard";
 export default function GroupList({ listName, groups = null }) {
 
     const { user } = useContext(UserContext);
+    const [newGroupName, setNewGroupName] = useState({});
+    const [newGroupIntro, setNewGroupIntro] = useState({});
 
     let groupTitle;
     // TODO retrieve groups
@@ -53,9 +55,26 @@ export default function GroupList({ listName, groups = null }) {
                 </Link>
             </li>
         })
+    else {
+        console.log(`groups in GroupList.jsx: ${groups}`);
+        groups = groups.map(group => {
+            return <li className=" list-group-item border-0 " key={group._id}>
+                <Link className="text-decoration-none " to='./chat' state={{
+                    name: user.username,
+                    room: group.groupName
+                }} >
+                    <GroupCard group={group} />
+                </Link>
+            </li>
+        })
+        
+    }
     switch (listName) {
         case 'recommended':
             groupTitle = 'Recommended for You';
+
+            
+
             break;
         case 'join':
             groupTitle = 'Your Groups';
@@ -65,6 +84,26 @@ export default function GroupList({ listName, groups = null }) {
             break;
         default:
             return <Navigate to='/' />;
+    }
+    // router.post('/group/create', createGroup);
+    const handleCreate = async (e) => {
+        // e.preventDefault()
+        const newGroup = {groupName: newGroupName, groupIntro: newGroupIntro};
+
+        //  { id, title: postTitle, datetime, body: postBody };
+
+        fetch('/group/create', {
+            method: 'POST',
+            headers: {
+                'Content-type': "application/json"
+            },
+            body: JSON.stringify(newGroup)
+        })
+        .then(res => res.json())
+        .then(data => console.log(data));
+
+
+        window.history.go(0);
     }
 
 
@@ -109,16 +148,33 @@ export default function GroupList({ listName, groups = null }) {
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id={`addGroupModal${listName}Label`}>Modal title</h5>
+                            <h5 className="modal-title" id={`addGroupModal${listName}Label`}>Create group</h5>
                             <button type="button" className="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                             </button>
                         </div>
+
                         <div className="modal-body">
-                            ...
+                            <form onSubmit={(e) => e.preventDefault()}>
+                                <div className="form-group">
+                                    <label for="groupName">Name</label>
+                                    <input className="form-control" id="groupName" placeholder="..."
+                                    onChange={(e) => setNewGroupName(e.target.value)}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label for="groupIntro">Description</label>
+                                    <input className="form-control" id="groupIntro" placeholder="..." 
+                                    onChange={(e) => setNewGroupIntro(e.target.value)}
+                                    />
+                                </div>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">X</button>
+                                <button type="button" className="btn btn-success" onClick={() => handleCreate()}>✔️</button>
+                            </form>
                         </div>
+                        
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
+                            {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">X</button>
+                            <button type="button" className="btn btn-success" onClick={() => handleCreate()}>✔️</button> */}
                         </div>
                     </div>
                 </div>

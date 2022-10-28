@@ -12,9 +12,23 @@ export const getGroup = async (req, res) => {
     }
 }
 
+export const getGroups = async (req, res) => {
+    try {
+        const allGroups = await Group.find();
+        console.log(allGroups)
+        res.status(200).json(allGroups);
+        
+        
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}
+
 export const createGroup = async (req, res) => {
-    const {groupName, owner, member, tags, intro, avatar} = req.body;
-    const newGroup = await Group.createGroup({groupName, owner, member, tags, intro, avatar});
+    // const {groupName, owner, member, tags, intro, avatar} = req.body;
+    // const newGroup = await Group.createGroup({groupName, owner, member, tags, intro, avatar});
+    const {groupName, groupIntro} = req.body;
+    const newGroup = await Group.createGroup({groupName, groupIntro});
     try {
         await newGroup.save();
         res.status(201).json(newGroup);
