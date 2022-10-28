@@ -1,4 +1,5 @@
 import { useParams, useLocation, Link } from "react-router-dom";
+import Tag from "./Utils/Tag";
 
 export default function Post(props) {
     const { postId } = useParams();
@@ -41,13 +42,7 @@ export default function Post(props) {
                     <strong>{state.user.username}</strong>
                     <div className='text-muted ms-auto'>last updated {`${state.updatedTime.toLocaleTimeString()}  ${state.updatedTime.toLocaleDateString()}`}</div>
                 </div>
-                <div className="">
-                    tags: <strong className="text-muted">{state.tag.map((val) => {
-                        return <button className="btn btn-outline-secondary btn-sm mx-1" key={val}>
-                            {val}
-                        </button>
-                    })}</strong>
-                </div>
+                <Tag tag={state.tag} isHidden={false} />
             </div>
 
             <div className=' body-content'>

@@ -10,7 +10,7 @@ export default function GroupList({ listName, groups = null }) {
     let groupTitle;
     // TODO retrieve groups
     // TODO throttle all groups
-    if (!groups )
+    if (!groups)
         groups = [
             {
                 groupId: '23',
@@ -82,6 +82,8 @@ export default function GroupList({ listName, groups = null }) {
             <ul className=" d-flex overflow-auto flex-wrap"
             >
                 {groups}
+
+                {/* ... | + */}
                 <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
                     <div className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
                         style={
@@ -89,12 +91,12 @@ export default function GroupList({ listName, groups = null }) {
                                 width: 270, height: 200,
                             }}
                     >
-                        <button className="btn btn-outline-light w-100 text-center"
+                        <button className="btn btn-outline-light w-100 text-center h-100"
                             type='button'
                         >
                             <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
                         </button>
-                        <button className="btn btn-outline-light w-100"
+                        <button className="btn btn-outline-light w-100 h-100"
                             data-bs-toggle="modal"
                             type='button'
                             data-bs-target={`#addGroupModal${listName}`}
@@ -105,6 +107,8 @@ export default function GroupList({ listName, groups = null }) {
                     </div>
                 </li>
             </ul>
+
+            {/* modal of + */}
             <div className="modal fade" id={`addGroupModal${listName}`} tabIndex="-1" role="dialog" aria-labelledby={`addGroupModal${listName}Label`} aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                     <div className="modal-content">
