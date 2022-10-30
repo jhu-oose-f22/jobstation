@@ -4,8 +4,10 @@ import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 
 export default function SearchGroup({ groups }) {
   const [searchInput, setSearchInput] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  // const [searchResult, setSearchResult] = useState([]);
+  let searchResult = [];
   const navigate = useNavigate();
+  let done = false;
   const handleSearch = async (e) => {
     // console.log(`before add: ${user.username}`);
     if (groups.length === 0) {
@@ -17,10 +19,13 @@ export default function SearchGroup({ groups }) {
               group.groupName.includes(searchInput) ||
               group.groupIntro.includes(searchInput)
             ) {
-              setSearchResult([...searchResult, group]);
+              searchResult = [...searchResult, group];
+
+              // setSearchResult([...searchResult, group]);
             }
           });
         });
+        done = true;
     } else {
       // console.log("no db ")
       groups.map((group) => {
@@ -28,22 +33,36 @@ export default function SearchGroup({ groups }) {
           group.groupName.includes(searchInput) ||
           group.groupIntro.includes(searchInput)
         ) {
-          setSearchResult([...searchResult, group]);
+          console.log(group);
+          // setSearchResult([...searchResult, group]);
+          searchResult = [...searchResult, group];
+          console.log(searchResult)
         }
+      });
+      done = true;
+    }
+    
+    if (done === true) {
+      console.log(searchResult)
+  
+      navigate("/group/search-result", {
+        state: {
+          groups: searchResult,
+        },
       });
     }
   };
 
   // console.log(searchResult);
-  if (searchResult.length > 0) {
-    // console.log(searchResult)
+  // if (done) {
+  //   // console.log(searchResult)
 
-    navigate("/group/search-result", {
-      state: {
-        groups: searchResult,
-      },
-    });
-  }
+  //   navigate("/group/search-result", {
+  //     state: {
+  //       groups: searchResult,
+  //     },
+  //   });
+  // }
 
   return (
     <form>

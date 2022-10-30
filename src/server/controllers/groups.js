@@ -32,7 +32,7 @@ export const getGroupsByIDs = async (req, res) => {
             allGroups = [...allGroups, cur];
         })
         // const allGroups = await Group.find({_id: targetGroupIDs}).exec();
-        console.log(allGroups)
+        // console.log(allGroups)
         res.status(200).json(allGroups);
         
         

@@ -4,7 +4,7 @@ import PageNotFound from "./components/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
-import SearchResult from "./components/SearchResult";
+import GroupSearchResult from "./components/GroupSearchResult";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -49,7 +49,7 @@ function App() {
                             <Route path='/group'>
                                 <Route index element={<Group />} />
                                 <Route path='/group/chat' element={<Chat />} />
-                                <Route path='/group/search-result' element={<SearchResult />} />
+                                <Route path='/group/search-result' element={<GroupSearchResult />} />
                             </Route>
 
 
