@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import { isLoggedIn, UserContext } from "../context/User";
 import GroupList from "./Group/GroupList";
 import Banner from "./Utils/Banner";
-import SearchGroup from "./SearchGroup"
+import SearchGroup from "./Group/GroupSearch"
 // const axios = require('axios')
 export default function Group(props) {
   const { user } = useContext(UserContext);

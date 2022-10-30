@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../context/User";
+import { UserContext } from "../../context/User";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 
 export default function SearchGroup({ groups }) {
