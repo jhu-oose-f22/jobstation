@@ -17,7 +17,7 @@ export default function Login(props) {
         e.preventDefault();
         if (email === '' || password === '') return;
         let userLogin = {
-            id: '123414',
+            // id: '123414',
             email: email,
             avatar: null,
             username: email.slice(0, email.indexOf('@')),

@@ -86,6 +86,31 @@ export const updateUser = async (req, res) => {
 export const getUser = async (req, res) => {
     try {
         const targetUser = await User.findById(req.params.id);
+        console.log(targetUser);
+        res.status(200).json(targetUser);
+        
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}
+export const getAllUser = async (req, res) => {
+    try {
+        const targetUser = await User.find({});
+        // console.log(targetUser);
+        res.status(200).json(targetUser);
+        
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}
+
+export const getUserByUsername = async (req, res) => {
+    try {
+        console.log('getUserByUsername')
+        console.log(req.prams.username)
+        const targetUser = await User.findOne({username: req.prams.username});
+        console.log(targetUser);
+
         res.status(200).json(targetUser);
         
     } catch (error) {

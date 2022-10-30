@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
-	name: { 
+	username: { 
 		type: String, 
 		required:  true 
 	},
@@ -14,7 +14,10 @@ const userSchema = mongoose.Schema({
 		required: true 
 	},
 	avatar: String,
-	groups: [String],
+	groups: {
+		type: [mongoose.ObjectId],
+		default: []
+	},
 	tags: [String],
 	posts: [String],
 	createdAt: {
