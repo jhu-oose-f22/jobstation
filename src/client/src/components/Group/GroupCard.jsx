@@ -28,6 +28,11 @@ export default function GroupCard({ group }) {
 
     window.history.go(0);
   }
+
+const handleEdit = async (e) => {
+    
+}
+
   return (
     <div
       className="card btn shadow-sm d-flex flex-row p-0"
@@ -87,8 +92,11 @@ export default function GroupCard({ group }) {
           >
             quit
           </button>
-          <button type="button" className="btn btn-primary">
+          <button type="button" className="btn btn-primary" onClick={(e) => handleEdit(e)}>
             edit
+          </button>
+          <button type="button" className="btn btn-success">
+            join
           </button>
           <span className="p-2 mt-auto w-100">
             <nobr className="text-muted">last: 3 mins ago</nobr>

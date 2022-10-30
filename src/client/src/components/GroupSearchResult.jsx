@@ -13,7 +13,8 @@ export default function SearchResult() {
     const location = useLocation();
     // console.log(location.state.groups) 
     const result = location.state.groups;
-
+    console.log("result page")
+    console.log(result);
 //   console.log("search result");
 //   console.log(groups);
 
@@ -34,7 +35,7 @@ export default function SearchResult() {
       <Banner pageName="group" />
       <div className="accordion">
         <SearchGroup groups={[]}/>
-        <GroupList listName="related" groups={result} />
+        <GroupList listName="related" groups={result} search={true} />
         <GroupList listName="recommended" />
       </div>
     </div>

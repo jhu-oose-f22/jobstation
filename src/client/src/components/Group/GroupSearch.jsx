@@ -10,7 +10,7 @@ export default function SearchGroup({ groups }) {
   let done = false;
   const handleSearch = async (e) => {
     // console.log(`before add: ${user.username}`);
-    if (groups.length === 0) {
+    // if (groups.length === 0) {
       await fetch("/group")
         .then((res) => res.json())
         .then((data) => {
@@ -26,21 +26,21 @@ export default function SearchGroup({ groups }) {
           });
         });
         done = true;
-    } else {
-      // console.log("no db ")
-      groups.map((group) => {
-        if (
-          group.groupName.includes(searchInput) ||
-          group.groupIntro.includes(searchInput)
-        ) {
-          console.log(group);
-          // setSearchResult([...searchResult, group]);
-          searchResult = [...searchResult, group];
+    // } else {
+    //   console.log("no db ")
+    //   groups.map((group) => {
+    //     if (
+    //       group.groupName.includes(searchInput) ||
+    //       group.groupIntro.includes(searchInput)
+    //     ) {
+    //       console.log(group);
+    //       // setSearchResult([...searchResult, group]);
+    //       searchResult = [...searchResult, group];
           console.log(searchResult)
-        }
-      });
-      done = true;
-    }
+    //     }
+    //   });
+    //   done = true;
+    // }
     
     if (done === true) {
       console.log(searchResult)

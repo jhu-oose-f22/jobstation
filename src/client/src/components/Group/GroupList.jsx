@@ -3,23 +3,31 @@ import { Link, Navigate, NavLink } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
 
-export default function GroupList({ listName, groups = null }) {
+export default function GroupList({ listName, groups = [], search = false }) {
   const { user } = useContext(UserContext);
   const [newGroupName, setNewGroupName] = useState({});
   const [newGroupIntro, setNewGroupIntro] = useState({});
 
   let groupTitle;
   // TODO throttle all groups
-  if (!groups) groups = [];
-  else {
+  //    groups = [];
+  if (search === false) {
     groups = groups.map((group) => {
       if (group.members.includes(user.username)) {
         return (
           <li className=" list-group-item border-0 " key={group._id}>
-              <GroupCard group={group} />
+            <GroupCard group={group} />
           </li>
         );
       }
+    });
+  } else {
+    groups = groups.map((group) => {
+      return (
+        <li className=" list-group-item border-0 " key={group._id}>
+          <GroupCard group={group} />
+        </li>
+      );
     });
   }
   switch (listName) {
@@ -79,7 +87,9 @@ export default function GroupList({ listName, groups = null }) {
         id={`${listName}body`}
       >
         <ul className=" d-flex overflow-auto flex-wrap">
+
           {groups}
+          
           <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
             <div
               className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
