@@ -28,7 +28,6 @@ export default function Login(props) {
         localStorage.setItem('userLogin', JSON.stringify(userLogin));
         toggleUser(userLogin);
 
-        window.history.go(-1);
     };
     // TODO: Register / login
     return <div className="d-flex flex-lg-row flex-column align-items-center justify-content-center justify-content-lg-evenly  h-100 bg-light">
