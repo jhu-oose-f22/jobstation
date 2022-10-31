@@ -4,9 +4,7 @@ import mongoose from "mongoose";
 export const getAllPosts = async (req, res) => {
     try {
         const targetPost = await Post.list();
-
         res.status(200).json(targetPost);
-        console.log(targetPost);
     } catch (error) {
         res.status(404).json({ message: error.message});
     }
