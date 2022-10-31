@@ -33,7 +33,7 @@ const Message = ({ message: { text, user }, name }) => {
     isSentByCurrentUser
       ? (
         <div className="messageContainer justifyEnd  ">
-          <p className="sentText pr-10">{trimmedName}</p>
+          <p className="sentText pr-10 my-auto">{trimmedName}</p>
           <div className="messageBox backgroundBlue border border-dark border-1 my-2 py-0">
             {messageBubble}
           </div>

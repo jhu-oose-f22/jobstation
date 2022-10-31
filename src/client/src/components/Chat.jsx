@@ -48,7 +48,6 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-    console.log(messages);
   }, [messages, socket, room]);
 
   const sendMessage = (event) => {
@@ -71,7 +70,13 @@ const Chat = (props) => {
       }}
     >
       <InfoBar room={room} />
-      <div className="d-flex overflow-auto">
+      <div className="d-flex"
+        style={
+          {
+            height: "93%",
+          }
+        }
+      >
         <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
           <Messages messages={messages} name={name} />
           <Input

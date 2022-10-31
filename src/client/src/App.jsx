@@ -28,6 +28,7 @@ function App() {
                     <div style={{
                         height: '90vh',
                         width: '100%',
+                        minHeight: '500px',
                         // overflow: 'clip'
                     }}>
                         <Routes>

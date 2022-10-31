@@ -33,20 +33,17 @@ function Input({ setMessage, sendMessage, message }) {
   ]
 
   return (
-    <form className="form m-0 p-0 bg-light d-flex w-100">
-      <div className='w-100'>
-        <ReactQuill theme='snow'
-          modules={modules}
-          formats={formats}
-          value={message}
-          placeholder='enter something...'
-          onChange={e => {
-            console.log(e);
-            setMessage(e);
-          }} />
-      </div>
-      <button className="btn btn-primary px-3 rounded-0 col-1" onClick={e => {
-        console.log(message);
+    <form className="form m-0 p-0 bg-light d-flex w-100 h-25 d-flex flex-column">
+      <ReactQuill theme='snow'
+        className='h-100 '
+        modules={modules}
+        formats={formats}
+        value={message}
+        placeholder='enter something...'
+        onChange={e => {
+          setMessage(e);
+        }} />
+      <button id="send" className="btn btn-success" onClick={e => {
         sendMessage(e);
       }}>
         Send
