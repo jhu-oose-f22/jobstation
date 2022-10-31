@@ -23,3 +23,10 @@ export const getTags = async (req, res) => {
     }
 }
 
+
+// export const removeTag = async (req, res) => {
+//     const { tag } = req.params;
+//     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No tag with name: ${tag}`);
+//     await Tag.findAndRemove(id);
+//     res.json({ message: "Tag deleted successfully." });
+// }

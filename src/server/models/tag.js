@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const tagSchema = mongoose.Schema({
-	Name: String,
+	Name: {
+		type: String,
+		unique: true
+	},
 	createdAt: {
         type: Date,
         default: new Date()
@@ -23,8 +26,11 @@ class TagClass{
 		else{
 			return "No new tag"
 		}
+	}
+	
+	// static async deleteTag( tag ){
 		
-	}	
+	// }
 }
 
 tagSchema.loadClass(TagClass);
