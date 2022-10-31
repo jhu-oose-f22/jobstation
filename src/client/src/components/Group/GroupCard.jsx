@@ -33,9 +33,9 @@ export default function GroupCard({ group }) {
                 }}
             >
                 <div className=" d-flex flex-column align-items-center justify-content-center h-100 m-2">
-                    <img src={(group.groupAvatar !== '' && group.groupAvatar) || `https://ui-avatars.com/api/?name=${group.groupname}&background=random&bold=true`}
-                        className="img-fluid rounded-3 mb-3" alt={group.groupname} />
-                    <strong className="card-title">{group.groupname}</strong>
+                    <img src={(group.avatar !== '' && group.avatar) || `https://ui-avatars.com/api/?name=${group.groupName}&background=random&bold=true`}
+                        className="img-fluid rounded-3 mb-3" alt={group.groupName} />
+                    <strong className="card-title">{group.groupName}</strong>
 
                 </div>
             </div>
