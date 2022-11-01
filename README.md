@@ -81,10 +81,10 @@
 
 
 ### Built With
-(Iteration 1)
-<!-- * [![React][React.js]][React-url]
+
+* [![React][React.js]][React-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url] -->
+<!--* [![JQuery][JQuery.com]][JQuery-url] -->
 * [![Express][Express]][Express-url]
 * [![MongoDB][MongoDB]][MongoDB-url]
 
@@ -93,15 +93,28 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
-### Install prerequisites and run locally
+### Install prerequisites and run locally  
 
+- Start chat server.   
+  - chatserver creates a socket for every chatroom to support live chat, stores new messages to database and retrieves history messages from  database.
 ```bash
-cd src/backend
-npm install
-npm run watch
+cd src/chatserver
+npm i && npm start
+```
+- client  
+  - all frontend pages
+```bash
+cd src/client
+npm i && npm start
+```
+- start backend  
+  - backend for user/post/group CRUD operations
+```bash
+cd src/server
+npm i && npm start
 ```
 
-The server would be running on http://localhost:3000/
+- Go to http://localhost:3000/
 
 
 <!-- ### Deployment -->
@@ -110,30 +123,42 @@ The server would be running on http://localhost:3000/
 <!-- USAGE EXAMPLES -->
 ## Usage/Functionality Description
 
-For iteration1, you can CRUD your job posts!
-
-- Sign up,  log in, sign out
-  -  **sign up**: enter valid username, email, and password to sign up
+So far,
+1.  you can CRUD post and group(chatroom)
+- Sign up,  sign in, sign out
+  - **sign up**: enter valid username, email, and password to sign up
   - **sign in**: sign in using username and password
   - **sign out**: click Sign out and user will be redirect to the sign up / log in page. 
-- Create, modify, delete, and search post
-  - **create**: After log in, user can create a new post by clicking the green button `Create Post`
+- Create, modify, delete, and search post/group. (Only backend supports these operations. Frontend and backend have yet to be integrated.)
+  - **create**: After log in, user can create a new post. 
  on the topright of the page. All three fields(title, tags, body) are required to be posted.
   - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can only view the post.
   -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
+
+2. group live chat
+- View existing groups
+- join a group and chat with group members, rich-text supported
 
 <!-- ROADMAP -->
 ## Roadmap
 
 - [x] Add SRS
 
+<<<<<<< HEAD
 - [ ] Add Group Chat
   - [ ] Backend
   - [ ] Frontend
+=======
+- [x] Add Group Chat
+  - [x] Backend
+    - socket, database interaction
+  - [x] Frontend
+    - rich-text supported
+>>>>>>> 59bdf6067def5071d09b7544e1510720c4d73c1d
 
 - [ ] Add Job Forum
-  - [ ] Refactor/Refine/Rewrite CRUD of Iteration 1
-  - [ ] Rewrite frontend using React
+  - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
+  - [x] Rewrite frontend using React
   - [ ] Add Recommendation System
 
 <!-- - [ ] Add Job Board

@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5001",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -17,9 +18,12 @@
     "react-emoji": "^0.5.0",
     "react-file-base64": "^1.0.3",
     "react-quill": "^2.0.0",
+    "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.1",
     "react-scroll-to-bottom": "^4.2.0",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "socket.io-client": "^4.5.3",
     "web-vitals": "^2.1.4"
   },

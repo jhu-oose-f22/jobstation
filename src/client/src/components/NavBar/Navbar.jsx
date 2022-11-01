@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { isLoggedIn, UserContext } from "../context/User";
-import Logo from "./Utils/Logo";
+import { isLoggedIn, UserContext } from "../../context/User";
+import Logo from "../Utils/Logo";
 
-export default function Navbar(props) {
+const Navbar = (props) => {
     const pages = [
         'Discussion',
         'Group',
         'Dashboard',
     ].map((value) => {
-        return (<li className='nav-item ps-2' key={value}>
+        return (<li key={value}>
             <NavLink className='nav-link mx-md-2' to={'/' + value.toLowerCase()}>
                 {value}
             </NavLink >
@@ -24,7 +24,7 @@ export default function Navbar(props) {
             style={
                 {
                     zIndex: "100",
-                    height: "5vh"
+                    height: "80px"
                 }
             }
         >
@@ -105,3 +105,4 @@ export default function Navbar(props) {
         </nav >
     )
 }
+export default Navbar;
