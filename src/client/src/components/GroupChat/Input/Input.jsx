@@ -43,7 +43,7 @@ function Input({ setMessage, sendMessage, message }) {
         onChange={e => {
           setMessage(e);
         }} />
-      <button id="send" className="btn btn-success" onClick={e => {
+      <button id="send" className="btn btn-success text-center px-2 py-1" onClick={e => {
         sendMessage(e);
       }}>
         Send

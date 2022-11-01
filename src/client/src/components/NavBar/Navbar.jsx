@@ -3,13 +3,13 @@ import { Link, NavLink } from "react-router-dom";
 import { isLoggedIn, UserContext } from "../../context/User";
 import Logo from "../Utils/Logo";
 
-const Navbar = (props) => {
+export default function Navbar(props) {
     const pages = [
         'Discussion',
         'Group',
         'Dashboard',
     ].map((value) => {
-        return (<li key={value}>
+        return (<li className='nav-item ps-2' key={value}>
             <NavLink className='nav-link mx-md-2' to={'/' + value.toLowerCase()}>
                 {value}
             </NavLink >
@@ -24,7 +24,7 @@ const Navbar = (props) => {
             style={
                 {
                     zIndex: "100",
-                    height: "80px"
+                    height: "5vh"
                 }
             }
         >
@@ -105,4 +105,3 @@ const Navbar = (props) => {
         </nav >
     )
 }
-export default Navbar;

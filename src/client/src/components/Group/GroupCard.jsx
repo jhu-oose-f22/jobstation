@@ -17,21 +17,21 @@ export default function GroupCard({ group }) {
   // TODO Modal
   const { user } = useContext(UserContext);
   const handleQuit = async (e) => {
-    const group_n_user = {groupId: group._id, username: user.username};
+    const group_n_user = { groupId: group._id, username: user.username };
     await fetch("/group/quit", {
-        method: "post",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify(group_n_user)
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(group_n_user)
     }).then((res) => res.json());
 
     window.history.go(0);
   }
 
-const handleEdit = async (e) => {
-    
-}
+  const handleEdit = async (e) => {
+
+  }
 
   return (
     <div

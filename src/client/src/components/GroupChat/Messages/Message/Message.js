@@ -4,7 +4,6 @@ import './Message.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'highlight.js/styles/github-dark.css';
 
-import ReactEmoji from 'react-emoji';
 import ReactQuill from 'react-quill';
 
 const Message = ({ message: { text, user }, name }) => {

@@ -35,6 +35,14 @@ const Chat = (props) => {
         console.log(error);
       }
     });
+
+
+    return () => {
+      console.log("disconnect");
+      socket.disconnect();
+      socket.off();
+    }
+
   }, [state, name, room, socket, setRoom, navigate]);
 
   useEffect(() => {

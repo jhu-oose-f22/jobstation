@@ -19,7 +19,8 @@ export default function Logout() {
 
         return () => {
             toggleUser({});
-            localStorage.setItem('userLogin', JSON.stringify({}));
+            localStorage.clear();
+            sessionStorage.clear();
             if (timer) {
                 clearTimeout(timer);
                 setTimer(null);

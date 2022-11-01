@@ -86,10 +86,10 @@ export default function GroupList({ listName, groups = [], search = false }) {
         className="collapse accordion-collapse show list-group"
         id={`${listName}body`}
       >
-        <ul className=" d-flex overflow-auto flex-wrap">
+        <ul className=" d-flex flex-wrap">
 
           {groups}
-          
+
           <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
             <div
               className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
@@ -99,13 +99,13 @@ export default function GroupList({ listName, groups = [], search = false }) {
               }}
             >
               <button
-                className="btn btn-outline-light w-100 text-center"
+                className="btn btn-outline-light w-100 text-center h-100"
                 type="button"
               >
                 <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
               </button>
               <button
-                className="btn btn-outline-light w-100"
+                className="btn btn-outline-light w-100 h-100"
                 data-bs-toggle="modal"
                 type="button"
                 data-bs-target={`#addGroupModal${listName}`}
@@ -147,7 +147,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
               <div className="modal-body">
                 <form onSubmit={(e) => e.preventDefault()}>
                   <div className="form-group">
-                    <label for="groupName">Name</label>
+                    <label htmlFor="groupName">Name</label>
                     <input
                       className="form-control"
                       id="groupName"
@@ -156,7 +156,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
                     />
                   </div>
                   <div className="form-group">
-                    <label for="groupIntro">Description</label>
+                    <label htmlFor="groupIntro">Description</label>
                     <input
                       className="form-control"
                       id="groupIntro"

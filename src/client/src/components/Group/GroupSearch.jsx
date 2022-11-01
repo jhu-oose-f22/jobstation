@@ -11,21 +11,21 @@ export default function SearchGroup({ groups }) {
   const handleSearch = async (e) => {
     // console.log(`before add: ${user.username}`);
     // if (groups.length === 0) {
-      await fetch("/group")
-        .then((res) => res.json())
-        .then((data) => {
-          data.map((group) => {
-            if (
-              group.groupName.includes(searchInput) ||
-              group.groupIntro.includes(searchInput)
-            ) {
-              searchResult = [...searchResult, group];
+    await fetch("/group")
+      .then((res) => res.json())
+      .then((data) => {
+        data.map((group) => {
+          if (
+            group.groupName.includes(searchInput) ||
+            group.groupIntro.includes(searchInput)
+          ) {
+            searchResult = [...searchResult, group];
 
-              // setSearchResult([...searchResult, group]);
-            }
-          });
+            // setSearchResult([...searchResult, group]);
+          }
         });
-        done = true;
+      });
+    done = true;
     // } else {
     //   console.log("no db ")
     //   groups.map((group) => {
@@ -36,15 +36,15 @@ export default function SearchGroup({ groups }) {
     //       console.log(group);
     //       // setSearchResult([...searchResult, group]);
     //       searchResult = [...searchResult, group];
-          console.log(searchResult)
+    console.log(searchResult)
     //     }
     //   });
     //   done = true;
     // }
-    
+
     if (done === true) {
       console.log(searchResult)
-  
+
       navigate("/group/search-result", {
         state: {
           groups: searchResult,
@@ -67,7 +67,7 @@ export default function SearchGroup({ groups }) {
   return (
     <form>
       <div className="form-group">
-        <label for="groupName">Search</label>
+        <label htmlFor="groupName">Search</label>
         <input
           className="form-control"
           id="groupName"
@@ -81,13 +81,13 @@ export default function SearchGroup({ groups }) {
           fetched_groups: searchResult,
         }}
       > */}
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={() => handleSearch()}
-        >
-          go
-        </button>
+      <button
+        type="button"
+        className="btn btn-success"
+        onClick={() => handleSearch()}
+      >
+        go
+      </button>
       {/* </Link> */}
     </form>
   );
