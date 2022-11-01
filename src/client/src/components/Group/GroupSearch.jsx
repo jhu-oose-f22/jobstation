@@ -9,20 +9,9 @@ export default function SearchGroup({ groups }) {
     const navigate = useNavigate();
     let done = false;
     const handleSearch = async (e) => {
-        // console.log(`before add: ${user.username}`);
-        // if (groups.length === 0) {
         await fetch(`/group/search/${searchInput}`)
             .then((res) => res.json())
-            .then((data) => {
-                data.map((group) => {
-                    if (
-                        group.groupName.includes(searchInput) ||
-                        group.groupIntro.includes(searchInput)
-                    ) {
-                        searchResult = [...searchResult, group];
-                    }
-                });
-            });
+            .then((data) => (searchResult = data));
         done = true;
 
         if (done === true) {

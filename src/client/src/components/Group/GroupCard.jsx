@@ -73,9 +73,7 @@ const handleEdit = async (e) => {
         </div>
 
         <div className=" col-8 text-start flex-column    justify-md-content-center d-flex h-100">
-          {/* <img className="" src={
-                    `https://source.unsplash.com/random/170x130/?${group.groupname}`
-                } alt='' /> */}
+
           <div
             className=" d-flex flex-column mt-md-auto mt-0 p-2"
             style={{
@@ -92,9 +90,7 @@ const handleEdit = async (e) => {
           >
             quit
           </button>
-          <button type="button" className="btn btn-primary" onClick={(e) => handleEdit(e)}>
-            edit
-          </button>
+          
           <button type="button" className="btn btn-success">
             join
           </button>

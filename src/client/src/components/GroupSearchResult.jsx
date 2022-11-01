@@ -11,16 +11,11 @@ import SearchGroup from "./Group/GroupSearch";
 export default function SearchResult() {
 
     const location = useLocation();
-    // console.log(location.state.groups) 
     const result = location.state.groups;
     console.log("result page")
     console.log(result);
-//   console.log("search result");
-//   console.log(groups);
 
-//   console.log(this.props.location.state.fetched_groups);
   const { user } = useContext(UserContext);
-  //   const [groups, setGroups] = useState(fetched_groups);
   if (!isLoggedIn(user)) {
     return <Navigate to="/login" />;
   }

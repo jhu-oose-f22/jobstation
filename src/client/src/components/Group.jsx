@@ -12,32 +12,11 @@ export default function Group(props) {
   const { user } = useContext(UserContext);
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-    // axios
-    //   .get("/group")
-    //   .then(function (response) {
-    //     // handle success
-    //     response.data.map((fetched) => {
-    //       if (fetched.members.includes(user.username)) {
-    //         setGroups([...groups, fetched]);
-    //         console.log(fetched);
-    //       }
-    //     });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   })
-    //   .then(function () {});
-    
-    // const username = 'admin';
-    // fetch(`/user/${username}`);
-    
-    // fetch("/group/")
+
     fetch(`/group/${user.username}`)
       .then((res) => res.json())
       .then((fetched) => {
         setGroups(fetched);
-        // console.log('fetched');
-        // console.log(fetched)
         });
     //   });
   }, []);
