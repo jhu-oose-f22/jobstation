@@ -31,10 +31,13 @@ export default function Group(props) {
     // const username = 'admin';
     // fetch(`/user/${username}`);
     
-    fetch("/group")
+    // fetch("/group/")
+    fetch(`/group/${user.username}`)
       .then((res) => res.json())
       .then((fetched) => {
         setGroups(fetched);
+        // console.log('fetched');
+        // console.log(fetched)
         });
     //   });
   }, []);

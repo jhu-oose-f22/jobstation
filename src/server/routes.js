@@ -4,7 +4,7 @@ import express from "express";
 
 
 import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost } from "./controllers/posts.js";
-import {  quitGroup, getGroup, getGroups, createGroup, addMember, removeGroup, updateGroup, getGroupsByIDs } from "./controllers/groups.js";
+import {  quitGroup, getGroupByUser, getGroups, createGroup, addMember, getGroupsByInput, updateGroup } from "./controllers/groups.js";
 import { getAllUser, signin, signup, joinGroup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
 
 const router = express.Router();
@@ -19,14 +19,14 @@ router.patch('/discuss/update/:id', updatePost);
 router.delete('/discuss/post/:id', deletePost);
 
 //Group
-router.get('/group/:id', getGroup);
 router.post('/group/create', createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup); // unused 
-// router.delete('/group/:id', removeGroup); 
 router.patch('/group/update/:id', updateGroup);
-// router.get('/group', getGroupsByIDs);
 router.get('/group', getGroups);
+router.get('/group/search/:input', getGroupsByInput);
+router.get('/group/:username', getGroupByUser);
 router.post('/group/quit', quitGroup)
+
 
 
 
@@ -37,7 +37,7 @@ router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
 
 
-router.get('/user/:id', getUser);
+// router.get('/user/:id', getUser);
 
 
 router.get('/user/:username', getUserByUsername);
