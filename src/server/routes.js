@@ -9,7 +9,7 @@ import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember
 import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
-import { createPostEvent, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
+import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
 
 const router = express.Router();
 
@@ -43,7 +43,7 @@ router.get('/group/user/:userName', getRecommendedGroups); //用假用户的名�
 
 //User
 router.post('/signin', signin);
-router.post('/signup', signup);
+router.post('/signup', createUsersEvents, signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
 
