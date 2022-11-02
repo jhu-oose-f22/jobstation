@@ -1,5 +1,6 @@
 import Post from "../models/post.js";
 import mongoose from "mongoose";
+import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -10,13 +11,16 @@ export const getAllPosts = async (req, res) => {
     }
 }
 
-// TODO For it3
 export const getRecommendedPosts = async (req, res) => {
     try {
-        const targetPost = await Post.list();
+        const ContentsType = "post"; 
+        const RelatedContentsNames = getRelatedContentsTitle(req.params.userName, ContentsType);  //
 
-        res.status(200).json(targetPost);
-        console.log(targetPost);
+        console.log(RelatedContentsNames);
+        const recommendedPosts = Post.find( { title: { "$in": RelatedContentsNames } } );
+        res.status(200).json(recommendedPosts);
+        console.log(recommendedPosts);
+
     } catch (error) {
         res.status(404).json({ message: error.message});
     }

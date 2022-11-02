@@ -172,4 +172,33 @@ export const updateGroup = async (req, res) => {
     const updatedGroup = { groupName, owner, tags, intro, avatar, _id: id };
     await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
     res.json(updatedGroup);
-};
+}
+
+export const getRecommendedGroups = async (req, res) => {
+    try {
+        // const ContentsType = "company"; 
+        // const recommendedGroupNames = getRelatedContentsTitle(req.params.userName, ContentsType);
+        var opts = JSON.stringify({
+            object: {id: req.params.userName, type: "comany"},
+            content_tagged_relationship_type: 'taggedWith',
+        });
+        var RelatedContentsNames = [];
+        recommendApi.getRelatedContent(appId, opts, async (error, data, response) => {
+            if (error) {
+                console.error(error);
+            } else {
+                console.log('API called successfully. Returned data: ' + data);
+                const results = (new Function("return " + response.text))();
+                
+                for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
+                console.log(RelatedContentsNames);
+                const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
+                res.status(200).json(recommendedGroups);
+                console.log(recommendedPosts);
+            }
+            
+        }); 
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}

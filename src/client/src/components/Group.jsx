@@ -6,37 +6,45 @@ import { Navigate } from "react-router-dom";
 import { isLoggedIn, UserContext } from "../context/User";
 import GroupList from "./Group/GroupList";
 import Banner from "./Utils/Banner";
-import SearchGroup from "./Group/GroupSearch"
+import SearchGroup from "./Group/GroupSearch";
 // const axios = require('axios')
 export default function Group(props) {
-  const { user } = useContext(UserContext);
-  const [groups, setGroups] = useState([]);
-  useEffect(() => {
-    if (!isLoggedIn(user)) return;
-    fetch(`/group/${user.username}`)
-      .then((res) => res.json())
-      .then((fetched) => {
-        setGroups(fetched);
-      });
-    //   });
-  }, []);
-  if (!isLoggedIn(user)) {
-    return <Navigate to="/login" />;
-  }
+    const { user } = useContext(UserContext);
+    console.log("user from context");
+    console.log(user);
+    const [groups, setGroups] = useState([]);
+    const [recommendedGroups, setRecommmendedGroups] = useState([]);
+    useEffect(() => {
+        if (!isLoggedIn(user)) return;
+        fetch(`/group/${user.username}`)
+            .then((res) => res.json())
+            .then((fetched) => {
+                setGroups(fetched);
+            });
+        // fetch(`/group/user/${user.username}`)
+        fetch('/group/user/zpu2')
+            .then((res) => res.json())
+            .then((recommended) => {
+              setRecommmendedGroups(recommended);
+            })
+    }, []);
+    if (!isLoggedIn(user)) {
+        return <Navigate to="/login" />;
+    }
 
-  return (
-    <div
-      className=" h-100"
-      style={{
-        overflowY: "auto",
-      }}
-    >
-      <Banner pageName="group" />
-      <div className="accordion">
-        <SearchGroup groups={groups} />
-        <GroupList listName="join" groups={groups} />
-        <GroupList listName="recommended" />
-      </div>
-    </div>
-  );
+    return (
+        <div
+            className=" h-100"
+            style={{
+                overflowY: "auto",
+            }}
+        >
+            <Banner pageName="group" />
+            <div className="accordion">
+                <SearchGroup groups={groups} />
+                <GroupList listName="join" groups={groups} />
+                <GroupList listName="recommended" groups={recommendedGroups}/>
+            </div>
+        </div>
+    );
 }
