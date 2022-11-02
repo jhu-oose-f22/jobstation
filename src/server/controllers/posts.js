@@ -14,12 +14,14 @@ export const getAllPosts = async (req, res) => {
 export const getRecommendedPosts = async (req, res) => {
     try {
         const ContentsType = "post"; 
-        const RelatedContentsNames = getRelatedContentsTitle(req.params.userName, ContentsType);  //
+        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);  
+        function delay(time){
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+        await delay(1000);
 
-        console.log(RelatedContentsNames);
-        const recommendedPosts = Post.find( { title: { "$in": RelatedContentsNames } } );
+        const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
         res.status(200).json(recommendedPosts);
-        console.log(recommendedPosts);
 
     } catch (error) {
         res.status(404).json({ message: error.message});

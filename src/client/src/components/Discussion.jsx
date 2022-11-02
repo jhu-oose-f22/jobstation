@@ -23,7 +23,8 @@ export default function Discussion() {
 
     useEffect(() => {
         if (!isLoggedIn(user)) return;
-        fetch(`/discuss/user/${user._id}`)
+        // fetch(`/discuss/user/${user.username}`)
+        fetch(`/discuss/user/zpu2`)
             .then((res) => res.json())
             .then((fetched) => {
                 setRecommendedPosts(fetched);

@@ -10,8 +10,8 @@ import SearchGroup from "./Group/GroupSearch";
 // const axios = require('axios')
 export default function Group(props) {
     const { user } = useContext(UserContext);
-    console.log("user from context");
-    console.log(user);
+    // console.log("user from context");
+    // console.log(user);
     const [groups, setGroups] = useState([]);
     const [recommendedGroups, setRecommmendedGroups] = useState([]);
     useEffect(() => {
@@ -25,13 +25,16 @@ export default function Group(props) {
         fetch('/group/user/zpu2')
             .then((res) => res.json())
             .then((recommended) => {
+              // console.log("recommended in group")
+              // console.log(recommended)
               setRecommmendedGroups(recommended);
             })
     }, []);
     if (!isLoggedIn(user)) {
         return <Navigate to="/login" />;
     }
-
+    // console.log("recccc");
+    // console.log(recommendedGroups);
     return (
         <div
             className=" h-100"
