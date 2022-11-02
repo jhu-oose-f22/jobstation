@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PageNotFound from "./components/404";
+import PageNotFound from "./components/Utils/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
@@ -21,11 +21,6 @@ import  {getPosts} from './actions/posts'
 
 function App() {
 
-    // TODO replace local storage with cookies (react-cookie)
-    const dispatch = useDispatch();
-    useEffect(()=>{
-        dispatch(getPosts());
-    },[dispatch])
     return (
         <React.StrictMode>
             <UserContextProvider>
@@ -42,8 +37,8 @@ function App() {
                             <Route index path='/' element={<MainPage />} />
 
                             <Route path='/discussion' >
-                                <Route index element={<Posts />} />
-                                <Route path='/discussion/:postId' element={<Post />} />
+                                <Route index element={<Discussion />} />
+                                <Route path='/discussion/post/:postId' element={<Post />} />
                             </Route>
 
 

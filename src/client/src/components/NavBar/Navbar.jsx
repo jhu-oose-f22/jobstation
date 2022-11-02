@@ -3,14 +3,14 @@ import { Link, NavLink } from "react-router-dom";
 import { isLoggedIn, UserContext } from "../../context/User";
 import Logo from "../Utils/Logo";
 
-export default function Navbar(props) {
+const Navbar = (props) => {
     const pages = [
         'Discussion',
         'Group',
         'Dashboard',
     ].map((value) => {
         return (<li className='nav-item ps-2' key={value}>
-            <NavLink className='nav-link mx-md-2' to={'/' + value.toLowerCase()}>
+            <NavLink className='nav-link mx-lg-2' to={'/' + value.toLowerCase()}>
                 {value}
             </NavLink >
         </li>);
@@ -20,46 +20,37 @@ export default function Navbar(props) {
     const { user } = useContext(UserContext);
 
     return (
-        <nav className='navbar navbar-expand-md navbar-dark bg-dark text-light'
-            style={
-                {
-                    zIndex: "100",
-                    height: "5vh"
-                }
-            }
-        >
-            <div className='container-fluid bg-dark w-100'>
+        <nav className='sticky-top navbar navbar-expand-lg navbar-dark bg-dark text-light'>
+            <div className='container-lg align-items-center justify-content-center'>
                 <div className='navbar-brand'>
                     <Logo />
                 </div>
 
                 {/* pages */}
                 <div className="collapse navbar-collapse"
-                    style={{
 
-                    }}
-
-                    id='navbarSupportedContent'>
-                    <ul className="navbar-nav me-auto ">
+                     id='navbarSupportedContent'>
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
                         {pages}
                     </ul>
                 </div>
 
 
+
                 {/* profile */}
                 {isLoggedIn(user) ?
-                    <div className="d-flex flex-row align-items-center justify-content-around  ms-auto">
-                        <div className='nav-item d-flex align-items-center'>
-                            <div className='dropdown'>
+                    <div className="d-flex flex-row align-items-center justify-content-around">
+                        <div className='nav-item d-flex align-items-center me-auto'>
+                            <div className='dropdown ms-auto'>
                                 <div className=" nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div className="d-flex flex-row text-info align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
                                         <img className="avatar-tiny me-2" width={20}
-                                            title={`${user.username}`}
-                                            src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
+                                             title={`${user.username}`}
+                                             src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
                                         {user.username}
                                     </div>
                                 </div>
-                                <ul className="dropdown-menu dropdown-menu-start dropdown-menu-md-end align-items-start" aria-labelledby="navbarDropdown">
+                                <ul className="dropdown-menu dropdown-menu-start dropdown-menu-lg-end align-items-start" aria-labelledby="navbarDropdown">
                                     <li><Link className="dropdown-item" to="/profile">
                                         <i className="fa-regular fa-user me-2"></i>
                                         Profile
@@ -76,9 +67,9 @@ export default function Navbar(props) {
                             </div>
                         </div>
                         {/* notification */}
-                        <div className="nav-item ms-2 me-auto me-md-3 bg-light bg-opacity-10 py-1 px-2 rounded-2">
+                        <div className="nav-item ms-2 me-auto me-lg-3 bg-light bg-opacity-10 py-1 px-2 rounded-2">
                             <Link className="nav-link " to="/notifications">
-                                <div className='fa-layers fa-md'>
+                                <div className='fa-layers fa-lg'>
                                     <i className="fa-regular fa-bell"></i>
                                     <i className="fa-solid fa-circle" data-fa-transform='shrink-10 up-4 right-4' color='red' ></i>
                                 </div>
@@ -102,6 +93,9 @@ export default function Navbar(props) {
 
 
             </div>
+
         </nav >
     )
 }
+
+export default Navbar;
