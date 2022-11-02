@@ -67,7 +67,7 @@ export default function Login(props) {
 
     }
 
-    return <div className="d-flex flex-lg-row flex-column align-items-center justify-content-center justify-content-lg-evenly  h-100 overflow-auto">
+    return <div className="container-lg d-flex flex-lg-row flex-column align-items-center justify-content-center justify-content-lg-evenly  h-100 overflow-auto">
         <div className="col-auto col-lg-6 d-flex flex-column align-items-center justify-content-center mt-4">
             <img className="me-3 rounded-circle" width='300' src='./imgs/Logo.png' alt='Logo of Job Station' loading="lazy" />
             <div className="d-flex flex-column my-5 mx-3">

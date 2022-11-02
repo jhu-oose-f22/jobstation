@@ -5,16 +5,15 @@ import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
 import GroupSearchResult from "./components/GroupSearchResult";
-import Chat from "./components/Chat";
+import Chat from "./components/GroupChat/Chat/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
 import Navbar from "./components/NavBar/Navbar";
-// import Post from "./components/Post";
+import Post from "./components/Posts/Post/Post";
 import ToDo from "./components/Utils/ToDo";
 import UserContextProvider from "./context/User";
-import Posts from './components/Posts/Posts'
-import Post from './components/Posts/Post/Post'
+
 
 import  {useDispatch} from "react-redux";
 import  {getPosts} from './actions/posts'

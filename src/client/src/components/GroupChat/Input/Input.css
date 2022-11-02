@@ -1,21 +1,11 @@
- .ql-toolbar.ql-snow {
-     height: 25%;
- }
+.form {
+  display: flex;
+  border-radius: 0 0 0 0;
+}
 
- .ql-container.ql-snow {
-     overflow-y: auto;
-     height: 75%;
- }
 
- #send {
-     position: absolute;
-     width: fit-content;
-     right: 5px;
-     bottom: 5px;
-     border-radius: 10px;
-     border: 1px solid #ccc;
- }
-
- form {
-     position: relative;
- }
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
