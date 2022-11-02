@@ -134,7 +134,7 @@ export const quitGroup = async (req, res) => {
             targetUser
         );
 
-        res.status(200).json(updatedGroup);
+        res.status(200).json(updated);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
