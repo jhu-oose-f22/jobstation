@@ -19,7 +19,6 @@ export const signin = async (req, res) => {
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
         const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
-        delete oldUser.password;
         res.status(200).json({ result: oldUser, token });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -39,7 +38,6 @@ export const signup = async (req, res) => {
         const result = await User.create({ email, password: hashedPassword, username: username, tags });
 
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
-        delete result.password;
         res.status(201).json({ result, token });
     } catch (error) {
         res.status(500).json({ message: error.message });

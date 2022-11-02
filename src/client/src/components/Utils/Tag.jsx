@@ -63,10 +63,13 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
                                 setError('Tag already added');
                                 return
                             }
-                            // if (tagList.find((val) => val === e.target.value)) {
-                            setTag([...tag, tagInput]);
-                            setTagInput('');
-                            // }
+                            if (allTagList.find((val) => val === e.target.value)) {
+                                setTag([...tag, tagInput]);
+                                setTagInput('');
+                            } else {
+                                setError('Tag not found');
+                                return;
+                            }
                         }
                     }
                 >

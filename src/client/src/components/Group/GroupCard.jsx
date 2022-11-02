@@ -52,7 +52,7 @@ export default function GroupCard({ group }) {
         >
           <Link
             className="text-decoration-none "
-            to="./chat"
+            to="/group/chat"
             state={{
               name: user.username,
               room: group.groupName,

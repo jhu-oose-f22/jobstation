@@ -52,7 +52,7 @@ export default function Login(props) {
         setError('');
         if (email === '' || password === '' || userName === '') return;
 
-        axios.post(`${API_URL}/signup`, { email, password, username: userName }).then(
+        axios.post(`${API_URL}/signup`, { email, password, username: userName, tags: tag }).then(
             (res) => {
                 console.log(res.data);
                 sessionStorage.setItem('userLogin', JSON.stringify(res.data.result));
