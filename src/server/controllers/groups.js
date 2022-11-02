@@ -4,6 +4,8 @@ import User from "../models/user.js";
 import Tag from "../models/tag.js";
 import { updateUser } from "./users.js";
 
+import { getRelatedContentsTitle } from "../middleware/recommend.js";
+
 export const getGroups = async (req, res) => {
     try {
         const targetGroup = await Group.find();
@@ -31,8 +33,6 @@ export const getGroupsByInput = async (req, res) => {
             ],
         });
 
-        // const targetGroup = await Group.find();
-        console.log(targetGroups);
         res.status(200).json(targetGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -176,28 +176,16 @@ export const updateGroup = async (req, res) => {
 
 export const getRecommendedGroups = async (req, res) => {
     try {
-        // const ContentsType = "company"; 
-        // const recommendedGroupNames = getRelatedContentsTitle(req.params.userName, ContentsType);
-        var opts = JSON.stringify({
-            object: {id: req.params.userName, type: "comany"},
-            content_tagged_relationship_type: 'taggedWith',
-        });
-        var RelatedContentsNames = [];
-        recommendApi.getRelatedContent(appId, opts,(error, data, response) => {
-            if (error) {
-                console.error(error);
-            } else {
-                console.log('API called successfully. Returned data: ' + data);
-                const results = (new Function("return " + response.text))();
-                
-                for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
-                console.log(RelatedContentsNames);
-                const recommendedGroups = Group.find( { groupName: { "$in": RelatedContentsNames } } );
-                res.status(200).json(recommendedGroups);
-                console.log(recommendedPosts);
-            }
-            
-        }); 
+        const ContentsType = "company"; 
+        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);
+        
+        function delay(time){
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+        await delay(1000);
+
+        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
+        res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message});
     }
