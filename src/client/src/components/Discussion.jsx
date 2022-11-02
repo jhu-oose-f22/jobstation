@@ -78,8 +78,7 @@ export default function Discussion() {
                         <div>
                             <div className="profile-nav nav nav-tabs pt-2 mb-4">
                                 <Link to="/discussion" className="profile-nav-link nav-item nav-link active">Posts</Link>
-                                <Link to="/todo" className="profile-nav-link nav-item nav-link active">Interview Question</Link>
-                                <Link to="/todo" className="profile-nav-link nav-item nav-link active">Offer Compare</Link>
+                                <Link to="/discussion/recommend" className="profile-nav-link nav-item nav-link active">Posts for You</Link>
 
                                 <Button variant="contained" onClick={handleClick}>
                                     Create
