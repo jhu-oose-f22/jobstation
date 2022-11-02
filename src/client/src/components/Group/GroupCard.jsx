@@ -35,7 +35,7 @@ export default function GroupCard({ group, joined = false }) {
     };
 
     const handleJoin = async (e) => {
-      console.log('trying to join')
+        console.log('trying to join')
         const group_n_user = { groupId: group._id, username: user.username };
         await fetch("/group/join", {
             method: "post",
