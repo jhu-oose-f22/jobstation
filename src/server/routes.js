@@ -2,7 +2,6 @@
 // can delete this file
 import express from "express";
 
-
 import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
@@ -10,6 +9,7 @@ import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByU
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
+
 
 const router = express.Router();
 
@@ -25,6 +25,7 @@ router.delete('/discuss/post/:id', deletePost);
 router.get('/discuss/user/:userName', getRecommendedPosts); //用假用户的名字
 
 //Group
+
 // router.get('/group/:id', getGroup);
 router.post('/group/create', createTags, createGroupEvent, createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused 
@@ -41,9 +42,11 @@ router.post('/group/join', joinGroup)
 router.get('/group/user/:userName', getRecommendedGroups); //用假用户的名字
 
 
+
 //User
 router.post('/signin', signin);
 router.post('/signup', signup);
+
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
 router.get('/user/:username', getUserByUsername);
@@ -56,5 +59,6 @@ router.get('/tags', getTags);
 
 //recommand
 router.post('/fakeusers', createFakeUsers); //设置了三个有tag的用户：zpu2, frontendBoy, testBoy
+
 
 export default router;
