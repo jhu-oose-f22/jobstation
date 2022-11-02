@@ -1,14 +1,24 @@
 import React from "react";
-import { OnlineIcon } from "./icons";
 
 const UserSidebar = ({ users }) => {
 
   const userLi = users ? users.map((user) => {
     return (
-      <li className="btn btn-outline-dark rounded-0" key={user.id}>
-        <div className="d-flex align-items-center text-white">
-          <OnlineIcon />
-          <span className="ms-1">{user.name}</span>
+      <li className="btn btn-dark rounded-0" key={user.id}
+        title={`${user.name} is online`}
+      >
+        <div className="d-flex align-items-center text-white" >
+          <div>
+            <img className="" width={30}
+              title={`${user.name}`}
+              src={(user.avatar !== '' && user.avatar) || `https://ui-avatars.com/api/?name=${user.name}&background=random&bold=true&rounded=true`} alt={`user ${user.name}`} />
+            <i className="mask fa-solid fa-circle fa-sm " color='lightgreen'
+              style={{
+                transform: 'translate(-75%, 75%)',
+              }}
+            ></i>
+          </div>
+          <span className="">{user.name}</span>
         </div>
       </li>
     );
@@ -16,7 +26,7 @@ const UserSidebar = ({ users }) => {
 
 
   return (
-    <div className="bg-dark d-flex flex-column justify-content-between align-items-between h-100 col-2 bg-opacity-50 w-100">
+    <div className="bg-dark d-flex flex-column justify-content-between align-items-between h-100 col-2 w-100">
       {users ? (
         <div className="h-100">
 

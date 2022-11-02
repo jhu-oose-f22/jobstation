@@ -5,13 +5,7 @@ import Logo from "./Utils/Logo";
 function Footer() {
 
     return (
-        <footer className="d-flex border-top border-3 border-opacity-50 py-3 bg-light justify-content-center align-items-center"
-            style={
-                {
-                    height: "5vh"
-                }
-            }
-        >
+        <footer className="fixed-bottom d-flex py-3 bg-light justify-content-center">
             <Logo textStyle='muted' />
             <div className='d-none d-md-inline-flex text-muted'>
                 |<a href="https://github.com/jhu-oose-f22/jobstation" className='ms-2 text-muted text-decoration-none' target="Github">
