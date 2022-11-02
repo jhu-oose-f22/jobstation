@@ -12,12 +12,12 @@ export default function Group(props) {
   const { user } = useContext(UserContext);
   const [groups, setGroups] = useState([]);
   useEffect(() => {
-
+    if (!isLoggedIn(user)) return;
     fetch(`/group/${user.username}`)
       .then((res) => res.json())
       .then((fetched) => {
         setGroups(fetched);
-        });
+      });
     //   });
   }, []);
   if (!isLoggedIn(user)) {
@@ -28,12 +28,12 @@ export default function Group(props) {
     <div
       className=" h-100"
       style={{
-        overflowY: "auto", 
+        overflowY: "auto",
       }}
     >
       <Banner pageName="group" />
       <div className="accordion">
-        <SearchGroup groups = {groups} />
+        <SearchGroup groups={groups} />
         <GroupList listName="join" groups={groups} />
         <GroupList listName="recommended" />
       </div>
