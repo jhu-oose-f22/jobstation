@@ -3,6 +3,7 @@ import { isLoggedIn, UserContext } from "../context/User";
 import { Link, Navigate } from "react-router-dom";
 import Banner from "./Utils/Banner";
 import { getAllDiscussions } from "../api/discussion";
+import Tag from "./Utils/Tag";
 
 export default function Discussion() {
     const { user } = useContext(UserContext);
@@ -26,7 +27,7 @@ export default function Discussion() {
         {
             id: '12u',
             title: "OA",
-            tag: ['Meta', 'OA', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
+            tag: ['Meta', 'OA', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'Meta', 'OA', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'Meta', 'OA', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'Meta', 'OA', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5'],
             user: {
                 userId: 'asldkjf',
                 username: 'wby',
@@ -156,15 +157,9 @@ export default function Discussion() {
                         title={`${res.user.username}`}
                         src={(res.user.avatar !== '' && res.user.avatar) || `https://ui-avatars.com/api/?name=${res.user.username}&background=random&bold=true&rounded=true`} alt={`user ${res.user.username}`} />
                     <strong>{res.title}</strong>
-                    <div className='text-muted ms-auto'>last updated {`${res.updatedTime.toLocaleTimeString()}  ${res.updatedTime.toLocaleDateString()}`}</div>
+                    <div className='text-muted ms-auto'>last updated {`${res.updatedTime.toLocaleTimeString().slice(0, -3)}  ${res.updatedTime.toLocaleDateString()}`}</div>
                 </div>
-                <div className="">
-                    tags: <strong className="text-muted">{res.tag.slice(0, 5).map((val) => {
-                        return <button className="btn btn-outline-secondary btn-sm mx-1" key={val}>
-                            {val}
-                        </button>
-                    })}</strong>
-                </div>
+                <Tag tag={res.tag} />
                 <div className="my-3">{res.body.slice(0, 80)}</div>
             </Link>
         </li>

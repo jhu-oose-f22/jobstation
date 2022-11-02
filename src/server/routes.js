@@ -4,8 +4,9 @@ import express from "express";
 
 
 import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
-import { getGroup, createGroup, addMember, removeGroup, updateGroup, getGroups ,getRecommendedGroups } from "./controllers/groups.js";
-import { signin, signup, joinGroup, removeUser, updateUser, getUser } from "./controllers/users.js";
+
+import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getGroups, getRecommendedGroups } from "./controllers/groups.js";
+import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
@@ -30,15 +31,32 @@ router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused
 router.delete('/group/:id', removeGroup); 
 router.patch('/group/update/:id', createTags, updateGroup);
 router.get('/group', getGroups);
+router.get('/group/search/:input', getGroupsByInput);
+router.get('/group/:username', getGroupByUser);
+router.post('/group/quit', quitGroup)
+router.post('/group/join', joinGroup)
+
+
 
 router.get('/group/user/:userName', getRecommendedGroups); //用假用户的名字
+
 
 //User
 router.post('/signin', signin);
 router.post('/signup', signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
-router.get('/user/:id', getUser);
+
+
+// router.get('/user/:id', getUser);
+
+
+router.get('/user/:username', getUserByUsername);
+
+
+
+
+router.get('/user', getAllUser);
 
 
 //Tags

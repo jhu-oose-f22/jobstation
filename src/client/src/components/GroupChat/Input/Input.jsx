@@ -14,7 +14,7 @@ function Input({ setMessage, sendMessage, message }) {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
       ['blockquote', 'code-block'],
-      ['link']
+      ['link', 'image']
     ],
   }
 
@@ -28,6 +28,7 @@ function Input({ setMessage, sendMessage, message }) {
     'bullet',
     'indent',
     'link',
+    'image',
     'code-block',
   ]
 

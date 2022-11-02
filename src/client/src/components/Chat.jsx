@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 import { isLoggedIn, UserContext } from "../context/User";
 
-import Sidebar from "./GroupChat/Sidebar";
+import UserSidebar from "./GroupChat/UserSidebar";
 import Messages from "./GroupChat/Messages/Messages";
 import InfoBar from "./GroupChat/InfoBar";
 import Input from "./GroupChat/Input/Input";
@@ -27,6 +27,7 @@ const Chat = (props) => {
   useEffect(() => {
     if (!state.room) navigate('../');
     setRoom(state.room);
+    if (room === '') return;
     console.log(name, room);
     socket.on('connect', (e) => { console.log(e) });
     socket.emit("join", { name, room }, (error) => {
@@ -37,18 +38,18 @@ const Chat = (props) => {
   }, [state, name, room, socket, setRoom, navigate]);
 
   useEffect(() => {
-    socket.on("message", (message) => {
-      setMessages([...messages, message]);
-    });
-
+    if (room === '') return;
     socket.on("history", history => {
       setMessages(history);
     })
-
+    socket.on("message", (message) => {
+      setMessages([...messages, message]);
+    });
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [messages, socket]);
+    console.log(messages);
+  }, [messages, socket, room]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -63,26 +64,27 @@ const Chat = (props) => {
 
 
   return (
-    <div className="h-100 d-flex bg-img m-0 w-100"
+    <div className="h-100 d-flex flex-column bg-img m-0 w-100"
       style={{
         backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',
       }}
     >
-
-      <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
-        <InfoBar room={room} />
-        <Messages messages={messages} name={name} />
-        <Input
-          message={message}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
-        />
-      </div>
-      <div className="col-md-2 h-100 collapse show"
-        id='sidebar'
-      >
-        <Sidebar users={users} />
+      <InfoBar room={room} />
+      <div className="d-flex overflow-auto">
+        <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
+          <Messages messages={messages} name={name} />
+          <Input
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+          />
+        </div>
+        <div className="col-md-2 h-100 collapse show"
+          id='sidebar'
+        >
+          <UserSidebar users={users} />
+        </div>
       </div>
     </div>
   );

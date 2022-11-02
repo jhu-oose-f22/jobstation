@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const groupSchema = mongoose.Schema({
     groupName: String,
+    groupIntro: String,
     owner: String, //should be user
-    member: {
+    members: {
         type: [String],
         default: []
     },
     tags: [String],
-    groupIntro: String,
     avatar: String,
     memberCount: {
         type: Number,
@@ -21,15 +21,18 @@ const groupSchema = mongoose.Schema({
 }, ['']);
 
 class GroupClass{
-    static async createGroup({groupName, groupIntro, owner = '', tags = [], avatar = ''}){
+    static async createGroup({groupName, groupIntro, groupTag, owner,  avatar = ''}){
         // if (groupName && owner && tags){
         if (groupName){
+        console.log(`creating new group: ${owner}`);
+
             // const memberCount = member.lenth;
             const newGroup = await this.create({
                 groupName,
                 groupIntro,
-                // owner,
-                // member,
+                tags: [groupTag],
+                owner,
+                members: [owner]
                 // tags,
                 // avatar,
                 // memberCount,
