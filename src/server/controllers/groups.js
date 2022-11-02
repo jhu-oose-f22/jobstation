@@ -4,6 +4,8 @@ import User from "../models/user.js";
 import Tag from "../models/tag.js";
 import { updateUser } from "./users.js";
 
+import { getRelatedContentsTitle } from "../middleware/recommend.js";
+
 export const getGroups = async (req, res) => {
     try {
         const targetGroup = await Group.find();
@@ -31,8 +33,6 @@ export const getGroupsByInput = async (req, res) => {
             ],
         });
 
-        // const targetGroup = await Group.find();
-        console.log(targetGroups);
         res.status(200).json(targetGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -172,4 +172,21 @@ export const updateGroup = async (req, res) => {
     const updatedGroup = { groupName, owner, tags, intro, avatar, _id: id };
     await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
     res.json(updatedGroup);
-};
+}
+
+export const getRecommendedGroups = async (req, res) => {
+    try {
+        const ContentsType = "company"; 
+        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);
+        
+        function delay(time){
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+        await delay(1000);
+
+        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
+        res.status(200).json(recommendedGroups);
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}

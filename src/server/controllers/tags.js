@@ -1,11 +1,10 @@
 import Tag from "../models/tag.js";
 
+
 export const createTags = async (req, res, next) => {
     const { tags } = req.body;
     try {
-        const newTags = await Tag.createTags(tags);
-        console.log("newTags");
-        console.log(newTags);
+        await Tag.createTags(tags);
         next();
     } catch (error) {
         res.status(204).json({ message: error.message });
