@@ -63,7 +63,8 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
                                 setError('Tag already added');
                                 return
                             }
-                            if (allTagList.find((val) => val === e.target.value)) {
+
+                            if (allTagList.find(({ Name }) => Name === tagInput)) {
                                 setTag([...tag, tagInput]);
                                 setTagInput('');
                             } else {
