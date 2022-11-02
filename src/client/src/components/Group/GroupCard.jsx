@@ -29,8 +29,8 @@ export default function GroupCard({ group, joined = false }) {
             body: JSON.stringify(group_n_user),
         }).then((res) => console.log(res));
 
-        // window.history.go(0);
-        navigate("/group");
+        window.history.go(0);
+        // navigate("/group");
 
     };
 
