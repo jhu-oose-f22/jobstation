@@ -1,6 +1,7 @@
 import Group from "../models/group.js";
 import mongoose from "mongoose";
 import User from "../models/user.js";
+import Tag from "../models/tag.js";
 import { updateUser } from "./users.js";
 
 export const getGroups = async (req, res) => {
@@ -23,6 +24,9 @@ export const getGroupsByInput = async (req, res) => {
                 },
                 {
                     groupIntro: { $regex: input, $options: "i" },
+                },
+                {
+                    tags: { $regex: input, $options: "i" },
                 },
             ],
         });
@@ -54,23 +58,50 @@ export const getGroupByUser = async (req, res) => {
 };
 
 export const createGroup = async (req, res) => {
-    // const {groupName, owner, member, tags, intro, avatar} = req.body;
-    // const newGroup = await Group.createGroup({groupName, owner, member, tags, intro, avatar});
-    const { groupName, groupIntro, owner } = req.body;
-    const newGroup = await Group.createGroup({ groupName, groupIntro, owner });
+    const { groupName, groupIntro, groupTag, owner } = req.body;
+    const inputTag = await Tag.createTags([groupTag]);
+    const newGroup = await Group.createGroup({ groupName, groupIntro, groupTag, owner });
     try {
         await newGroup.save();
-        // console.log(`newGroup._id: ${newGroup._id}`);
         let creator = await User.findOne({ username: owner });
         creator.groups.push(newGroup._id);
         const updatedUser = await User.findOneAndUpdate(
             { username: owner },
             creator
         );
-        // console.log(`updated user: ${updatedUser}`);
         res.status(201).json(newGroup);
     } catch (error) {
         res.status(204).json({ message: error.message });
+    }
+};
+
+export const joinGroup = async (req, res) => {
+    try {
+        const { groupId, username } = req.body;
+        const targetGroup = await Group.findById(groupId);
+        if (targetGroup.members.includes(username))
+            res.status(200).json("already in, unable to join");
+        else {
+            let updated = targetGroup;
+            updated.memberCount += 1;
+            updated.members.push(username);
+            const updatedGroup = await Group.findOneAndUpdate(
+                { _id: groupId },
+                updated
+            );
+            let targetUser = await User.findOne({ username: username });
+            targetUser.groups.push(groupId);
+            const updatedUser = await User.findOneAndUpdate(
+                { username: username },
+                targetUser
+            );
+            res.status(200).json(updatedGroup);
+
+        }
+       
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 };
 

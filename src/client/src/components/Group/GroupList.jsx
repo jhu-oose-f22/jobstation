@@ -7,16 +7,28 @@ export default function GroupList({ listName, groups = [], search = false }) {
     const { user } = useContext(UserContext);
     const [newGroupName, setNewGroupName] = useState({});
     const [newGroupIntro, setNewGroupIntro] = useState({});
+    const [newGroupTag, setNewGroupTag] = useState({});
 
     let groupTitle;
     // TODO throttle all groups
-    groups = groups.map((group) => {
-        return (
-            <li className=" list-group-item border-0 " key={group._id}>
-                <GroupCard group={group} />
-            </li>
-        );
-    });
+    if (!search) {
+        groups = groups.map((group) => {
+            return (
+                <li className=" list-group-item border-0 " key={group._id}>
+                    <GroupCard group={group} joined={true} />
+                </li>
+            );
+        });
+    } else {
+        groups = groups.map((group) => {
+            return (
+                <li className=" list-group-item border-0 " key={group._id}>
+                    <GroupCard group={group} joined={false} />
+                </li>
+            );
+        });
+    }
+    
     // }
     switch (listName) {
         case "recommended":
@@ -39,6 +51,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
+            groupTag: newGroupTag,
             owner: user.username,
         };
 
@@ -154,6 +167,19 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                             placeholder="..."
                                             onChange={(e) =>
                                                 setNewGroupIntro(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label for="groupTag">
+                                            Tag
+                                        </label>
+                                        <input
+                                            className="form-control"
+                                            id="groupTag"
+                                            placeholder="..."
+                                            onChange={(e) =>
+                                                setNewGroupTag(e.target.value)
                                             }
                                         />
                                     </div>
