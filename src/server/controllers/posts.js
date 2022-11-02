@@ -13,28 +13,14 @@ export const getAllPosts = async (req, res) => {
 
 export const getRecommendedPosts = async (req, res) => {
     try {
-        // const ContentsType = "post"; 
-        // const recommendedPostNames = getRelatedContentsTitle(req.params.userName, ContentsType);
-        var opts = JSON.stringify({
-            object: {id: req.params.userName, type: "post"},
-            content_tagged_relationship_type: 'taggedWith',
-        });
-        var RelatedContentsNames = [];
-        recommendApi.getRelatedContent(appId, opts,(error, data, response) => {
-            if (error) {
-                console.error(error);
-            } else {
-                console.log('API called successfully. Returned data: ' + data);
-                const results = (new Function("return " + response.text))();
-                
-                for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
-                console.log(RelatedContentsNames);
-                const recommendedPosts = Post.find( { title: { "$in": RelatedContentsNames } } );
-                res.status(200).json(recommendedPosts);
-                console.log(recommendedPosts);
-            }
-            
-        }); 
+        const ContentsType = "post"; 
+        const RelatedContentsNames = getRelatedContentsTitle(req.params.userName, ContentsType);  //
+
+        console.log(RelatedContentsNames);
+        const recommendedPosts = Post.find( { title: { "$in": RelatedContentsNames } } );
+        res.status(200).json(recommendedPosts);
+        console.log(recommendedPosts);
+
     } catch (error) {
         res.status(404).json({ message: error.message});
     }

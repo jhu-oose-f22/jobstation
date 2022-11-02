@@ -5,7 +5,7 @@ import express from "express";
 
 import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
 
-import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getGroups, getRecommendedGroups } from "./controllers/groups.js";
+import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
 import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
@@ -25,10 +25,10 @@ router.delete('/discuss/post/:id', deletePost);
 router.get('/discuss/user/:userName', getRecommendedPosts); //用假用户的名字
 
 //Group
-router.get('/group/:id', getGroup);
+// router.get('/group/:id', getGroup);
 router.post('/group/create', createTags, createGroupEvent, createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused 
-router.delete('/group/:id', removeGroup); 
+// router.delete('/group/:id', removeGroup); 
 router.patch('/group/update/:id', createTags, updateGroup);
 router.get('/group', getGroups);
 router.get('/group/search/:input', getGroupsByInput);
