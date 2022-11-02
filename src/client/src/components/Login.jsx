@@ -5,6 +5,7 @@ import Switch from "react-switch";
 import { API_URL } from "../context/Const";
 import { isLoggedIn, UserContext } from "../context/User";
 import Error from "./Utils/Error";
+import { TagSelection } from "./Utils/Tag";
 
 export default function Login(props) {
     const [email, setEmail] = useState('');
@@ -13,12 +14,14 @@ export default function Login(props) {
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState('');
     const [userName, setUserName] = useState('');
+    const [tag, setTag] = useState([]);
 
     const { user, toggleUser, toggleToken } = useContext(UserContext);
 
 
     const handleLogin = (e) => {
         e.preventDefault();
+        setError('');
         if (email === '' || password === '') return;
 
         axios.post(`${API_URL}/signin`, { email, password }).then(
@@ -46,6 +49,7 @@ export default function Login(props) {
 
     const handleSignup = (e) => {
         e.preventDefault();
+        setError('');
         if (email === '' || password === '' || userName === '') return;
 
         axios.post(`${API_URL}/signup`, { email, password, username: userName }).then(
@@ -63,7 +67,7 @@ export default function Login(props) {
 
     }
 
-    return <div className="d-flex flex-lg-row flex-column align-items-center justify-content-center justify-content-lg-evenly  h-100 bg-light overflow-auto">
+    return <div className="d-flex flex-lg-row flex-column align-items-center justify-content-center justify-content-lg-evenly  h-100 overflow-auto">
         <div className="col-auto col-lg-6 d-flex flex-column align-items-center justify-content-center mt-4">
             <img className="me-3 rounded-circle" width='300' src='./imgs/Logo.png' alt='Logo of Job Station' loading="lazy" />
             <div className="d-flex flex-column my-5 mx-3">
@@ -87,7 +91,7 @@ export default function Login(props) {
             </div>
             :
             // login
-            <div>
+            <div className="col-4 mt-2">
                 <h1>Sign
                     <Switch onChange={() => {
                         setIsLogin(!isLogin);
@@ -180,6 +184,7 @@ export default function Login(props) {
                                 value={password}
                                 onChange={e => setPassword(e.target.value)} />
                         </div>
+                        <TagSelection tag={tag} setTag={setTag} setError={setError} />
                         <button className="btn btn-success w-100 my-4 h-100">
                             Sign Up
                         </button>
