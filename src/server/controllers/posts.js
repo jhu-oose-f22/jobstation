@@ -1,12 +1,28 @@
 import Post from "../models/post.js";
 import mongoose from "mongoose";
+import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
 
-export const getPosts = async (req, res) => {
+export const getAllPosts = async (req, res) => {
     try {
         const targetPost = await Post.list();
-
         res.status(200).json(targetPost);
-        console.log(targetPost);
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}
+
+export const getRecommendedPosts = async (req, res) => {
+    try {
+        const ContentsType = "post"; 
+        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);  
+        function delay(time){
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+        await delay(1000);
+
+        const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
+        res.status(200).json(recommendedPosts);
+
     } catch (error) {
         res.status(404).json({ message: error.message});
     }
@@ -24,11 +40,19 @@ export const createPost = async (req, res) => {
 }
 
 export const getPostsByTags = async (req, res) => {
-    const tags = req.body.tags;
-    
+    try {
+        const {tags} = req.body;
+        console.log(tags);
+        const targetPosts = await Post.find( { tags: {$all: tags}});
+        res.status(201).json(targetPosts);
+        console.log(targetPosts);
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+
 }
 
-export const getPost = async (req, res) => {
+export const getPostById = async (req, res) => {
     try {
         const targetPost = await Post.findById(req.params.id);
         res.status(200).json(targetPost);

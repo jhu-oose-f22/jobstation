@@ -37,7 +37,7 @@ const Chat = (props) => {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      setMessages(messages => [...messages, message]);
+      setMessages([...messages, message]);
     });
 
     socket.on("history", history => {
@@ -47,7 +47,7 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [message, socket]);
+  }, [socket, messages]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -57,10 +57,10 @@ const Chat = (props) => {
   };
 
   return (
-    <div className="vh-100 d-flex align-items-center justify-content-center p-5 bg-img "
+    <div className="container-lg d-flex align-items-center justify-content-center p-3"
       style={{
-        backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',
+        height: 800
       }}
     >
       <div className="col-8 d-flex flex-column align-items-between justify-content-center h-100 ">
@@ -70,6 +70,7 @@ const Chat = (props) => {
           message={message}
           setMessage={setMessage}
           sendMessage={sendMessage}
+          room = {room}
         />
       </div>
       <TextContainer users={users} />

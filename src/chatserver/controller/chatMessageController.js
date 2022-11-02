@@ -1,20 +1,6 @@
-const mongoose = require('mongoose');
 const chatMessages = require('../model/ChatMessage');
 const { format } = require('date-fns');
-// I am trying to create a collection like "oose_jobstation_chatmessage", but IDK how to do that.
 
-
-
-const createChatMessage = (groupname, owner) => {
-    // const GroupChatMessages = mongoose.model(`${groupname}chatmessages`,chatMessageSchema);
-    // try {
-    //     const res = await GroupChatMessages.create()
-    // } catch (error) {
-        
-    // } 
-
-
-}
 
 const fetchChatMessage = async (room) => {
     try {
@@ -46,7 +32,6 @@ const storeChatMessage = async (room,content,user) => {
 }
 
 module.exports = {
-    createChatMessage,
     storeChatMessage,
     fetchChatMessage
 }

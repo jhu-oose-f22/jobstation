@@ -5,6 +5,9 @@
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 .VSCodeCounter/*
+.idea
+.github
+.DS_Store
 src/server/node_modules
 src/client/node_modules
 src/chatserver/node_modules
@@ -88,12 +91,12 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# # dotenv environment variable files
+# .env
+# .env.development.local
+# .env.test.local
+# .env.production.local
+# .env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

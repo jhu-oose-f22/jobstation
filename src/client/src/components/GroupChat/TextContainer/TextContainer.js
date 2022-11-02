@@ -11,7 +11,7 @@ const TextContainer = ({ users }) => {
   return (
     <div className="bg-secondary d-flex flex-column justify-content-between align-items-between h-100 col-2 bg-opacity-50  border border-light border-opacity-50 " style={
       {
-        borderRadius: '0 18px 18px 0',
+        borderRadius: '0 12px 12px 0',
       }
     }>
       {users ? (
@@ -19,7 +19,7 @@ const TextContainer = ({ users }) => {
           <div className="text-white text-wrap text-center  bg-primary bg-opacity-25 py-3 px-1"
             style={
               {
-                borderRadius: '0 18px 0 0',
+                borderRadius: '0 12px 0 0',
               }
             }
           >
