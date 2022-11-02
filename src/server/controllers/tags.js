@@ -14,10 +14,11 @@ export const createTags = async (req, res, next) => {
 
 export const getTags = async (req, res) => {
     try {
-        const targetTags = await Tag.find();
+        const targetTags = await Tag.find({});
+
         res.status(201).json(targetTags);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 }
 

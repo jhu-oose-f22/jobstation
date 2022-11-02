@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
-import { Link, Navigate, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
 
 export default function GroupList({ listName, groups = [], search = false }) {
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [newGroupName, setNewGroupName] = useState({});
     const [newGroupIntro, setNewGroupIntro] = useState({});
     const [newGroupTag, setNewGroupTag] = useState({});
@@ -66,6 +68,8 @@ export default function GroupList({ listName, groups = [], search = false }) {
             .then((data) => console.log(data));
 
         window.history.go(0);
+        // navigate("/group");
+
     };
 
     return (
@@ -193,6 +197,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                     <button
                                         type="button"
                                         className="btn btn-success"
+                                        data-bs-dismiss="modal"
                                         onClick={() => handleCreate()}
                                     >
                                         ✔️

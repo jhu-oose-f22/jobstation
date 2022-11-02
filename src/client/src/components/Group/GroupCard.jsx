@@ -30,6 +30,8 @@ export default function GroupCard({ group, joined = false }) {
         }).then((res) => console.log(res));
 
         window.history.go(0);
+        // navigate("/group");
+
     };
 
     const handleJoin = async (e) => {
@@ -66,7 +68,7 @@ export default function GroupCard({ group, joined = false }) {
                 >
                     <Link
                         className="text-decoration-none "
-                        to="./chat"
+                        to="/group/chat"
                         state={{
                             name: user.username,
                             room: group.groupName,

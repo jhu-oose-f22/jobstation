@@ -46,16 +46,7 @@ router.post('/signin', signin);
 router.post('/signup', signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
-
-
-// router.get('/user/:id', getUser);
-
-
 router.get('/user/:username', getUserByUsername);
-
-
-
-
 router.get('/user', getAllUser);
 
 
