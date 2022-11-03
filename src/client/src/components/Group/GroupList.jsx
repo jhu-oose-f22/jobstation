@@ -1,10 +1,19 @@
 import { useContext, useState } from "react";
+<<<<<<< HEAD
 import { Link, Navigate, NavLink } from "react-router-dom";
+=======
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
 
 export default function GroupList({ listName, groups = [], search = false }) {
     const { user } = useContext(UserContext);
+<<<<<<< HEAD
+=======
+    const navigate = useNavigate();
+
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     const [newGroupName, setNewGroupName] = useState({});
     const [newGroupIntro, setNewGroupIntro] = useState({});
     const [newGroupTag, setNewGroupTag] = useState({});
@@ -66,8 +75,15 @@ export default function GroupList({ listName, groups = [], search = false }) {
             .then((data) => console.log(data));
 
         window.history.go(0);
+<<<<<<< HEAD
     };
 
+=======
+        // navigate("/group");
+
+    };
+
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div className="accordion-item py-5 border-0">
             <div className=" accordion-header my-2" id={listName}>
@@ -193,6 +209,10 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                     <button
                                         type="button"
                                         className="btn btn-success"
+<<<<<<< HEAD
+=======
+                                        data-bs-dismiss="modal"
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
                                         onClick={() => handleCreate()}
                                     >
                                         ✔️

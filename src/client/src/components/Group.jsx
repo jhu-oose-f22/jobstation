@@ -12,12 +12,20 @@ export default function Group(props) {
   const { user } = useContext(UserContext);
   const [groups, setGroups] = useState([]);
   useEffect(() => {
+<<<<<<< HEAD
 
+=======
+    if (!isLoggedIn(user)) return;
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     fetch(`/group/${user.username}`)
       .then((res) => res.json())
       .then((fetched) => {
         setGroups(fetched);
+<<<<<<< HEAD
         });
+=======
+      });
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     //   });
   }, []);
   if (!isLoggedIn(user)) {
@@ -28,12 +36,20 @@ export default function Group(props) {
     <div
       className=" h-100"
       style={{
+<<<<<<< HEAD
         overflowY: "auto", 
+=======
+        overflowY: "auto",
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
       }}
     >
       <Banner pageName="group" />
       <div className="accordion">
+<<<<<<< HEAD
         <SearchGroup groups = {groups} />
+=======
+        <SearchGroup groups={groups} />
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
         <GroupList listName="join" groups={groups} />
         <GroupList listName="recommended" />
       </div>

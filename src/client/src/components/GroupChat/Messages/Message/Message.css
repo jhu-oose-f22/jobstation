@@ -1,7 +1,24 @@
+<<<<<<< HEAD
 .messageBox {
   background: #F3F3F3;
   border-radius: 20px;
+=======
+.messageBoxSelf {
+  background: #226EF2;
+  border-radius: 12px;
+  padding: 5px 5px;
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
   color: white;
+  display: inline-block;
+  max-width: 80%;
+
+}
+
+.messageBoxOther {
+  background: white;
+  border-radius: 12px;
+  padding: 5px 5px;
+  color: #333333;
   display: inline-block;
   max-width: 80%;
 
@@ -10,8 +27,7 @@
 .messageText {
   width: 100%;
   letter-spacing: 0;
-  float: left;
-  font-size: 1.1em;
+  font-size: 10pt;
   word-wrap: break-word;
   margin: auto;
 }

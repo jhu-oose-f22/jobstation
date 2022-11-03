@@ -30,6 +30,7 @@ export default function GroupCard({ group, joined = false }) {
         }).then((res) => console.log(res));
 
         window.history.go(0);
+<<<<<<< HEAD
     };
 
     const handleJoin = async (e) => {
@@ -47,6 +48,27 @@ export default function GroupCard({ group, joined = false }) {
         navigate("/group");
     };
 
+=======
+        // navigate("/group");
+
+    };
+
+    const handleJoin = async (e) => {
+      console.log('trying to join')
+        const group_n_user = { groupId: group._id, username: user.username };
+        await fetch("/group/join", {
+            method: "post",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(group_n_user),
+        }).then((res) => res.json());
+
+        // window.history.go(0);
+        navigate("/group");
+    };
+
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div
             className="card btn shadow-sm d-flex flex-row p-0"
@@ -66,7 +88,11 @@ export default function GroupCard({ group, joined = false }) {
                 >
                     <Link
                         className="text-decoration-none "
+<<<<<<< HEAD
                         to="./chat"
+=======
+                        to="/group/chat"
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
                         state={{
                             name: user.username,
                             room: group.groupName,

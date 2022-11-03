@@ -8,9 +8,10 @@ const secret = 'test';
 
 export const signin = async (req, res) => {
     const { email, password } = req.body;
-    
+
     try {
         const oldUser = await User.findOne({ email });
+
 
         if (!oldUser) return res.status(404).json({ message: "User doesn't exist" });
 
@@ -19,31 +20,29 @@ export const signin = async (req, res) => {
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
         const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "1h" });
-
         res.status(200).json({ result: oldUser, token });
     } catch (err) {
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: err.message });
     }
 };
 
 export const signup = async (req, res) => {
-    const { email, password, name } = req.body;
+    const { email, password, username, tags = [] } = req.body;
 
     try {
         const oldUser = await User.findOne({ email });
 
-        if (oldUser) return res.status(400).json({ message: "User already exists" });
+        if (oldUser) return res.status(400).json({ message: "Email already exists" });
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const result = await User.create({ email, password: hashedPassword, name: name });
+        const result = await User.create({ email, password: hashedPassword, username: username, tags });
 
-        const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
-
+        const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
         res.status(201).json({ result, token });
     } catch (error) {
-        res.status(500).json({ message: "Something went wrong" });
-    
+        res.status(500).json({ message: error.message });
+
         console.log(error);
     }
 };
@@ -75,11 +74,11 @@ export const removeUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { tags } = req.body;
-  
+
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No user with id: ${id}`);
     const updatedUser = { tags };
     await User.findByIdAndUpdate(id, updatedUser, { new: true });
-//   res.json(updatedUser);
+    //   res.json(updatedUser);
     const user = await User.findById(id);
     res.json(user);
 }
@@ -88,9 +87,9 @@ export const getUser = async (req, res) => {
         const targetUser = await User.findById(req.params.id);
         console.log(targetUser);
         res.status(200).json(targetUser);
-        
+
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 }
 export const getAllUser = async (req, res) => {
@@ -98,9 +97,9 @@ export const getAllUser = async (req, res) => {
         const targetUser = await User.find({});
         // console.log(targetUser);
         res.status(200).json(targetUser);
-        
+
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 }
 
@@ -108,12 +107,13 @@ export const getUserByUsername = async (req, res) => {
     try {
         console.log('getUserByUsername')
         console.log(req.prams.username)
-        const targetUser = await User.findOne({username: req.prams.username});
+        const targetUser = await User.findOne({ username: req.prams.username });
         console.log(targetUser);
 
         res.status(200).json(targetUser);
-        
+
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
+
 }

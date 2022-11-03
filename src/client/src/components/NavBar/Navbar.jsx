@@ -20,6 +20,7 @@ const Navbar = (props) => {
     const { user } = useContext(UserContext);
 
     return (
+<<<<<<< HEAD:src/client/src/components/NavBar/Navbar.jsx
         <nav className='navbar navbar-expand-md navbar-dark bg-dark text-light'
             style={
                 {
@@ -29,6 +30,10 @@ const Navbar = (props) => {
             }
         >
             <div className='container-fluid bg-dark w-100'>
+=======
+        <nav className='sticky-top navbar navbar-expand-lg navbar-dark bg-dark text-light'>
+            <div className='container-lg align-items-center justify-content-center'>
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f:src/client/src/components/Navbar.jsx
                 <div className='navbar-brand'>
                     <Logo />
                 </div>
@@ -39,8 +44,13 @@ const Navbar = (props) => {
 
                     }}
 
+<<<<<<< HEAD:src/client/src/components/NavBar/Navbar.jsx
                     id='navbarSupportedContent'>
                     <ul className="navbar-nav me-auto ">
+=======
+                     id='navbarSupportedContent'>
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f:src/client/src/components/Navbar.jsx
                         {pages}
                     </ul>
                 </div>
@@ -54,8 +64,8 @@ const Navbar = (props) => {
                                 <div className=" nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div className="d-flex flex-row text-info align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
                                         <img className="avatar-tiny me-2" width={20}
-                                            title={`${user.username}`}
-                                            src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
+                                             title={`${user.username}`}
+                                             src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
                                         {user.username}
                                     </div>
                                 </div>
@@ -105,4 +115,8 @@ const Navbar = (props) => {
         </nav >
     )
 }
+<<<<<<< HEAD:src/client/src/components/NavBar/Navbar.jsx
+=======
+
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f:src/client/src/components/Navbar.jsx
 export default Navbar;

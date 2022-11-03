@@ -4,14 +4,17 @@ import { API_URL } from "./Const";
 
 const defaultUser = {
     user: null,
-    toggleUser: () => { }
+    token: null,
+    toggleUser: () => { },
+    toggleToken: () => { },
 };
 
 export const UserContext = React.createContext(defaultUser)
 
 export default function UserContextProvider(props) {
 
-    const [userLogin, setUserLogin] = useState(JSON.parse(localStorage.getItem('userLogin')));
+    const [userLogin, setUserLogin] = useState(JSON.parse(sessionStorage.getItem('userLogin')));
+    const [token, setToken] = useState(sessionStorage.getItem('token'));
     const userStorage = JSON.parse(localStorage.getItem('userLogin'));
     // TODO get user status.
     useEffect(() => {
@@ -20,7 +23,9 @@ export default function UserContextProvider(props) {
     return (
         <UserContext.Provider value={{
             user: userLogin,
-            toggleUser: setUserLogin
+            toggleUser: setUserLogin,
+            token: token,
+            toggleToken: setToken,
         }}>
             {props.children}
         </UserContext.Provider>

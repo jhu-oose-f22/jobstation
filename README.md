@@ -139,27 +139,24 @@ So far,
 - View existing groups
 - join a group and chat with group members, rich-text supported
 
+3. Recommendation System.
+- Get Recommended Groups based on tags you like.
+
 <!-- ROADMAP -->
 ## Roadmap
 
 - [x] Add SRS
 
-<<<<<<< HEAD
-- [ ] Add Group Chat
-  - [ ] Backend
-  - [ ] Frontend
-=======
 - [x] Add Group Chat
   - [x] Backend
     - socket, database interaction
   - [x] Frontend
     - rich-text supported
->>>>>>> 59bdf6067def5071d09b7544e1510720c4d73c1d
 
 - [ ] Add Job Forum
   - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
   - [x] Rewrite frontend using React
-  - [ ] Add Recommendation System
+  - [x] Add Recommendation System
 
 <!-- - [ ] Add Job Board
   - [ ] Add CRUD

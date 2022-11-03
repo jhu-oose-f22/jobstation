@@ -12,7 +12,11 @@ export const recommendApi = new Pipeless.RecommendationsApi();
 export const appId = 1694; // {Number} 
 // const opts = {};
 
+<<<<<<< HEAD
 //create
+=======
+
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
 export const createPostEvent = async (req, res, next) => {
     const {title, tags} = req.body;
     var postEvents = [];
@@ -83,7 +87,11 @@ export const createGroupEvent = async (req, res, next) => {
     next();
 }
 
+<<<<<<< HEAD
 export const createEventsForFakeUsers = async (user) => {
+=======
+export const createEventsForUser = async (user) => {
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     const {name, tags} = user;
     var Events = [];
     var eventBatch = [];
@@ -122,11 +130,62 @@ export const createEventsForFakeUsers = async (user) => {
     
 }
 
+<<<<<<< HEAD
+=======
+
+
+export const getRelatedContentsTitle = async ( userName, ContentsType ) => {
+    var opts = JSON.stringify({
+        object: {id: userName, type: ContentsType},
+        content_tagged_relationship_type: 'taggedWith',
+    });
+    var RelatedContentsNames = [];
+    recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+            const results = (new Function("return " + response.text))();
+            
+            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
+            // return RelatedContentsNames;
+        }
+    });
+    console.log(RelatedContentsNames);
+
+    return RelatedContentsNames;
+}
+
+export const getRelatedContents = async ( userName, ContentsType ) => {
+    var opts = JSON.stringify({
+        object: {id: userName, type: "post"},
+        content_tagged_relationship_type: 'taggedWith',
+    });
+    
+    await recommendApi.getRelatedContent(appId, opts,(error, data, response) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+            const results = (new Function("return " + response.text))();
+            var RelatedContentsNames = [];
+            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
+            return RelatedContentsNames;
+        }
+    });
+    // return RelatedContentsNames;
+}
+
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
 export const createFakeUsers = async (req, res) => {
     const {users} = req.body;
     
     for (const user of users){
+<<<<<<< HEAD
         createEventsForFakeUsers(user);
+=======
+        createEventsForUser(user);
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
 
         var userEvents = [];
         var userBatch = [];
@@ -183,6 +242,7 @@ export const createFakeUsers = async (req, res) => {
     
 }
 
+<<<<<<< HEAD
 export const createEventsForUsers = async (name, tags) => {
     var Events = [];
     var eventBatch = [];
@@ -301,3 +361,5 @@ export const getRelatedContentsTitle = async ( userName, ContentsType ) => {
 
     return RelatedContentsNames;
 }
+=======
+>>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
