@@ -17,7 +17,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
         groups = groups.map((group) => {
             return (
                 <li className=" list-group-item border-0 " key={group._id}>
-                    <GroupCard group={group} joined={true} />
+                    <GroupCard group={group} joined={true} listname={listName} />
                 </li>
             );
         });
@@ -49,23 +49,24 @@ export default function GroupList({ listName, groups = [], search = false }) {
             return <Navigate to="/" />;
     }
     const handleCreate = async (e) => {
-        console.log(`before add: ${user.username}`);
+        // console.log(`before add: ${user.username}`);
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
-            groupTag: newGroupTag,
+            groupTag: [newGroupTag],
             owner: user.username,
         };
-
+        console.log('tag when creating');
+        console.log(newGroup.groupTag)
         await fetch("/group/create", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
             },
-            body: JSON.stringify(newGroup),
+            body: JSON.stringify(newGroup)
         })
             .then((res) => res.json())
-            .then((data) => console.log(data));
+            // .then((data) => console.log(data));
 
         window.history.go(0);
         // navigate("/group");

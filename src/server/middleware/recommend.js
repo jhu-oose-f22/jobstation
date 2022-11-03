@@ -49,10 +49,10 @@ export const createPostEvent = async (req, res, next) => {
 }
 
 export const createGroupEvent = async (req, res, next) => {
-    const {groupName, tags} = req.body;
+    const {groupName, groupTag} = req.body;
     var groupEvents = [];
     var eventBatch = [];
-    for (const tag of tags){
+    for (const tag of groupTag){
         eventBatch.push({
             start_object: {id: groupName, type: 'company'},
             relationship: {type: 'taggedWith'},

@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
@@ -21,8 +21,8 @@ export default function Group(props) {
             .then((fetched) => {
                 setGroups(fetched);
             });
-        // fetch(`/group/user/${user.username}`)
-        fetch('/group/user/zpu2')
+        // fetch('/group/user/zpu2')
+        fetch(`/group/user/${user.username}`)
             .then((res) => res.json())
             .then((recommended) => {
               // console.log("recommended in group")

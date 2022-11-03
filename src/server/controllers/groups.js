@@ -59,13 +59,17 @@ export const getGroupByUser = async (req, res) => {
 
 export const createGroup = async (req, res) => {
     const { groupName, groupIntro, groupTag, owner } = req.body;
-    const inputTag = await Tag.createTags([groupTag]);
+    console.log('tag in controller create');
+    console.log(groupTag);
+    
+    // const tagArray = [groupTag];
     const newGroup = await Group.createGroup({
         groupName,
         groupIntro,
         groupTag,
         owner,
     });
+    const inputTag = await Tag.createTags(groupTag);
     try {
         await newGroup.save();
         let creator = await User.findOne({ username: owner });
@@ -188,8 +192,8 @@ export const getRecommendedGroups = async (req, res) => {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
         await delay(1000);
-        console.log("res from api");
-        console.log(RelatedContentsNames);
+        // console.log("res from api");
+        // console.log(RelatedContentsNames);
         const recommendedGroups = await Group.find({
             groupName: { $in: RelatedContentsNames },
         });
@@ -197,7 +201,7 @@ export const getRecommendedGroups = async (req, res) => {
         // console.log("recommended in controller");
         // await delay(1000);
 
-        console.log(recommendedGroups);
+        // console.log(recommendedGroups);
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });
