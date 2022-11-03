@@ -24,10 +24,6 @@ const userSchema = mongoose.Schema({
 		type: Date,
 		default: new Date()
 	},
-<<<<<<< HEAD
-=======
-
->>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
 });
 
 export default mongoose.model("User", userSchema);

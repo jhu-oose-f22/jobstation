@@ -2,7 +2,7 @@ import Post from "../models/post.js";
 import mongoose from "mongoose";
 import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
 
-export const getAllAllPosts = async (req, res) => {
+export const getAllPosts = async (req, res) => {
     try {
         const targetPost = await Post.list();
         res.status(200).json(targetPost);
