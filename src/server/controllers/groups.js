@@ -191,17 +191,9 @@ export const getRecommendedGroups = async (req, res) => {
         function delay(time) {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
-        await delay(1000);
-        // console.log("res from api");
-        // console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find({
-            groupName: { $in: RelatedContentsNames },
-        });
-
-        // console.log("recommended in controller");
-        // await delay(1000);
-
-        // console.log(recommendedGroups);
+        await delay(500);
+        console.log(RelatedContentsNames);
+        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });

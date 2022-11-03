@@ -18,7 +18,7 @@ export const getRecommendedPosts = async (req, res) => {
         function delay(time){
             return new Promise(resolve => setTimeout(resolve, time));
         }
-        await delay(1000);
+        await delay(500);
 
         const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
         res.status(200).json(recommendedPosts);

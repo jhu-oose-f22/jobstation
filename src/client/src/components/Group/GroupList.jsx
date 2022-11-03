@@ -73,6 +73,12 @@ export default function GroupList({ listName, groups = [], search = false }) {
 
     };
 
+// =======
+        // navigate("/group");
+
+    // };
+
+// >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div className="accordion-item py-5 border-0">
             <div className=" accordion-header my-2" id={listName}>

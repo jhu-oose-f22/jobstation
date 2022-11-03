@@ -2,14 +2,13 @@
 // can delete this file
 import express from "express";
 
-
 import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
 import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
-import { createPostEvent, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
+import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
 
 const router = express.Router();
 
@@ -25,6 +24,7 @@ router.delete('/discuss/post/:id', deletePost);
 router.get('/discuss/user/:userName', getRecommendedPosts); //用假用户的名字
 
 //Group
+
 // router.get('/group/:id', getGroup);
 router.post('/group/create', createTags, createGroupEvent, createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused 
@@ -43,7 +43,7 @@ router.get('/group/user/:userName', getRecommendedGroups); //用假用户的名�
 
 //User
 router.post('/signin', signin);
-router.post('/signup', signup);
+router.post('/signup', createUsersEvents, signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
 router.get('/user/:username', getUserByUsername);

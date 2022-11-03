@@ -23,8 +23,6 @@ export default function Discussion() {
 
     useEffect(() => {
         if (!isLoggedIn(user)) return;
-
-        // fetch(`/discuss/user/zpu2`)
         fetch(`/discuss/user/${user.username}`)
             .then((res) => res.json())
             .then((fetched) => {

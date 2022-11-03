@@ -49,6 +49,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
         else navigate("/group");
     };
 
+// >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div
             className="card btn shadow-sm d-flex flex-row p-0"
