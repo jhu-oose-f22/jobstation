@@ -23,12 +23,12 @@ export default function Dashboard({ posts }) {
             />
             {/* <Banner className="h-50" pageName={"discussion"} /> */}
             <div className="container py-3 py-lg-5">
-            <div>working</div>
+            <h2>Posts</h2>
                 
                 
                 <Grid container rowSpacing={2}>
                     {posts.map((post) => (
-                        <Grid key={post.id} item xs={12} sm={12} lg={12}>
+                        <Grid key={post._id} item xs={12} sm={12} lg={12}>
                             <PostCard post={post} />
                         </Grid>
                     ))}
