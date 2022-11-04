@@ -2,10 +2,10 @@
 // can delete this file
 import express from "express";
 
-import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
+import { getAllPosts, getPostsByUsername, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
-import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
+import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserProfile, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
@@ -14,6 +14,8 @@ const router = express.Router();
 
 //Discuss 
 router.get('/discuss', getAllPosts);
+router.get('/posts/:username', getPostsByUsername);
+
 router.post('/discuss/create', createTags, createPostEvent, createPost);
 router.get('/discuss/post/:id', getPostById);
 router.get('/discuss/tags', getPostsByTags);
@@ -46,8 +48,9 @@ router.post('/signin', signin);
 router.post('/signup', createUsersEvents, signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
-router.get('/user/:username', getUserByUsername);
+router.get('/profile/:username', getUserByUsername);
 router.get('/user', getAllUser);
+// router.get('/profile/:username', getUserProfile);
 
 
 //Tags

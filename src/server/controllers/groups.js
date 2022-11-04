@@ -49,8 +49,6 @@ export const getGroupByUser = async (req, res) => {
             _id: { $in: targetUser.groups },
         });
 
-        // console.log("target groups");
-        // console.log(targetGroups);
         res.status(200).json(targetGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });

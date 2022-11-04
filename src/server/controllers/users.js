@@ -105,6 +105,21 @@ export const getAllUser = async (req, res) => {
 
 export const getUserByUsername = async (req, res) => {
     try {
+        // console.log('getUserByUsernameasdfasdf')
+        // console.log(req.params.username)
+        const targetUser = await User.findOne({ username: req.params.username });
+        console.log(targetUser);
+
+        res.status(200).json(targetUser);
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+
+}
+
+export const getUserProfile = async (req, res) => {
+    try {
         console.log('getUserByUsername')
         console.log(req.prams.username)
         const targetUser = await User.findOne({ username: req.prams.username });
@@ -117,3 +132,4 @@ export const getUserByUsername = async (req, res) => {
     }
 
 }
+
