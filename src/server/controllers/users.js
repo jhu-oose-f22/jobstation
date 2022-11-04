@@ -105,16 +105,18 @@ export const getAllUser = async (req, res) => {
 
 export const updateUserByUsername = async (req, res) => {
     try {
-        const {username, tags} = req.body;
+        const {originalUsername, username, email, tags} = req.body;
         console.log('tags in controller')
         console.log(tags);
-        const targetUser = await User.find({username: username});
+        const targetUser = await User.find({username: originalUsername});
         let updated = targetUser;
         updated[0].tags = tags;
+        updated[0].username = username;
+        updated[0].email = email;
         // console.log('updated');
         // console.log(updated[0]);
         const updatedGroup = await User.findOneAndUpdate(
-            { username: username },
+            { username: originalUsername },
             updated[0]
         );
         // console.log(targetUser);

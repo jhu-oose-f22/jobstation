@@ -36,7 +36,7 @@ export default function Dashboard(props) {
     // console.log(tag);
     return (
         <div>
-            <Banner pageName="dashboard" />
+            {/* <Banner pageName="dashboard" /> */}
             {/* <TagSelection tag={tag} setTag={setTag} setError={setError} /> */}
             <Profile profile={userProfile}/>
             <MyPosts posts={postsOfCurrentUser} />

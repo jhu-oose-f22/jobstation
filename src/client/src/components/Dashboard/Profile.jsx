@@ -33,36 +33,38 @@ import {
 
 export default function Profile({ profile }) {
     
+    // console.log(profile.tags)
     
     const [varyingState, setVaryingState] = useState('');
     const [varyingModal, setVaryingModal] = useState(false);
     const [varyingUserName, setVaryingUserName] = useState('');
     const [varyingEmail, setVaryingEmail] = useState('');
-    const [tag, setTag] = useState(profile.tags);
+    const [tag, setTag] = useState([]);
     const [error, setError] = useState('');
     const handleUpdate = async () => {
         //const group_n_user = { groupId: group._id, username: user.username };
-        await fetch("/group/quit", {
+        const updatedUserInfo = {
+            originalUsername: profile.username,
+            username: varyingUserName,
+            email: varyingEmail,
+            tags: tag,
+        }
+        await fetch(`/user/update/${profile.username}`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",
             },
-            body: JSON.stringify(),
+            body: JSON.stringify(updatedUserInfo),
         }).then((res) => console.log(res));
 
         window.history.go(0);
         // navigate("/group");
 
     };
-    // useEffect(() => {
-    //     // action on update of movies
-    // }, [movies]);
 
-    // useEffect(() => {
-    //     setTag(profile.tags);
-    // }, []);
-    console.log(tag)
-
+    useEffect(() => {
+        setTag(profile.tags);
+    }, [profile]);
 
     let tagsOfCurrentUser = profile.tags?.map((tagg) => {
         return (
@@ -91,7 +93,7 @@ export default function Profile({ profile }) {
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center">
                                 <MDBCardImage
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                    src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
                                     alt="avatar"
                                     className="rounded-circle"
                                     style={{ width: '150px' }}
@@ -153,7 +155,7 @@ export default function Profile({ profile }) {
                                                     <MDBBtn color='secondary' onClick={() => setVaryingModal(!varyingModal)}>
                                                         Close
                                                     </MDBBtn>
-                                                    <MDBBtn>Save changes onClick={() => handleUpdate()}</MDBBtn>
+                                                    <MDBBtn onClick={() => handleUpdate()}>Save changes </MDBBtn>
                                                 </MDBModalFooter>
                                             </MDBModalContent>
                                         </MDBModalDialog>
@@ -163,32 +165,7 @@ export default function Profile({ profile }) {
                             </MDBCardBody>
                         </MDBCard>
 
-                        {/* <MDBCard className="mb-4 mb-lg-0">
-              <MDBCardBody className="p-0">
-                <MDBListGroup flush className="rounded-3">
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fas icon="globe fa-lg text-warning" />
-                    <MDBCardText>https://mdbootstrap.com</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="github fa-lg" style={{ color: '#333333' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="twitter fa-lg" style={{ color: '#55acee' }} />
-                    <MDBCardText>@mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="instagram fa-lg" style={{ color: '#ac2bac' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className="d-flex justify-content-between align-items-center p-3">
-                    <MDBIcon fab icon="facebook fa-lg" style={{ color: '#3b5998' }} />
-                    <MDBCardText>mdbootstrap</MDBCardText>
-                  </MDBListGroupItem>
-                </MDBListGroup>
-              </MDBCardBody>
-            </MDBCard> */}
+                        
                     </MDBCol>
                     <MDBCol lg="8">
                         <MDBCard className="mb-4">
