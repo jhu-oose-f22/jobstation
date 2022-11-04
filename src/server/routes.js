@@ -5,7 +5,7 @@ import express from "express";
 import { getAllPosts, getPostsByUsername, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
-import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserProfile, getUserByUsername } from "./controllers/users.js";
+import { updateUserByUsername, getAllUser, signin, signup, removeUser, updateUser, getUser, getUserProfile, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
@@ -48,6 +48,7 @@ router.post('/signin', signin);
 router.post('/signup', createUsersEvents, signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
+router.post('/user/update/:username', updateUserByUsername);
 router.get('/profile/:username', getUserByUsername);
 router.get('/user', getAllUser);
 // router.get('/profile/:username', getUserProfile);

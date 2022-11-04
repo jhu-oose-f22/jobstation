@@ -103,12 +103,34 @@ export const getAllUser = async (req, res) => {
     }
 }
 
+export const updateUserByUsername = async (req, res) => {
+    try {
+        const {username, tags} = req.body;
+        console.log('tags in controller')
+        console.log(tags);
+        const targetUser = await User.find({username: username});
+        let updated = targetUser;
+        updated[0].tags = tags;
+        // console.log('updated');
+        // console.log(updated[0]);
+        const updatedGroup = await User.findOneAndUpdate(
+            { username: username },
+            updated[0]
+        );
+        // console.log(targetUser);
+        res.status(200).json(updated);
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const getUserByUsername = async (req, res) => {
     try {
         // console.log('getUserByUsernameasdfasdf')
         // console.log(req.params.username)
         const targetUser = await User.findOne({ username: req.params.username });
-        console.log(targetUser);
+        // console.log(targetUser);
 
         res.status(200).json(targetUser);
 

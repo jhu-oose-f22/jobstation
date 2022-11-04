@@ -67,8 +67,8 @@ export const getPostsByUsername = async (req, res) => {
         const targetUser = await User.findOne({
             username: req.params.username,
         });
-        console.log('get posts by username ');
-        console.log(targetUser);
+        // console.log('get posts by username ');
+        // console.log(targetUser);
         const targetPosts = await Post.find({
             _id: { $in: targetUser.posts },
         });

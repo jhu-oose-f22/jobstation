@@ -8,8 +8,7 @@ import { TagSelection } from "./Utils/Tag";
 
 export default function Dashboard(props) {
     const {user} = useContext(UserContext);
-    const [tag, setTag] = useState([]);
-    const [error, setError] = useState('');
+    
 
     const [userProfile, setUserProfile] = useState({});
     const [postsOfCurrentUser, setPostsOfCurrentUser] = useState([]);
@@ -19,41 +18,27 @@ export default function Dashboard(props) {
             .then((res) => res.json())
             .then((profile) => {
                 setUserProfile(profile);
-                setTag(profile.tags);
+                // setTag(profile.tags);
                 // console.log(profile);
             })
-        fetch(`posts/${user.username}`)
+        fetch(`/posts/${user.username}`)
             .then((res)=> res.json())
             .then((posts) => {
                 setPostsOfCurrentUser(posts);
             })
         
     }, [])
-    // useEffect(() => {
-    //     const updated = {
-    //         username: user.username,
-    //         tags: tag,
-    //     }
-    //     fetch(`user/update/${user.usernmae}`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-type": "application/json",
-    //         },
-    //         body: JSON.stringify(updated)
-    //     })
-    //         .then((res) => res.json())
 
-    // }, tag)
     if (!isLoggedIn(user)) {
         return <Navigate to="/login" />;
     }
 
-    console.log(tag);
+    // console.log(tag);
     return (
         <div>
             <Banner pageName="dashboard" />
-            <TagSelection tag={tag} setTag={setTag} setError={setError} />
-            <Profile profile={userProfile} />
+            {/* <TagSelection tag={tag} setTag={setTag} setError={setError} /> */}
+            <Profile profile={userProfile}/>
             <MyPosts posts={postsOfCurrentUser} />
         </div>
     )
