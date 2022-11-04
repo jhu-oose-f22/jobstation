@@ -35,7 +35,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
     };
 
     const handleJoin = async (e) => {
-      console.log('trying to join')
+        console.log('trying to join')
         const group_n_user = { groupId: group._id, username: user.username };
         await fetch("/group/join", {
             method: "post",
@@ -49,7 +49,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
         else navigate("/group");
     };
 
-// >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
+    // >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div
             className="card btn shadow-sm d-flex flex-row p-0"
@@ -84,7 +84,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                                 className="img-fluid rounded-3 mb-3"
                                 alt={group.groupName}
                             />
-                            <strong className="card-title">
+                            <strong className="card-title text-break">
                                 {group.groupName}
                             </strong>
                         </div>

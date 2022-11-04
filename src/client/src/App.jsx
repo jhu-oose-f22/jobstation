@@ -27,7 +27,7 @@ function App() {
 
                     <Navbar />
                     <div style={{
-                        height: '90vh',
+                        height: '88vh',
                         width: '100%',
                         minHeight: '500px',
                         overflow: 'auto'

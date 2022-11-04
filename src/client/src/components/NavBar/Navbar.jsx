@@ -22,7 +22,7 @@ const Navbar = (props) => {
     return (
         <nav className='sticky-top navbar navbar-expand-lg navbar-dark bg-dark text-light py-0'
             style={{
-                height: '5vh',
+                height: '7vh',
             }}
         >
             <div className='container-lg align-items-center justify-content-center'>

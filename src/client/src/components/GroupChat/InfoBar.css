@@ -1,4 +1,4 @@
-button[aria-expanded="true"] {
+button.info-bar[aria-expanded="true"] {
     outline: white solid 1px !important;
 }
 
