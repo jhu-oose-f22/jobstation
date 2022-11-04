@@ -3,6 +3,7 @@ import { useState, useEffect, useContext,ChangeEvent } from "react";
 // import Banner from "./Utils/Banner";
 import React from 'react';
 import { TagSelection } from "../Utils/Tag";
+import { isLoggedIn, UserContext } from "../../context/User";
 
 import {
     MDBCol,
@@ -15,11 +16,6 @@ import {
     MDBBtn,
     MDBBreadcrumb,
     MDBBreadcrumbItem,
-    MDBProgress,
-    MDBProgressBar,
-    MDBIcon,
-    MDBListGroup,
-    MDBListGroupItem,
     MDBModal,
     MDBModalDialog,
     MDBModalContent,
@@ -32,6 +28,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 export default function Profile({ profile }) {
+    const { user, toggleUser} = useContext(UserContext);
     
     // console.log(profile.tags)
     
@@ -42,6 +39,13 @@ export default function Profile({ profile }) {
     const [tag, setTag] = useState([]);
     const [error, setError] = useState('');
     const handleUpdate = async () => {
+        let newUser = user;
+        Object.assign(newUser, {username: varyingUserName});
+        console.log('new user');
+        console.log(newUser);
+        // newUser.username 
+        toggleUser(newUser)
+        console.log(user);
         //const group_n_user = { groupId: group._id, username: user.username };
         const updatedUserInfo = {
             originalUsername: profile.username,
@@ -55,9 +59,11 @@ export default function Profile({ profile }) {
                 "Content-type": "application/json",
             },
             body: JSON.stringify(updatedUserInfo),
-        }).then((res) => console.log(res));
+        }).then((res) => res.json());
+         
+        
 
-        window.history.go(0);
+        // window.history.go(0);
         // navigate("/group");
 
     };
