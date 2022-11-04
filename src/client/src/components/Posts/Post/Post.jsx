@@ -12,8 +12,12 @@ export default function Post(props) {
     useEffect(()=>{
         dispatch(getPostById(postId));
     },[dispatch])
-    const onePost = useSelector((state)=> state.posts);
-    console.log(onePost);
+    const testPost = useSelector((state)=> state.posts);
+    
+    
+    
+    
+    console.log(testPost);
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -32,7 +36,7 @@ export default function Post(props) {
     return (
         <div className="container py-lg-5 py-3 container-lg vh-100">
             <div className='d-flex justify-content-between align-items-baseline'>
-                <h1>{onePost.title}</h1>
+                <h1>{testPost.title}</h1>
                 <div className='d-flex flex-row align-content-center justify-content-center'>
                     <Stack direction="row" spacing={2}>
                         <Button variant="contained" onClick={handleClick}>
@@ -68,8 +72,8 @@ export default function Post(props) {
                     {/*<img className="avatar-tiny me-3" width={30}*/}
                     {/*    title={`${onePost.creator}`}*/}
                     {/*    src={(state.user.avatar !== '' && state.user.avatar) || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />*/}
-                    <strong>{onePost.creator}</strong>
-                    <div className='text-muted ms-auto'>last updated {`${onePost.createdAt}`}</div>
+                    <strong>{testPost.creator}</strong>
+                    <div className='text-muted ms-auto'>last updated {`${testPost.createdAt}`}</div>
                 </div>
                 {/*<div>*/}
                 {/*    <Typography variant="body2" color="textSecondary" component="h2">{onePost?.tags.map((tag) => `#${tag} `)}</Typography>*/}
@@ -77,12 +81,10 @@ export default function Post(props) {
             </div>
 
             <div className=' body-content'>
-                {onePost.message}
+                {testPost.message}
             </div>
 
             <hr />
-
-
         </div>
     );
 }

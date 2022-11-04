@@ -61,6 +61,7 @@ export default function RecipeReviewCard({post}) {
     const shareLink = `localhost:3000/discussion/post/${post._id}`;
     const handleOnePost = () => {
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        console.log(newPage);
         navigate(newPage);
     };
     const handleLike = () => {
@@ -94,10 +95,11 @@ export default function RecipeReviewCard({post}) {
                     {post.message}
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing>
+            <CardActions >
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon sx={{color:'pink'}} onClick={handleLike}/>
                 </IconButton>
+                <span> Likes </span>
                 <IconButton aria-label="share">
                     <ShareIcon sx={{color:"#39a5c0"}} onClick={handleShare} />
                 </IconButton>
