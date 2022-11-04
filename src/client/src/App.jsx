@@ -1,11 +1,11 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PageNotFound from "./components/Utils/404";
 import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
 import GroupSearchResult from "./components/GroupSearchResult";
-import Chat from "./components/GroupChat/Chat/Chat";
+import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import MainPage from "./components/MainPage";
@@ -15,9 +15,8 @@ import ToDo from "./components/Utils/ToDo";
 import UserContextProvider from "./context/User";
 
 
-import  {useDispatch} from "react-redux";
-import  {getPosts} from './actions/posts'
-import PostForm from "./components/Form/PostForm";
+import { useDispatch } from "react-redux";
+import { getPosts } from './actions/posts'
 
 function App() {
 
@@ -28,17 +27,16 @@ function App() {
 
                     <Navbar />
                     <div style={{
-                        height: '90vh',
+                        height: '88vh',
                         width: '100%',
                         minHeight: '500px',
-                        // overflow: 'clip'
+                        overflow: 'auto'
                     }}>
                         <Routes>
                             <Route index path='/' element={<MainPage />} />
 
                             <Route path='/discussion' >
                                 <Route index element={<Discussion />} />
-                                <Route path='/discussion/create' element={<PostForm />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
                             </Route>
 
