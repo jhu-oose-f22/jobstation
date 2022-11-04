@@ -17,6 +17,7 @@ import UserContextProvider from "./context/User";
 
 import  {useDispatch} from "react-redux";
 import  {getPosts} from './actions/posts'
+import PostForm from "./components/Form/PostForm";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
 
                             <Route path='/discussion' >
                                 <Route index element={<Discussion />} />
+                                <Route path='/discussion/create' element={<PostForm />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
                             </Route>
 

@@ -1,37 +1,46 @@
-import React, { useContext, useEffect, useState } from "react";
-import { isLoggedIn, UserContext } from "../context/User";
-import { Link, Navigate } from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import {isLoggedIn, UserContext} from "../context/User";
+import {Navigate, useNavigate} from "react-router-dom";
 import Banner from "./Utils/Banner";
-import {useDispatch, useSelector} from "react-redux";
-import {Box, Button, Card, CircularProgress, Grid, Popover} from "@mui/material";
+import {useDispatch} from "react-redux";
+import {Grid, Popover} from "@mui/material";
 import PostCard from "./Posts/PostCard";
 import PostForm from "./Form/PostForm";
-import {getPosts, getPostsRecommended} from "../actions/posts";
-import axios from "axios";
+import {getPosts} from "../actions/posts";
+import ScrollToTop from "react-scroll-to-top";
 
-export default function Discussion() {
-    const { user } = useContext(UserContext);
+
+export default function Discussion(props) {
+    const {user} = useContext(UserContext);
     const dispatch = useDispatch();
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getPosts());
-    },[dispatch])
+    }, [dispatch])
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [isRecommend,setIsRecommend] = useState(false);
-    const discussionPosts = useSelector((state)=> state.posts);
-    const [recommendedPosts,setRecommendedPosts] = useState([]);
+    const navigate = useNavigate();
+    const [isRecommend, setIsRecommend] = useState(true);
 
+    const [allPosts, setAllPosts] = useState([]);
+    const [recPosts, setRecPosts] = useState([]);
     useEffect(() => {
         if (!isLoggedIn(user)) return;
-        fetch(`/discuss/user/${user.username}`)
-            .then((res) => res.json())
-            .then((fetched) => {
-                setRecommendedPosts(fetched);
-            });
+        if (isRecommend) {
+            fetch(`/discuss/user/${user.username}`)
+                .then((res) => res.json())
+                .then((fetched) => {
+                    setRecPosts(fetched);
+                });
+        } else {
+            fetch(`/discuss`)
+                .then((res) => res.json())
+                .then((fetched) => {
+                    setAllPosts(fetched);
+                });
+        }
     }, [isRecommend]);
 
     if (!isLoggedIn(user)) {
-        return <Navigate to='/login' />;
+        return <Navigate to='/login'/>;
     }
 
     const handleLoadRec = () => {
@@ -46,143 +55,78 @@ export default function Discussion() {
 
     };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleCreate = (event) => {
+        navigate('/discussion/create')
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
-
-    return(
-        !discussionPosts.length ?
-            <div className="vh-100">
-                <Banner className='h-50' pageName={'discussion'} />
-                <div className="container py-3 py-lg-5 container--narrow">
-                    <div>
-                        <div className="profile-nav nav nav-tabs pt-2 mb-4">
-                            <Link to="/discussion" className="profile-nav-link nav-item nav-link active">Posts</Link>
-                            <Link to="/todo" className="profile-nav-link nav-item nav-link active">Interview Question</Link>
-                            <Link to="/todo" className="profile-nav-link nav-item nav-link active">Offer Compare</Link>
-                            <Button variant="contained" onClick={handleClick}>
-                                Create a Post
-                            </Button>
-                            <Popover
-                                id={id}
-                                open={open}
-                                anchorReference="anchorPosition"
-                                onClose={handleClose}
-                                anchorPosition={{ top: 200, left: 400 }}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                            >
-                                <PostForm/>
-                            </Popover>
-                        </div>
-                        <ul className="list-group">
-                            <CircularProgress/>
-                        </ul>
-                    </div>
+    return (
+        isRecommend ?(
+        <div className="vh-100">
+            <ScrollToTop smooth component={<p style={{color: "blue"}}>UP</p>}/>
+            <Banner className='h-50' pageName={'discussion'}/>
+            <div className="container py-3 py-lg-5">
+                <nav className="nav nav-tabs mb-2 d-flex justify-content-start">
+                    <button className="nav-link active" onClick={handleLoadRec}>Posts
+                    </button>
+                    <button className="nav-link" onClick={handleLoadAll}>All Posts
+                    </button>
+                    <form className="d-flex align-right ms-auto me-2">
+                        <input className="form-control me-2" placeholder="search for posts"
+                               aria-label="Search"/>
+                        <button className="btn btn-outline-success">GO</button>
+                    </form>
+                    <button className="btn btn-primary" onClick={handleCreate}>Create</button>
+                </nav>
+                <div className="mb-2 hstack gap-3">
+                    <button type="button" className="btn btn-none btn-sm">Hot</button>
+                    <button type="button" className="btn btn-none btn-sm">Newest to Oldest</button>
+                    <button type="button" className="btn btn-none btn-sm">Most Votes</button>
                 </div>
-            </div>
-            : (
-                !isRecommend ?
-                <div className="vh-100">
-                    <Banner className='h-50' pageName={'discussion'} />
-                    <div className="container py-3 py-lg-5 container--narrow">
-                        <div>
-                            <div className="profile-nav nav nav-tabs pt-2 mb-4">
-                                <Link to="/discussion" className="profile-nav-link nav-item nav-link active">Posts</Link>
-                                <Link to="/discussion" className="profile-nav-link nav-item nav-link active" onClick={handleLoadRec}>Posts for You</Link>
-
-                                <Button variant="contained" onClick={handleClick}>
-                                    Create
-                                </Button>
-                                <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorReference="anchorPosition"
-                                    onClose={handleClose}
-                                    anchorPosition={{ top: 200, left: 400 }}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'left',
-                                    }}
-                                >
-                                    <PostForm/>
-                                </Popover>
-                            </div>
-                            <Grid container rowSpacing={2}>
-                                {
-                                    discussionPosts.map((post) =>(
-                                        <Grid key={post.id} item xs={12} sm={12} lg={12}>
-
-                                            <PostCard post={post}/>
-                                        </Grid>
-                                    ))
-                                }
+                <Grid container rowSpacing={2}>
+                    {
+                        recPosts.map((post) => (
+                            <Grid key={post.id} item xs={12} sm={12} lg={12}>
+                                <PostCard post={post}/>
                             </Grid>
+                        ))
+                    }
+                </Grid>
+            </div>
+        </div>
+        )
+            :(
+                <div className="vh-100">
+                    <ScrollToTop smooth component={<p style={{color: "blue"}}>UP</p>}/>
+                    <Banner className='h-50' pageName={'discussion'}/>
+                    <div className="container py-3 py-lg-5">
+                        <nav className="nav nav-tabs mb-2 d-flex justify-content-start">
+                            <button className="nav-link" onClick={handleLoadRec}>Posts
+                            </button>
+                            <button className="nav-link active" onClick={handleLoadAll}>All Posts
+                            </button>
+                            <form className="d-flex align-right ms-auto me-2">
+                                <input className="form-control me-2" placeholder="search for posts"
+                                       aria-label="Search"/>
+                                <button className="btn btn-outline-success">GO</button>
+                            </form>
+                            <button className="btn btn-primary" onClick={handleCreate}>Create</button>
+                        </nav>
+                        <div className="mb-2 hstack gap-3">
+                            <button type="button" className="btn btn-none btn-sm">Hot</button>
+                            <button type="button" className="btn btn-none btn-sm">Newest to Oldest</button>
+                            <button type="button" className="btn btn-none btn-sm">Most Votes</button>
                         </div>
+                        <Grid container rowSpacing={2}>
+                            {
+                                allPosts.map((post) => (
+                                    <Grid key={post.id} item xs={12} sm={12} lg={12}>
+                                        <PostCard post={post}/>
+                                    </Grid>
+                                ))
+                            }
+                        </Grid>
                     </div>
                 </div>
-                    :
-                    (
-                        <div className="vh-100">
-                            <Banner className='h-50' pageName={'discussion'} />
-                            <div className="container py-3 py-lg-5 container--narrow">
-                                <div>
-                                    <div className="profile-nav nav nav-tabs pt-2 mb-4">
-                                        <Link to="/discussion" className="profile-nav-link nav-item nav-link active" onClick={handleLoadAll}>Posts</Link>
-                                        <Link to="/discussion" className="profile-nav-link nav-item nav-link active" onClick={handleLoadRec}>Posts for You</Link>
-
-                                        <Button variant="contained" onClick={handleClick}>
-                                            Create
-                                        </Button>
-                                        <Popover
-                                            id={id}
-                                            open={open}
-                                            anchorReference="anchorPosition"
-                                            onClose={handleClose}
-                                            anchorPosition={{ top: 200, left: 400 }}
-                                            anchorOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'left',
-                                            }}
-                                            transformOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'left',
-                                            }}
-                                        >
-                                            <PostForm/>
-                                        </Popover>
-                                    </div>
-                                    <Grid container rowSpacing={2}>
-                                        {
-                                            recommendedPosts.map((post) =>(
-                                                <Grid key={post.id} item xs={12} sm={12} lg={12}>
-
-                                                    <PostCard post={post}/>
-                                                </Grid>
-                                            ))
-                                        }
-                                    </Grid>
-                                </div>
-                            </div>
-                        </div>
-                    )
             )
     );
 }
