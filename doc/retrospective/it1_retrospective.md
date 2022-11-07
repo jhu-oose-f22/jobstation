@@ -16,4 +16,3 @@
 1. Implement user story in the Groups section.
 2. Rebuild the front end with React.js.
 2. Adding some features in the Forum section.
-
