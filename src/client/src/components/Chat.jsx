@@ -5,7 +5,7 @@ import { isLoggedIn, UserContext } from "../context/User";
 
 import UserSidebar from "./GroupChat/UserSidebar";
 import Messages from "./GroupChat/Messages/Messages";
-import InfoBar from "./GroupChat/InfoBar";
+import InfoBar from "./GroupChat/InfoBar/InfoBar";
 import Input from "./GroupChat/Input/Input";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -19,18 +19,22 @@ const Chat = (props) => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const name = user.username;
-  const [room, setRoom] = useState('');
+  const [group, setGroup] = useState(
+    {
+      groupName: "",
+    }
+  );
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState(io(ENDPOINT));
+  const [socket,] = useState(io(ENDPOINT));
   useEffect(() => {
-    if (!state.room) navigate('../');
-    setRoom(state.room);
-    if (room === '') return;
-    console.log(name, room);
+    if (!state.group) navigate('../');
+    setGroup(state.group);
+    if (!group || Object.keys(group).length === 0) return;
+    console.log(name, group);
     socket.on('connect', (e) => { console.log(e) });
-    socket.emit("join", { name, room }, (error) => {
+    socket.emit("join", { name, room: group.groupName }, (error) => {
       if (error) {
         console.log(error);
       }
@@ -43,10 +47,10 @@ const Chat = (props) => {
       socket.off();
     }
 
-  }, [state, name, room, socket, setRoom, navigate]);
+  }, [state, name, group, socket, setGroup, navigate]);
 
   useEffect(() => {
-    if (room === '') return;
+    if (group === '') return;
     socket.on("history", history => {
       setMessages(history);
     })
@@ -56,7 +60,7 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [messages, socket, room]);
+  }, [messages, socket, group]);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -73,11 +77,11 @@ const Chat = (props) => {
   return (
     <div className="h-100 d-flex flex-column bg-img m-0 w-100"
       style={{
-        backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
+        backgroundImage: `url(https://source.unsplash.com/random/?${group.groupName.slice(0, group.groupName.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',
       }}
     >
-      <InfoBar room={room} />
+      <InfoBar group={group} />
       <div className="d-flex"
         style={
           {

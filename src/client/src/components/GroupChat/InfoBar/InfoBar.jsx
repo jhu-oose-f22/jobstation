@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import './InfoBar.css';
 
-const InfoBar = ({ room }) => {
+const InfoBar = ({ group }) => {
   const [isUserSelected, setisUserSelected] = useState(false);
 
   const handleOutline = () => {
@@ -31,18 +31,35 @@ const InfoBar = ({ room }) => {
             overflowX: "auto",
             overflowY: "clip"
           }}
-        >{room}</h3>
+        >{group.groupName}</h3>
+
+        {/* dropdown */}
+        <div className='dropdown dropdown-menu-start'>
+          <button className='btn p-0 info-bar ms-2'
+            type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          >
+            <i className="fa-solid fa-caret-down text-white"></i>
+          </button>
+
+
+          {/* Menu */}
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+            {/* Settings */}
+            <button class="btn dropdown-item" type="button"
+              data-bs-toggle="modal" data-bs-target="#settingModal"
+            ><i className='fa-solid fa-gear'></i> Settings</button>
+            <div className='dropdown-divider'></div>
+
+            {/* Leave */}
+            <div className="btn dropdown-item text-danger" onClick={() => { console.log("Exit") }}><i className="fa-solid fa-right-from-bracket"></i><span>Leave group</span></div>
+          </div>
+        </div>
+
 
         {/* buttons */}
         <div className='ms-auto me-2'>
-
-          {/*  */}
-          <button className='btn btn-dark p-0 info-bar'
-            type='button'
-          >
-            <i className="fa-solid fa-thumbtack"></i>
-          </button>
-
+          {/* TODO: Add more */}
           {/* users */}
           <button className='btn btn-dark ms-1 p-0 info-bar'
             type='button'

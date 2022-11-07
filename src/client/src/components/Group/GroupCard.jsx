@@ -71,8 +71,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                         className="text-decoration-none "
                         to="/group/chat"
                         state={{
-                            name: user.username,
-                            room: group.groupName,
+                            group,
                         }}
                     >
                         <div className=" d-flex flex-column align-items-center justify-content-center h-100 m-2">
