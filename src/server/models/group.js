@@ -8,6 +8,10 @@ const groupSchema = mongoose.Schema({
         type: [String],
         default: []
     },
+    // members: {
+	// 	type: [mongoose.ObjectId],
+	// 	default: []
+	// },
     tags: [String],
     avatar: String,
     memberCount: {
