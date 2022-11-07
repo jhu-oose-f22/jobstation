@@ -1,19 +1,43 @@
 import { useParams, useLocation } from "react-router-dom";
 import {Button, Link, Popover, Stack, Typography} from "@mui/material";
 import PostForm from "../../Form/PostForm";
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getPostById} from "../../../actions/posts";
+import React, {useContext, useEffect, useState} from "react";
+import {isLoggedIn, UserContext} from "../../../context/User";
 
 export default function Post(props) {
-    const {state} = useLocation();
+    const {user} = useContext(UserContext);
     const { postId } = useParams();
-    const dispatch = useDispatch();
+
+
+    const [post, setPost] = useState("");
+    const [isUser,setIsUser] = useState(false);
+
+    console.log(postId)
+
     useEffect(()=>{
-        dispatch(getPostById(postId));
-    },[dispatch])
-    const onePost = useSelector((state)=> state.posts);
-    console.log(onePost);
+        fetch(`/discuss/post/${postId}`)
+            .then((res) => res.json())
+            .then((fetched) => {
+                setPost(fetched);
+            });
+    },[])
+
+    let postTags = post.tags;
+    if(postTags===undefined){
+        postTags=[];
+    }
+
+    useEffect(()=>{
+        if(!isLoggedIn(user)){
+            return;
+        }
+        if(user._id === post.creator){
+            setIsUser(true);
+        }
+        else{
+            setIsUser(false);
+        }
+    },[isUser])
 
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -30,9 +54,10 @@ export default function Post(props) {
     const id = open ? 'simple-popover' : undefined;
 
     return (
+        isUser?
         <div className="container py-lg-5 py-3 container-lg vh-100">
             <div className='d-flex justify-content-between align-items-baseline'>
-                <h1>{onePost.title}</h1>
+                <h1>{post.title}</h1>
                 <div className='d-flex flex-row align-content-center justify-content-center'>
                     <Stack direction="row" spacing={2}>
                         <Button variant="contained" onClick={handleClick}>
@@ -68,21 +93,47 @@ export default function Post(props) {
                     {/*<img className="avatar-tiny me-3" width={30}*/}
                     {/*    title={`${onePost.creator}`}*/}
                     {/*    src={(state.user.avatar !== '' && state.user.avatar) || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />*/}
-                    <strong>{onePost.creator}</strong>
-                    <div className='text-muted ms-auto'>last updated {`${onePost.createdAt}`}</div>
+                    <strong>{post.creator}</strong>
+                    <div className='text-muted ms-auto'>last updated {`${post.createdAt}`}</div>
                 </div>
-                {/*<div>*/}
-                {/*    <Typography variant="body2" color="textSecondary" component="h2">{onePost?.tags.map((tag) => `#${tag} `)}</Typography>*/}
-                {/*</div>*/}
-            </div>
-
-            <div className=' body-content'>
-                {onePost.message}
             </div>
 
             <hr />
-
+            <div className=' body-content'>
+                {post.message}
+            </div>
 
         </div>
+            :
+            (
+                <div className="container py-lg-5 py-3 container-lg vh-100">
+                    <div className='d-flex justify-content-between align-items-baseline'>
+                        <h1>{post.title}</h1>
+
+                    </div>
+
+                    <div className="text-muted small mb-4">
+                        <div className="d-flex flex-row align-items-center my-2 justify-content-start">
+                            {/*<img className="avatar-tiny me-3" width={30}*/}
+                            {/*    title={`${onePost.creator}`}*/}
+                            {/*    src={(state.user.avatar !== '' && state.user.avatar) || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />*/}
+                            <strong>{post.creator}</strong>
+                            <div className='text-muted ms-auto'>last updated {`${post.createdAt}`}</div>
+                        </div>
+                    </div>
+                    <div>
+                        tags:<strong className="text-muted">{postTags.map((tag) => {
+                        return <Link href='/' className="btn btn-outline-secondary btn-sm mx-1" underline="none">
+                            {tag}
+                        </Link>
+                    })}
+                    </strong>
+                    </div>
+                    <hr />
+                    <div className=' body-content'>
+                        {post.message}
+                    </div>
+                </div>
+            )
     );
 }
