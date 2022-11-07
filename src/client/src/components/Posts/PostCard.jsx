@@ -60,9 +60,8 @@ export default function RecipeReviewCard({post}) {
     const newPage = `/discussion/post/${post._id}`;
     const shareLink = `localhost:3000/discussion/post/${post._id}`;
     const handleOnePost = () => {
-        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-        console.log(newPage);
         navigate(newPage);
+        window.history.go(0);
     };
     const handleLike = () => {
         alert("todo, increment like by one");
