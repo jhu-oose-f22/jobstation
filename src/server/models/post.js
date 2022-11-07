@@ -5,8 +5,13 @@ const postSchema = mongoose.Schema({
     title: String,
     message: String,
     creator: String,
+    comments: [String],
     tags: [String],
     likeCount: {
+        type: Number,
+        default: 0
+    },
+    commentCount: {
         type: Number,
         default: 0
     },

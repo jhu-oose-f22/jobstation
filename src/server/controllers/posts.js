@@ -1,6 +1,9 @@
 import Post from "../models/post.js";
+import Comment from "../models/comment.js";
+
 import mongoose from "mongoose";
 import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
+
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -84,4 +87,24 @@ export const likePost = async (req, res) => {
     const post = await Post.findById(id);
     const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
     res.json(updatedPost);
+}
+
+export const createComment = async (req, res) => {
+    const { postId, userId, message } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send(`No post with id: ${postId}`);
+    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No post with id: ${userId}`);
+    console.log(message, userId);
+    const newComment = await Comment.create({message, userId});
+    const post = await Post.findById(postId);
+    const updatedPost = await Post.findByIdAndUpdate(
+        postId,
+        {
+            commentCount: post.commentCount + 1 ,
+            $push: { comments: newComment._id },
+        }, 
+        { new: true }
+    
+    );
+    res.json(updatedPost);
+
 }
