@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import {UserContext} from "../../context/User";
-import {useNavigate, useParams} from "react-router-dom";
+import {isLoggedIn, UserContext} from "../../context/User";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 import Banner from "../Utils/Banner";
 import {Grid} from "@mui/material";
@@ -28,7 +28,27 @@ const PostSearchResult = (props) => {
                 setPosts(fetched);
             });
     },[])
+    if (!isLoggedIn(user)) {
+        return <Navigate to='/login'/>;
+    }
+    const handleSort = (e) => {
+        let sortedSearchPost = [];
 
+        switch (e) {
+            case 'hot':
+                sortedSearchPost = [...posts].sort((a,b) => b.commentCount - a.commentCount);
+                setPosts(sortedSearchPost);
+                return;
+            case 'new to old':
+                sortedSearchPost = [...posts].sort((a,b) => b.createdAt > a.createdAt? 1 : -1);
+                setPosts(sortedSearchPost);
+                return;
+            case 'like':
+                sortedSearchPost = [...posts].sort((a,b) => b.likeCount - a.likeCount);
+                setPosts(sortedSearchPost);
+                return;
+        }
+    }
 
     const handleCreate = (event) => {
         navigate('/discussion/create')
@@ -49,9 +69,9 @@ const PostSearchResult = (props) => {
                     <button className="btn btn-primary" onClick={handleCreate}>Create</button>
                 </nav>
                 <div className="mb-2 hstack gap-3">
-                    <button type="button" className="btn btn-none btn-sm">Hot</button>
-                    <button type="button" className="btn btn-none btn-sm">Newest to Oldest</button>
-                    <button type="button" className="btn btn-none btn-sm">Most Votes</button>
+                    <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('hot')}>Hot</button>
+                    <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('new to old')}>Newest to Oldest</button>
+                    <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('like')}>Most Votes</button>
                 </div>
                 <Grid container rowSpacing={2}>
                     {

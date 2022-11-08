@@ -39,6 +39,7 @@ function App() {
                             <Route path='/discussion' >
                                 <Route index element={<Discussion />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
+                                <Route path='/discussion/post/:postId' element={<Post />} />
                                 <Route path='/discussion/search-result/:searchInput' element={<PostSearchResult />} />
                             </Route>
 

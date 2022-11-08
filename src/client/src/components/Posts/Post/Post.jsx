@@ -1,15 +1,15 @@
-import { useParams, useLocation } from "react-router-dom";
+import {useParams, useLocation, useNavigate} from "react-router-dom";
 import {Button, Link, Popover, Stack, Typography} from "@mui/material";
-import PostForm from "../../Form/PostForm";
 import React, {useContext, useEffect, useState} from "react";
 import {isLoggedIn, UserContext} from "../../../context/User";
+import Avatar from "@mui/material/Avatar";
 
 export default function Post(props) {
     const {user} = useContext(UserContext);
     const { postId } = useParams();
     const [post, setPost] = useState("");
     const [isUser,setIsUser] = useState(false);
-
+    const navigate = useNavigate();
     console.log(postId)
 
     useEffect(()=>{
@@ -20,6 +20,7 @@ export default function Post(props) {
             });
     },[])
 
+    const avatarSrc = `https://ui-avatars.com/api/?name=${post.creator}&background=random&bold=true`;
     let postTags = post.tags;
     if(postTags===undefined){
         postTags=[];
@@ -37,49 +38,27 @@ export default function Post(props) {
         }
     },[isUser])
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    const handleEdit = (event) => {
+        navigate('/discussion/edit')
+    };
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     const handleDelete = () => {
         alert('delete the post');
     };
-    const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
 
     return (
 
         <div className="container py-lg-5 py-3 container-lg vh-100">
             <div className='d-flex justify-content-between align-items-baseline'>
                 <h1>{post.title}</h1>
+
                 {
                     isUser?
                     <div className='d-flex flex-row align-content-center justify-content-center'>
                         <Stack direction="row" spacing={2}>
-                            <Button variant="contained" onClick={handleClick}>
+                            <Button variant="contained" onClick={handleEdit}>
                                 Edit
                             </Button>
-                            <Popover
-                                id={id}
-                                open={open}
-                                anchorReference="anchorPosition"
-                                onClose={handleClose}
-                                anchorPosition={{top: 200, left: 400}}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
-                            >
-                                <PostForm formType='edit'/>
-                            </Popover>
                             <Button variant="outlined" color="error" onClick={handleDelete}>
                                 Delete
                             </Button>
@@ -91,7 +70,7 @@ export default function Post(props) {
                         )
                 }
             </div>
-
+            <Avatar src={avatarSrc} />
             <div className="text-muted small mb-4">
                 <div className="d-flex flex-row align-items-center my-2 justify-content-start">
                     {/*<img className="avatar-tiny me-3" width={30}*/}
@@ -103,7 +82,8 @@ export default function Post(props) {
             </div>
             <div>
                 tags:<strong className="text-muted">{postTags.map((tag) => {
-                return <Link href='/' className="btn btn-outline-secondary btn-sm mx-1" underline="none">
+                    const newPage = `/discussion/search-result/${tag}`;
+                return <Link href={newPage} className="btn btn-outline-secondary btn-sm mx-1" underline="none">
                     {tag}
                 </Link>
             })}
