@@ -98,7 +98,7 @@ export default function RecipeReviewCard({post}) {
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon sx={{color:'pink'}} onClick={handleLike}/>
                 </IconButton>
-                <span> Likes </span>
+                <span> {post.likeCount} Likes </span>
                 <IconButton aria-label="share">
                     <ShareIcon sx={{color:"#39a5c0"}} onClick={handleShare} />
                 </IconButton>

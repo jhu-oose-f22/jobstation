@@ -5,6 +5,7 @@ import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
 import GroupSearchResult from "./components/GroupSearchResult";
+import PostSearchResult from "./components/Posts/PostSearchResult";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -38,6 +39,7 @@ function App() {
                             <Route path='/discussion' >
                                 <Route index element={<Discussion />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
+                                <Route path='/discussion/search-result/:searchInput' element={<PostSearchResult />} />
                             </Route>
 
 

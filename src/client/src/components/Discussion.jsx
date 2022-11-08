@@ -12,16 +12,14 @@ import ScrollToTop from "react-scroll-to-top";
 
 export default function Discussion(props) {
     const {user} = useContext(UserContext);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [dispatch])
 
     const navigate = useNavigate();
     const [isRecommend, setIsRecommend] = useState(true);
 
     const [allPosts, setAllPosts] = useState([]);
     const [recPosts, setRecPosts] = useState([]);
+    const [searchInput, setSearchInput] = useState("");
+    const newPage = `/discussion/search-result/${searchInput}`;
     useEffect(() => {
         if (!isLoggedIn(user)) return;
         if (isRecommend) {
@@ -42,6 +40,11 @@ export default function Discussion(props) {
     if (!isLoggedIn(user)) {
         return <Navigate to='/login'/>;
     }
+
+    const handleSearch = (e) => {
+        navigate(newPage);
+        window.history.go(0);
+    };
 
     const handleLoadRec = () => {
         setIsRecommend(true);
@@ -71,9 +74,9 @@ export default function Discussion(props) {
                     <button className="nav-link" onClick={handleLoadAll}>All Posts
                     </button>
                     <form className="d-flex align-right ms-auto me-2">
-                        <input className="form-control me-2" placeholder="search for posts"
-                               aria-label="Search"/>
-                        <button className="btn btn-outline-success">GO</button>
+                        <input className="form-control me-2" id="post" placeholder="search for posts"
+                               aria-label="Search" onChange={(e)=> setSearchInput(e.target.value)}/>
+                        <button className="btn btn-outline-success" type="button" onClick={()=>handleSearch()}>GO</button>
                     </form>
                     <button className="btn btn-primary" onClick={handleCreate}>Create</button>
                 </nav>
@@ -105,9 +108,9 @@ export default function Discussion(props) {
                             <button className="nav-link active" onClick={handleLoadAll}>All Posts
                             </button>
                             <form className="d-flex align-right ms-auto me-2">
-                                <input className="form-control me-2" placeholder="search for posts"
-                                       aria-label="Search"/>
-                                <button className="btn btn-outline-success">GO</button>
+                                <input className="form-control me-2" id="post" placeholder="search for posts"
+                                       aria-label="Search" onChange={(e)=> setSearchInput(e.target.value)}/>
+                                <button className="btn btn-outline-success" type="button" onClick={()=>handleSearch()}>GO</button>
                             </form>
                             <button className="btn btn-primary" onClick={handleCreate}>Create</button>
                         </nav>

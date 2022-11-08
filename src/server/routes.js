@@ -2,7 +2,21 @@
 // can delete this file
 import express from "express";
 
-import { getAllPosts, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts, createComment, deleteComment, likeComment, getComment } from "./controllers/posts.js";
+import {
+    getAllPosts,
+    createPost,
+    getPostById,
+    getPostsByTags,
+    likePost,
+    deletePost,
+    updatePost,
+    getRecommendedPosts,
+    createComment,
+    deleteComment,
+    likeComment,
+    getComment,
+    getPostsBySearch
+} from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
 import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
@@ -18,6 +32,7 @@ router.post('/discuss/create', createTags, createPostEvent, createPost);
 router.get('/discuss/post/:id', getPostById);
 router.get('/discuss/tags', getPostsByTags);
 router.patch('/discuss/like/:id', likePost);
+router.get('/discuss/search/:input', getPostsBySearch);
 router.patch('/discuss/update/:id', createTags, updatePost);
 router.delete('/discuss/post/:id', deletePost);
 router.post('/discuss/comment', createComment);

@@ -3,6 +3,7 @@ import Comment from "../models/comment.js";
 
 import mongoose from "mongoose";
 import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
+import Group from "../models/group.js";
 
 
 export const getAllPosts = async (req, res) => {
@@ -13,6 +14,30 @@ export const getAllPosts = async (req, res) => {
         res.status(404).json({ message: error.message});
     }
 }
+
+export const getPostsBySearch = async (req, res) => {
+    try {
+        const input = req.params.input;
+
+        const targetPosts = await Post.find({
+            $or: [
+                {
+                    title: { $regex: input, $options: "i" },
+                },
+                {
+                    creator: { $regex: input, $options: "i" },
+                },
+                {
+                    tags: { $regex: input, $options: "i" },
+                },
+            ],
+        });
+        console.log(targetPosts);
+        res.status(200).json(targetPosts);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
 
 export const getRecommendedPosts = async (req, res) => {
     try {
