@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../../../context/Const';
+import { UserContext } from '../../../context/User';
 
 import './InfoBar.css';
 
 const InfoBar = ({ group }) => {
+  const { user } = useContext(UserContext);
   const [isUserSelected, setisUserSelected] = useState(false);
+  const navigate = useNavigate();
 
   const handleOutline = () => {
     setisUserSelected(!isUserSelected);
@@ -46,13 +51,27 @@ const InfoBar = ({ group }) => {
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
             {/* Settings */}
-            <button class="btn dropdown-item" type="button"
+            <button className="btn dropdown-item" type="button"
               data-bs-toggle="modal" data-bs-target="#settingModal"
             ><i className='fa-solid fa-gear'></i> Settings</button>
+
             <div className='dropdown-divider'></div>
 
-            {/* Leave */}
-            <div className="btn dropdown-item text-danger" onClick={() => { console.log("Exit") }}><i className="fa-solid fa-right-from-bracket"></i><span>Leave group</span></div>
+            {/* Quit */}
+            <div className="btn dropdown-item text-danger" onClick={() => {
+              const quit = window.confirm('Are you sure you want to leave this group?')
+              if (quit) {
+                axios.post(API_URL + '/group/quit',
+                  {
+                    groupId: group._id,
+                    username: user.username,
+                  }).then(() => {
+                    window.alert('You have left the group');
+                    navigate('../');
+                  }
+                  )
+              }
+            }}><i className="fa-solid fa-right-from-bracket me-2"></i><span>Quit group</span></div>
           </div>
         </div>
 
@@ -75,7 +94,7 @@ const InfoBar = ({ group }) => {
           </button>
         </div>
       </div>
-    </div>
+    </div >
   )
 };
 

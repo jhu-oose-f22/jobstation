@@ -61,7 +61,7 @@ export const createGroup = async (req, res) => {
     const { groupName, groupIntro, groupTag, owner } = req.body;
     console.log('tag in controller create');
     console.log(groupTag);
-    
+
     // const tagArray = [groupTag];
     const newGroup = await Group.createGroup({
         groupName,
@@ -193,7 +193,7 @@ export const getRecommendedGroups = async (req, res) => {
         }
         await delay(500);
         console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
+        const recommendedGroups = await Group.find({ groupName: { "$in": RelatedContentsNames } });
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });

@@ -10,47 +10,49 @@ import Input from "./GroupChat/Input/Input";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import SettingModal from "./GroupChat/InfoBar/SettingModal";
 
 const ENDPOINT = "localhost:4000";
 
+const socket = io(ENDPOINT);
 
-const Chat = (props) => {
+const Chat = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const name = user.username;
   const [group, setGroup] = useState(
-    {
-      groupName: "",
-    }
+    state.group || {}
   );
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [socket,] = useState(io(ENDPOINT));
+  const [isConnected, setIsConnected] = useState(socket.connected);
+
+
   useEffect(() => {
-    if (!state.group) navigate('../');
+    if (!state.group || !isLoggedIn(user)) navigate('../');
     setGroup(state.group);
-    if (!group || Object.keys(group).length === 0) return;
-    console.log(name, group);
-    socket.on('connect', (e) => { console.log(e) });
-    socket.emit("join", { name, room: group.groupName }, (error) => {
+    if (Object.keys(group).length === 0) return;
+    socket.emit("join", { name: name, room: group.groupName }, (error) => {
+      console.log(group.groupName)
       if (error) {
         console.log(error);
       }
     });
 
+    socket.on('connect', (e) => { setIsConnected(true) });
+
+    socket.on('disconnect', (e) => { setIsConnected(false) });
 
     return () => {
-      console.log("disconnect");
-      socket.disconnect();
-      socket.off();
+      socket.off("connect");
+      socket.off("disconnect");
     }
-
-  }, [state, name, group, socket, setGroup, navigate]);
+  }, []);
 
   useEffect(() => {
-    if (group === '') return;
+    if (Object.keys(group).length === 0) return;
     socket.on("history", history => {
       setMessages(history);
     })
@@ -60,11 +62,16 @@ const Chat = (props) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
-  }, [messages, socket, group]);
+    return () => {
+      socket.off("history");
+      socket.off("message");
+      socket.off("roomData")
+    }
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
-    if (message) {
+    if (message && isConnected) {
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
@@ -90,7 +97,7 @@ const Chat = (props) => {
         }
       >
         <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
-          <Messages messages={messages} name={name} />
+          <Messages messages={messages} />
           <Input
             message={message}
             setMessage={setMessage}
@@ -103,6 +110,8 @@ const Chat = (props) => {
           <UserSidebar users={users} />
         </div>
       </div>
+
+      <SettingModal group={group} />
     </div>
   );
 };
