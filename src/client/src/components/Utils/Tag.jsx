@@ -87,8 +87,8 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
         </div>
         <datalist id="tagList" className="options align-self-end">
             {/* <option value="AA">AA</option> */}
-            {allTagList.map(({ Name }) => {
-                return <option key={Name} value={Name}>{Name}</option>
+            {allTagList.map(({ Name }, idx) => {
+                return <option key={idx} value={Name}>{Name}</option>
             })}
         </datalist>
     </div>

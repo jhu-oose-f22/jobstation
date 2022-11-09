@@ -22,19 +22,18 @@ const Chat = () => {
   const { user } = useContext(UserContext);
   const name = user.username;
   const [group, setGroup] = useState(
-    state.group || {}
+    state.group
   );
-  const [users, setUsers] = useState("");
+  const [usersOnline, setUsersOnline] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
 
 
   useEffect(() => {
-    if (!state.group || !isLoggedIn(user)) navigate('../');
-    setGroup(state.group);
+    if (!state.group || !isLoggedIn(user) || state.group.members.indexOf(user.username) === -1) return;
     if (Object.keys(group).length === 0) return;
-    socket.emit("join", { name: name, room: group.groupName }, (error) => {
+    socket.emit("join", { name: name, room: group._id }, (error) => {
       console.log(group.groupName)
       if (error) {
         console.log(error);
@@ -60,12 +59,12 @@ const Chat = () => {
       setMessages([...messages, message]);
     });
     socket.on("roomData", ({ users }) => {
-      setUsers(users);
+      setUsersOnline(users);
     });
     return () => {
       socket.off("history");
       socket.off("message");
-      socket.off("roomData")
+      socket.off("roomData");
     }
   }, []);
 
@@ -76,7 +75,8 @@ const Chat = () => {
     }
   };
 
-  if (!state) {
+  if (!state || !state.group || state.group.members.indexOf(user.username) === -1 || !isLoggedIn(user)) {
+    window.alert("You are not a member of this group");
     return <Navigate to='../' />
   }
 
@@ -107,11 +107,11 @@ const Chat = () => {
         <div className="col-md-2 h-100 collapse show"
           id='sidebar'
         >
-          <UserSidebar users={users} />
+          <UserSidebar usersOnline={usersOnline} group={group} />
         </div>
       </div>
 
-      <SettingModal group={group} />
+      <SettingModal group={group} setGroup={setGroup} />
     </div>
   );
 };
