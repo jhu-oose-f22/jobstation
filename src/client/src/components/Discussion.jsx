@@ -40,7 +40,6 @@ export default function Discussion(props) {
     }
     const handleSearch = (e) => {
         navigate(newPage);
-        window.history.go(0);
     };
 
     const handleLoadRec = () => {

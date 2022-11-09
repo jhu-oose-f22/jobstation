@@ -1,8 +1,11 @@
-import {useParams, useLocation, useNavigate} from "react-router-dom";
-import {Button, Link, Popover, Stack, Typography} from "@mui/material";
+import {useParams, useNavigate} from "react-router-dom";
+import {Button, Link, Stack} from "@mui/material";
 import React, {useContext, useEffect, useState} from "react";
 import {isLoggedIn, UserContext} from "../../../context/User";
 import Avatar from "@mui/material/Avatar";
+import DefaultComponent from "../comments";
+import IconButton from "@mui/material/IconButton";
+import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined";
 
 export default function Post(props) {
     const {user} = useContext(UserContext);
@@ -46,6 +49,16 @@ export default function Post(props) {
         alert('delete the post');
     };
 
+    const handleLike = async () => {
+        await fetch(`/discuss/like/${postId}`,{
+            method: "PATCH",
+        }).
+            then((res) => res.json());
+        setPost(prePost =>{
+            return {...prePost, likeCount: prePost.likeCount+1}
+        })
+    }
+
     return (
 
         <div className="container py-lg-5 py-3 container-lg vh-100">
@@ -73,14 +86,11 @@ export default function Post(props) {
             <Avatar src={avatarSrc} />
             <div className="text-muted small mb-4">
                 <div className="d-flex flex-row align-items-center my-2 justify-content-start">
-                    {/*<img className="avatar-tiny me-3" width={30}*/}
-                    {/*    title={`${onePost.creator}`}*/}
-                    {/*    src={(state.user.avatar !== '' && state.user.avatar) || `https://ui-avatars.com/api/?name=${state.user.username}&background=random&bold=true&rounded=true`} alt={`user ${state.user.username}`} />*/}
                     <strong>{post.creator}</strong>
                     <div className='text-muted ms-auto'>last updated {`${post.createdAt}`}</div>
                 </div>
             </div>
-            <div>
+            <div className='d-flex flex-row align-items-center my-2 justify-content-start'>
                 tags:<strong className="text-muted">{postTags.map((tag) => {
                     const newPage = `/discussion/search-result/${tag}`;
                 return <Link href={newPage} className="btn btn-outline-secondary btn-sm mx-1" underline="none">
@@ -88,12 +98,15 @@ export default function Post(props) {
                 </Link>
             })}
             </strong>
+                <IconButton className='ms-auto' aria-label="add to favorites" onClick={handleLike}>
+                    <ThumbUpOffAltOutlinedIcon sx={{color:'pink'}}/>
+                </IconButton>
+                <span> {post.likeCount} Likes </span>
             </div>
             <hr />
             <div className=' body-content'>
                 {post.message}
             </div>
-
         </div>
     );
 }

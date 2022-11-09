@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {isLoggedIn, UserContext} from "../../context/User";
 import {Navigate, useNavigate, useParams} from "react-router-dom";
-import ScrollToTop from "react-scroll-to-top";
 import Banner from "../Utils/Banner";
 import {Grid} from "@mui/material";
 import PostCard from "./PostCard";
@@ -55,7 +54,6 @@ const PostSearchResult = (props) => {
     };
     return(
         <div className="vh-100">
-            <ScrollToTop smooth component={<p style={{color: "blue"}}>UP</p>}/>
             <Banner className='h-50' pageName={'discussion'}/>
             <div className="container py-3 py-lg-5">
                 <nav className="nav nav-tabs mb-2 d-flex justify-content-start">
