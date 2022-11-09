@@ -11,6 +11,7 @@ import Input from "./GroupChat/Input/Input";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import SettingModal from "./GroupChat/InfoBar/SettingModal";
+import LeftSidebar from "./GroupChat/LeftSidebar";
 
 const ENDPOINT = "localhost:4000";
 
@@ -96,6 +97,9 @@ const Chat = () => {
           }
         }
       >
+        <div className="col-2 h-100 collapse" id="sidebarLeft">
+          <LeftSidebar />
+        </div>
         <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
           <Messages messages={messages} />
           <Input
@@ -104,8 +108,8 @@ const Chat = () => {
             sendMessage={sendMessage}
           />
         </div>
-        <div className="col-md-2 h-100 collapse show"
-          id='sidebar'
+        <div className="col-4 col-md-2 h-100 collapse show"
+          id='sidebarUser'
         >
           <UserSidebar usersOnline={usersOnline} group={group} />
         </div>

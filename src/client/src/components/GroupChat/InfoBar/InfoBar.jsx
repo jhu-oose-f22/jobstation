@@ -23,7 +23,7 @@ const InfoBar = ({ group }) => {
         <button className='btn btn-dark me-auto ms-3 p-0 info-bar'
           type='button'
           data-bs-toggle='collapse'
-          data-bs-target='#sidebar' aria-expanded="true"
+          data-bs-target='#sidebarLeft' aria-expanded="false"
         >
           <i className='fa-solid fa-list' color='white'></i>
         </button>
@@ -83,7 +83,7 @@ const InfoBar = ({ group }) => {
           <button className='btn btn-dark ms-1 p-0 info-bar'
             type='button'
             data-bs-toggle='collapse'
-            data-bs-target='#sidebar' aria-expanded="true"
+            data-bs-target='#sidebarUser' aria-expanded="true"
           >
             <i className='fa-solid fa-user-group' color='white'></i>
           </button>

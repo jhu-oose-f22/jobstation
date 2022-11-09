@@ -8,7 +8,7 @@ import { API_URL } from "../../../context/Const";
 export default function SettingModal({ group, setGroup }) {
 
     const { user } = useContext(UserContext);
-    const readOnly = false //user.username !== group.owner;
+    const readOnly = user.username !== group.owner;
 
     const [groupName, setGroupName] = useState(group.groupName);
     const [groupTags, setGroupTags] = useState(group.tags);
@@ -72,12 +72,14 @@ export default function SettingModal({ group, setGroup }) {
                         </div>}
                         <div className={"form-group mt-2 " + (group.groupName !== groupName ? "border border-warning rounded p-3" : "")}>
                             <label htmlFor="group-name" className="form-label">Group Name</label>
-                            <input type="text" className="form-control" id="group-name" value={groupName} onChange={
-                                (e) => {
-                                    if (readOnly) return;
-                                    setGroupName(e.target.value);
-                                }
-                            } />
+                            <input type="text" className="form-control" id="group-name" value={groupName}
+                                autoComplete="off" readOnly={readOnly}
+                                onChange={
+                                    (e) => {
+                                        if (readOnly) return;
+                                        setGroupName(e.target.value);
+                                    }
+                                } />
                         </div>
                         <div className={"form-group mt-2 " + (group.tags !== groupTags ? "border border-warning rounded p-3" : "")}>
                             <TagSelection tag={groupTags} setTag={readOnly ? () => { } : setGroupTags} setError={readOnly ? () => { } : setError} />
