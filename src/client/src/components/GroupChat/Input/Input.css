@@ -1,5 +1,13 @@
  .ql-toolbar.ql-snow {
+
+     display: flex;
+     flex-direction: row;
+     align-items: center;
      height: 25%;
+ }
+
+ .ql-formats {
+     overflow-x: auto;
  }
 
  .ql-container.ql-snow {

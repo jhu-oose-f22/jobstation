@@ -60,7 +60,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                 transition: "all 250ms cubic-bezier(.02, .01, .47, 1)",
             }}
         >
-            <div className=" mask d-flex flex-row g-0  p-0 h-100 ">
+            <div className=" mask d-flex flex-row g-0  p-0 h-100 w-100">
                 <div
                     className=" col-4 p-1 text-dark h-100 "
                     style={{

@@ -12,6 +12,9 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import SettingModal from "./GroupChat/InfoBar/SettingModal";
 import LeftSidebar from "./GroupChat/LeftSidebar";
+import ChatPage from "./GroupChat/ChatPage";
+
+import "./GroupChat/Chat.css";
 
 const ENDPOINT = "localhost:4000";
 
@@ -100,13 +103,25 @@ const Chat = () => {
         <div className="col-2 h-100 collapse" id="sidebarLeft">
           <LeftSidebar />
         </div>
-        <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
-          <Messages messages={messages} />
-          <Input
-            message={message}
-            setMessage={setMessage}
-            sendMessage={sendMessage}
-          />
+        <div className="tab-content w-100 h-100"
+          style={
+            {
+              position: "relative"
+            }
+          }
+        >
+          <ChatPage states={
+            {
+              messages, message, setMessage, sendMessage
+            }
+          } />
+
+          <div className="tab-pane fade"
+            id="other"
+            role="tabpanel" aria-labelledby="other-tab"
+          >
+            Test
+          </div>
         </div>
         <div className="col-4 col-md-2 h-100 collapse show"
           id='sidebarUser'

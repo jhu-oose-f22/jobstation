@@ -17,7 +17,9 @@ const InfoBar = ({ group }) => {
   };
 
   return (
-    <div className="w-100 d-flex flex-row align-items-center bg-dark bg-opacity-75 text-white py-1">
+    <div className="w-100 d-flex flex-row align-items-center bg-dark bg-opacity-75 text-white py-1"
+      style={{ height: "7%" }}
+    >
       <div className="w-100  h-100 d-flex flex-row align-items-center justify-content-between ">
         {/* Left Sidebar */}
         <button className='btn btn-dark me-auto ms-3 p-0 info-bar'

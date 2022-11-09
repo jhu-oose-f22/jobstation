@@ -34,7 +34,7 @@ const UserSidebar = ({ usersOnline, group }) => {
         title={`${user.name} is online`}
         onClick={isOwner && user.name !== group.owner ? toggleGroupMember : null}
       >
-        <div className="d-flex align-items-center text-white">
+        <div className="d-flex align-items-center">
           <div>
             <img className="" width={30}
               title={`${user.name}`}
@@ -45,7 +45,7 @@ const UserSidebar = ({ usersOnline, group }) => {
               }}
             ></i>
           </div>
-          <span className={user.name === group.owner ? "text-danger" : ' text-secondary'}>{user.name + (user.name === group.owner ? "(Owner)" : "")}</span>
+          <span className={user.name === group.owner ? "text-danger" : ' text-white'}>{user.name + (user.name === group.owner ? "(Owner)" : "")}</span>
         </div>
       </li>
     );
