@@ -15,7 +15,7 @@ const Input = ({ setMessage, sendMessage, message,room }) => {
                             value={message}
                             placeholder={placeholder}
                             onChange={e => {
-                                console.log(e);
+                                //console.log(e);
                                 setMessage(e);
                             }} />
             </div>

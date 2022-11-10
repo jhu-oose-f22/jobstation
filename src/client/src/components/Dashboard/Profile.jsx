@@ -30,7 +30,7 @@ import {
 export default function Profile({ profile }) {
     const { user, toggleUser} = useContext(UserContext);
     
-    // console.log(profile.tags)
+    // //console.log(profile.tags)
     
     const [varyingState, setVaryingState] = useState('');
     const [varyingModal, setVaryingModal] = useState(false);
@@ -41,19 +41,19 @@ export default function Profile({ profile }) {
     const handleUpdate = async () => {
         let newUser = user;
         Object.assign(newUser, {username: varyingUserName});
-        console.log('new user');
-        console.log(newUser);
+        //console.log('new user');
+        //console.log(newUser);
         // newUser.username 
         toggleUser(newUser)
-        console.log(user);
+        //console.log(user);
         //const group_n_user = { groupId: group._id, username: user.username };
         const updatedUserInfo = {
-            originalUsername: profile.username,
-            username: varyingUserName,
+            userId: user._id,
+            newUsername: varyingUserName,
             email: varyingEmail,
             tags: tag,
         }
-        await fetch(`/user/update/${profile.username}`, {
+        await fetch(`/user/update`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",
@@ -63,7 +63,7 @@ export default function Profile({ profile }) {
          
         
 
-        // window.history.go(0);
+        window.history.go(0);
         // navigate("/group");
 
     };

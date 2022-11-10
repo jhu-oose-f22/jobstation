@@ -31,7 +31,7 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
                 setTagList(res.data);
             },
             (err) => {
-                console.log(err.message);
+                //console.log(err.message);
             }
         );
     };

@@ -5,10 +5,10 @@ const DIS_URL = API_URL + '/discuss';
 
 export const getAllDiscussions = (toggleDiscussion) => axios.get(DIS_URL).then(
     (res) => {
-        console.log(res);
+        //console.log(res);
         toggleDiscussion(res.data);
     },
     (err) => {
-        console.log(err);
+        //console.log(err);
     }
 );

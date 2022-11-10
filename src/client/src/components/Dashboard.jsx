@@ -8,20 +8,20 @@ import { TagSelection } from "./Utils/Tag";
 
 export default function Dashboard(props) {
     const {user, toggleUser} = useContext(UserContext);
-    
-    console.log(`dashboard: user.username = ${user.username}`);
+    //console.log(`user id at dashboard == ${user._id}`)
+    //console.log(`dashboard: user.username = ${user.username}`);
     const [userProfile, setUserProfile] = useState({});
     const [postsOfCurrentUser, setPostsOfCurrentUser] = useState([]);
     useEffect(() => {
         if (!isLoggedIn(user)) return;
-        fetch(`/profile/${user.username}`)
+        fetch(`/profile/${user._id}`)
             .then((res) => res.json())
             .then((profile) => {
                 setUserProfile(profile);
                 // setTag(profile.tags);
-                // console.log(profile);
+                // //console.log(profile);
             })
-        fetch(`/posts/${user.username}`)
+        fetch(`/posts/${user._id}`)
             .then((res)=> res.json())
             .then((posts) => {
                 setPostsOfCurrentUser(posts);
@@ -33,7 +33,7 @@ export default function Dashboard(props) {
         return <Navigate to="/login" />;
     }
 
-    // console.log(tag);
+    // //console.log(tag);
     return (
         <div>
             {/* <Banner pageName="dashboard" /> */}

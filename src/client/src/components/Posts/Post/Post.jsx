@@ -13,7 +13,7 @@ export default function Post(props) {
         dispatch(getPostById(postId));
     },[dispatch])
     const onePost = useSelector((state)=> state.posts);
-    console.log(onePost);
+    //console.log(onePost);
 
     const [anchorEl, setAnchorEl] = useState(null);
 

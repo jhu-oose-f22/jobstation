@@ -10,7 +10,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
     const navigate = useNavigate();
 
     const handleQuit = async (e) => {
-        const group_n_user = { groupId: group._id, username: user.username };
+        const group_n_user = { groupId: group._id, userId: user._id };
         await fetch("/group/quit", {
             method: "post",
             headers: {
@@ -25,15 +25,15 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
     };
 
     const handleJoin = async (e) => {
-      console.log('trying to join')
-        const group_n_user = { groupId: group._id, username: user.username };
+      //console.log('trying to join')
+      const group_n_user = { groupId: group._id, userId: user._id };
         await fetch("/group/join", {
             method: "post",
             headers: {
                 "Content-type": "application/json",
             },
             body: JSON.stringify(group_n_user),
-        }).then((res) => res.json());
+        }).then((res) => console.log(res));
         if (listname === 'recommended')
             window.history.go(0);
         else navigate("/group");
