@@ -51,29 +51,27 @@ export const createPost = async (req, res) => {
 export const getPostsByTags = async (req, res) => {
     try {
         const { tags } = req.body;
-        // console.log(tags);
+        // //console.log(tags);
         const targetPosts = await Post.find({ tags: { $all: tags } });
         res.status(201).json(targetPosts);
-        // console.log(targetPosts);
+        // //console.log(targetPosts);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 };
 
-export const getPostsByUsername = async (req, res) => {
+export const getPostsByUserId = async (req, res) => {
     try {
-        const { userName } = req.params.username;
-        // console.log(tags);
-        const targetUser = await User.findOne({
-            username: req.params.username,
-        });
-        // console.log('get posts by username ');
-        // console.log(targetUser);
+        // const  userId  = ;
+        //console.log(req.params.userId);
+        const targetUser = await User.findById(req.params.userId);
+        // //console.log('get posts by username ');
+        // //console.log(targetUser);
         const targetPosts = await Post.find({
             _id: { $in: targetUser.posts },
         });
         res.status(201).json(targetPosts);
-        // console.log(targetPosts);
+        // //console.log(targetPosts);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

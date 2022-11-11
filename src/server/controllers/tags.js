@@ -3,8 +3,8 @@ import Tag from "../models/tag.js";
 
 export const createTags = async (req, res, next) => {
     const { tags } = req.body;
-    console.log('middleware: createTags')
-    console.log(tags);
+    //console.log('middleware: createTags')
+    //console.log(tags);
     try {
         await Tag.createTags(tags);
         next();

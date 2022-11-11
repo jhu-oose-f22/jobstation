@@ -2,10 +2,10 @@
 // can delete this file
 import express from "express";
 
-import { getAllPosts, getPostsByUsername, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
+import { getAllPosts, getPostsByUserId, createPost, getPostById, getPostsByTags, likePost, deletePost, updatePost, getRecommendedPosts } from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
-import { updateUserByUsername, getAllUser, signin, signup, removeUser, updateUser, getUser, getUserProfile, getUserByUsername } from "./controllers/users.js";
+import { updateUserById, getAllUser, signin, signup, removeUser, updateUser, getUserById } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
@@ -14,7 +14,8 @@ const router = express.Router();
 
 //Discuss 
 router.get('/discuss', getAllPosts);
-router.get('/posts/:username', getPostsByUsername);
+// 00
+router.get('/posts/:userId', getPostsByUserId);
 
 router.post('/discuss/create', createTags, createPostEvent, createPost);
 router.get('/discuss/post/:id', getPostById);
@@ -34,7 +35,7 @@ router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused
 router.patch('/group/update/:id', createTags, updateGroup);
 router.get('/group', getGroups);
 router.get('/group/search/:input', getGroupsByInput);
-router.get('/group/:username', getGroupByUser);
+router.get('/group/:userId', getGroupByUser);
 router.post('/group/quit', quitGroup)
 router.post('/group/join', joinGroup)
 
@@ -47,9 +48,11 @@ router.get('/group/user/:userName', getRecommendedGroups); //用假用户的名�
 router.post('/signin', signin);
 router.post('/signup', createUsersEvents, signup);
 router.delete('/user/:id', removeUser);
-router.patch('/user/update/:id', updateUser);
-router.post('/user/update/:username', updateUserByUsername);
-router.get('/profile/:username', getUserByUsername);
+// router.patch('/user/update/:id', updateUser);
+
+router.post('/user/update', updateUserById);
+router.get('/profile/:userId', getUserById);
+
 router.get('/user', getAllUser);
 // router.get('/profile/:username', getUserProfile);
 

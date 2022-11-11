@@ -43,7 +43,7 @@ export const signup = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
 
-        console.log(error);
+        //console.log(error);
     }
 };
 
@@ -85,7 +85,7 @@ export const updateUser = async (req, res) => {
 export const getUser = async (req, res) => {
     try {
         const targetUser = await User.findById(req.params.id);
-        console.log(targetUser);
+        //console.log(targetUser);
         res.status(200).json(targetUser);
 
     } catch (error) {
@@ -95,7 +95,7 @@ export const getUser = async (req, res) => {
 export const getAllUser = async (req, res) => {
     try {
         const targetUser = await User.find({});
-        // console.log(targetUser);
+        // //console.log(targetUser);
         res.status(200).json(targetUser);
 
     } catch (error) {
@@ -103,23 +103,23 @@ export const getAllUser = async (req, res) => {
     }
 }
 
-export const updateUserByUsername = async (req, res) => {
+export const updateUserById = async (req, res) => {
     try {
-        const {originalUsername, username, email, tags} = req.body;
-        console.log('tags in controller')
-        console.log(tags);
-        const targetUser = await User.find({username: originalUsername});
+        const {userId, newUsername, email, tags} = req.body;
+        // //console.log('tags in controller')
+        // //console.log(tags);
+        const targetUser = await User.findById(userId);
         let updated = targetUser;
-        updated[0].tags = tags;
-        updated[0].username = username;
-        updated[0].email = email;
-        // console.log('updated');
-        // console.log(updated[0]);
-        const updatedGroup = await User.findOneAndUpdate(
-            { username: originalUsername },
-            updated[0]
+        updated.tags = tags;
+        updated.username = newUsername;
+        updated.email = email;
+        // //console.log('updated');
+        // //console.log(updated[0]);
+        const updatedGroup = await User.findByIdAndUpdate(
+            userId,
+            updated
         );
-        // console.log(targetUser);
+        // //console.log(targetUser);
         res.status(200).json(updated);
 
     } catch (error) {
@@ -127,27 +127,12 @@ export const updateUserByUsername = async (req, res) => {
     }
 }
 
-export const getUserByUsername = async (req, res) => {
+export const getUserById = async (req, res) => {
     try {
-        // console.log('getUserByUsernameasdfasdf')
-        // console.log(req.params.username)
-        const targetUser = await User.findOne({ username: req.params.username });
-        // console.log(targetUser);
-
-        res.status(200).json(targetUser);
-
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-
-}
-
-export const getUserProfile = async (req, res) => {
-    try {
-        console.log('getUserByUsername')
-        console.log(req.prams.username)
-        const targetUser = await User.findOne({ username: req.prams.username });
-        console.log(targetUser);
+        // //console.log('get user profile')
+        // //console.log(req.params.userId)
+        const targetUser = await User.findById(req.params.userId);
+        // //console.log(targetUser);
 
         res.status(200).json(targetUser);
 
