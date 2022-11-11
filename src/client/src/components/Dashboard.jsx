@@ -27,7 +27,7 @@ export default function Dashboard(props) {
                 setPostsOfCurrentUser(posts);
             })
         
-    }, [])
+    }, [user])
 
     if (!isLoggedIn(user)) {
         return <Navigate to="/login" />;
