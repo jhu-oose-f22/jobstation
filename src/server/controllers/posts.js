@@ -1,6 +1,10 @@
 import Post from "../models/post.js";
+import Comment from "../models/comment.js";
+
 import mongoose from "mongoose";
 import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
+import Group from "../models/group.js";
+
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -11,6 +15,30 @@ export const getAllPosts = async (req, res) => {
     }
 }
 
+export const getPostsBySearch = async (req, res) => {
+    try {
+        const input = req.params.input;
+
+        const targetPosts = await Post.find({
+            $or: [
+                {
+                    title: { $regex: input, $options: "i" },
+                },
+                {
+                    creator: { $regex: input, $options: "i" },
+                },
+                {
+                    tags: { $regex: input, $options: "i" },
+                },
+            ],
+        });
+        console.log(targetPosts);
+        res.status(200).json(targetPosts);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
 export const getRecommendedPosts = async (req, res) => {
     try {
         const ContentsType = "post"; 
@@ -18,9 +46,14 @@ export const getRecommendedPosts = async (req, res) => {
         function delay(time){
             return new Promise(resolve => setTimeout(resolve, time));
         }
-        await delay(500);
+        await delay(200);
 
         const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
+        if(recommendedPosts < 20){
+            const hotPosts = await Post.find();
+        }
+        console.log('typeof(recommendedPosts)');
+        console.log(recommendedPosts);
         res.status(200).json(recommendedPosts);
 
     } catch (error) {
@@ -84,4 +117,76 @@ export const likePost = async (req, res) => {
     const post = await Post.findById(id);
     const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
     res.json(updatedPost);
+}
+
+export const dislikePost = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    const post = await Post.findById(id);
+    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount - 1 }, { new: true });
+    res.json(updatedPost);
+}
+
+//Comments functions
+export const createComment = async (req, res) => {
+    const { postId, userId, message } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send(`No post with id: ${postId}`);
+    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No post with id: ${userId}`);
+    console.log(message, userId);
+    const newComment = await Comment.create({message, userId});
+    const post = await Post.findById(postId);
+    const updatedPost = await Post.findByIdAndUpdate(
+        postId,
+        {
+            commentCount: post.commentCount + 1 ,
+            $push: { comments: newComment._id },
+        }, 
+        { new: true }
+    
+    );
+    res.json(updatedPost);
+}
+
+export const deleteComment = async(req, res) => {
+    try{
+        const { commentId, postId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(commentId)) return res.status(404).send(`No comment with id: ${commentId}`);
+        await Comment.findByIdAndRemove(commentId);
+        //delet dubcomment
+        await Post.updateMany( {$pull: {comments: commentId}} )
+        res.json({ message: "Comment deleted successfully." });
+    } catch (error){
+        res.status(404).json({ message: error.message});
+    }
+}
+
+export const likeComment = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Comment with id: ${id}`);
+    const comment = await Comment.findById(id);
+    const updatedComment = await Comment.findByIdAndUpdate(id, { likeCount: comment.likeCount + 1 }, { new: true });
+    res.json(updatedComment);
+}
+
+
+
+export const getComment = async (req, res) => {
+    try {
+        const targetComment = await Comment.findById(req.params.id);
+        res.status(200).json(targetComment);
+    } catch (error) {
+        res.status(404).json({ message: error.message});
+    }
+}
+
+export const getComments = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+        const post = await Post.findById(id);
+        const comments = await Comment.find({ $all: { _id: post.comments } });
+        res.status(200).json(comments);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }

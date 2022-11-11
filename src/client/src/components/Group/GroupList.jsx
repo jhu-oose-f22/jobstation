@@ -53,11 +53,11 @@ export default function GroupList({ listName, groups = [], search = false }) {
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
-            groupTag: [newGroupTag],
+            tags: [newGroupTag],
             owner: user.username,
         };
         console.log('tag when creating');
-        console.log(newGroup.groupTag)
+
         await fetch("/group/create", {
             method: "POST",
             headers: {
