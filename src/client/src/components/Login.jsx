@@ -27,8 +27,6 @@ export default function Login(props) {
         axios.post(`${API_URL}/signin`, { email, password }).then(
             (res) => {
                 console.log(res.data);
-                sessionStorage.setItem('userLogin', JSON.stringify(res.data.result));
-                sessionStorage.setItem('token', res.data.token);
                 if (remember) {
                     localStorage.setItem('userLogin', JSON.stringify(res.data.result));
                     localStorage.setItem('token', res.data.token);

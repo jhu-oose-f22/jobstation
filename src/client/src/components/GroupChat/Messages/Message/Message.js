@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './Message.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'highlight.js/styles/github-dark.css';
 
 import ReactQuill from 'react-quill';
+import { UserContext } from '../../../../context/User';
 
-const Message = ({ message: { text, user }, name }) => {
+const Message = ({ message: { text, user } }) => {
   let isSentByCurrentUser = false;
+  const { user: userLogin } = useContext(UserContext);
 
-  const trimmedName = name.trim().toLowerCase();
-
-  if (user === trimmedName) {
+  if (user === userLogin.username) {
     isSentByCurrentUser = true;
   }
 
@@ -32,7 +32,7 @@ const Message = ({ message: { text, user }, name }) => {
     isSentByCurrentUser
       ? (
         <div className="messageContainer justifyEnd  ">
-          <p className="sentText pr-10 my-auto">{trimmedName}</p>
+          <p className="sentText pr-10 my-auto">{userLogin.username}</p>
           <div className="messageBox backgroundBlue border border-dark border-1 my-2 py-0">
             {messageBubble}
           </div>
