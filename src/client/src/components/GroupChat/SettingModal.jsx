@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../../context/User";
-import { TagSelection } from "../../Utils/Tag";
-import Error from "../../Utils/Error";
+import { UserContext } from "../../context/User";
+import { TagSelection } from "../Utils/Tag";
+import Error from "../Utils/Error";
 import axios from "axios";
-import { API_URL } from "../../../context/Const";
+import { API_URL } from "../../context/Const";
 
 export default function SettingModal({ group, setGroup }) {
 

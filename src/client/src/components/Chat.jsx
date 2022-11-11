@@ -4,13 +4,12 @@ import { io } from "socket.io-client";
 import { isLoggedIn, UserContext } from "../context/User";
 
 import UserSidebar from "./GroupChat/UserSidebar";
-import Messages from "./GroupChat/Messages/Messages";
-import InfoBar from "./GroupChat/InfoBar/InfoBar";
-import Input from "./GroupChat/Input/Input";
+import InfoBar from "./GroupChat/ChatPage/InfoBar/InfoBar";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import SettingModal from "./GroupChat/InfoBar/SettingModal";
+import SettingModal from "./GroupChat/SettingModal";
+import GroupCalendar from "./GroupChat/GroupCalendar";
 import LeftSidebar from "./GroupChat/LeftSidebar";
 import ChatPage from "./GroupChat/ChatPage";
 
@@ -110,18 +109,18 @@ const Chat = () => {
             }
           }
         >
+          {/* Pages */}
+          {/* 1. Chat */}
           <ChatPage states={
             {
               messages, message, setMessage, sendMessage
             }
           } />
 
-          <div className="tab-pane fade"
-            id="other"
-            role="tabpanel" aria-labelledby="other-tab"
-          >
-            Test
-          </div>
+          {/* 2. Calendar */}
+          <GroupCalendar group={group} />
+
+
         </div>
         <div className="col-4 col-md-2 h-100 collapse show"
           id='sidebarUser'

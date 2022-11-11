@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { API_URL } from '../../../context/Const';
-import { UserContext } from '../../../context/User';
+import { API_URL } from '../../../../context/Const';
+import { UserContext } from '../../../../context/User';
 
 import './InfoBar.css';
 
