@@ -21,9 +21,14 @@ export const getRecommendedPosts = async (req, res) => {
         function delay(time){
             return new Promise(resolve => setTimeout(resolve, time));
         }
-        await delay(500);
+        await delay(200);
 
         const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
+        if(recommendedPosts < 20){
+            const hotPosts = await Post.find();
+        }
+        console.log('typeof(recommendedPosts)');
+        console.log(recommendedPosts);
         res.status(200).json(recommendedPosts);
 
     } catch (error) {
@@ -89,6 +94,14 @@ export const likePost = async (req, res) => {
     res.json(updatedPost);
 }
 
+export const dislikePost = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    const post = await Post.findById(id);
+    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount - 1 }, { new: true });
+    res.json(updatedPost);
+}
+
 //Comments functions
 export const createComment = async (req, res) => {
     const { postId, userId, message } = req.body;
@@ -130,11 +143,25 @@ export const likeComment = async (req, res) => {
     res.json(updatedComment);
 }
 
+
+
 export const getComment = async (req, res) => {
     try {
         const targetComment = await Comment.findById(req.params.id);
         res.status(200).json(targetComment);
     } catch (error) {
         res.status(404).json({ message: error.message});
+    }
+}
+
+export const getComments = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+        const post = await Post.findById(id);
+        const comments = await Comment.find({ $all: { _id: post.comments } });
+        res.status(200).json(comments);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }
