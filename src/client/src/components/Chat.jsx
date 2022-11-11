@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import { isLoggedIn, UserContext } from "../context/User";
 
 import UserSidebar from "./GroupChat/UserSidebar";
-import InfoBar from "./GroupChat/ChatPage/InfoBar/InfoBar";
+import InfoBar from "./GroupChat/InfoBar/InfoBar";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
