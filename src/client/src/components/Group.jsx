@@ -10,8 +10,8 @@ import SearchGroup from "./Group/GroupSearch";
 // const axios = require('axios')
 export default function Group(props) {
     const { user } = useContext(UserContext);
-    // //console.log("user from context");
-    // //console.log(user);
+    console.log("user at group page");
+    console.log(user);
     const [groups, setGroups] = useState([]);
     const [recommendedGroups, setRecommmendedGroups] = useState([]);
     useEffect(() => {

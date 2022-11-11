@@ -9,7 +9,7 @@ import { TagSelection } from "./Utils/Tag";
 export default function Dashboard(props) {
     const {user, toggleUser} = useContext(UserContext);
     //console.log(`user id at dashboard == ${user._id}`)
-    //console.log(`dashboard: user.username = ${user.username}`);
+    console.log(`dashboard: user.username = ${user.username}`);
     const [userProfile, setUserProfile] = useState({});
     const [postsOfCurrentUser, setPostsOfCurrentUser] = useState([]);
     useEffect(() => {

@@ -44,7 +44,7 @@ export default function Profile({ profile }) {
         //console.log('new user');
         //console.log(newUser);
         // newUser.username 
-        toggleUser(newUser)
+        toggleUser(newUser);
         //console.log(user);
         //const group_n_user = { groupId: group._id, username: user.username };
         const updatedUserInfo = {
