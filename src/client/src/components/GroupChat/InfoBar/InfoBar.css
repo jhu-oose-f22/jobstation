@@ -1,0 +1,8 @@
+button.info-bar[aria-expanded="true"] {
+    outline: white solid 1px !important;
+}
+
+button.info-bar {
+    width: 32px;
+    height: 32px;
+}

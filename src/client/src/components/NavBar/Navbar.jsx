@@ -20,8 +20,13 @@ const Navbar = (props) => {
     const { user } = useContext(UserContext);
 
     return (
-        <nav className='sticky-top navbar navbar-expand-lg navbar-dark bg-dark text-light'>
-            <div className='container-lg align-items-center justify-content-center'>
+        <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light py-0'
+            style={{
+                height: '7vh',
+                zIndex: "100",
+            }}
+        >
+            <div className='container-lg align-items-center justify-content-center bg-dark'>
                 <div className='navbar-brand'>
                     <Logo />
                 </div>
@@ -29,7 +34,7 @@ const Navbar = (props) => {
                 {/* pages */}
                 <div className="collapse navbar-collapse"
 
-                     id='navbarSupportedContent'>
+                    id='navbarSupportedContent'>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-lg-2">
                         {pages}
                     </ul>
@@ -45,8 +50,8 @@ const Navbar = (props) => {
                                 <div className=" nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div className="d-flex flex-row text-info align-content-end justify-content-end rounded-3 px-2 py-1 bg-light bg-opacity-10">
                                         <img className="avatar-tiny me-2" width={20}
-                                             title={`${user.username}`}
-                                             src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
+                                            title={`${user.username}`}
+                                            src={user.avatar || `https://ui-avatars.com/api/?name=${user.username}&background=random&bold=true&rounded=true`} alt={`user ${user.username}`} />
                                         {user.username}
                                     </div>
                                 </div>

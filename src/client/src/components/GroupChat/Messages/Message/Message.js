@@ -1,42 +1,52 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './Message.css';
 import 'react-quill/dist/quill.bubble.css';
-import ReactQuill from "react-quill";
+import 'highlight.js/styles/github-dark.css';
 
-const Message = ({ message: { text, user }, name }) => {
-    let isSentByCurrentUser = false;
+import ReactQuill from 'react-quill';
+import { UserContext } from '../../../../context/User';
 
-    const trimmedName = name.trim().toLowerCase();
+const Message = ({ message: { text, user } }) => {
+  let isSentByCurrentUser = false;
+  const { user: userLogin } = useContext(UserContext);
 
-    if(user === trimmedName) {
-        isSentByCurrentUser = true;
-    }
-    const messageBubble = <ReactQuill
-        theme='bubble'
-        readOnly={true}
-        value={text}
+  if (user === userLogin.username) {
+    isSentByCurrentUser = true;
+  }
 
-    />
-    return (
-        isSentByCurrentUser
-            ? (
-                <div className="messageContainer justifyEnd  ">
-                    <p className="sentText pr-10">{trimmedName}</p>
-                    <div className="messageBoxSelf my-2">
-                        {messageBubble}
-                    </div>
-                </div>
-            )
-            : (
-                <div className="messageContainer justifyStart">
-                    <div className="messageBoxOther text-dark my-2">
-                        {messageBubble}
-                    </div>
-                    <p className="sentText pl-10 ">{user}</p>
-                </div>
-            )
-    );
+
+  const modules = {
+    syntax: true
+  }
+
+
+  const messageBubble = <ReactQuill
+    theme='bubble'
+    readOnly={true}
+    value={text}
+    modules={modules}
+  />
+
+  return (
+    isSentByCurrentUser
+      ? (
+        <div className="messageContainer justifyEnd  ">
+          <p className="sentText pr-10 my-auto">{userLogin.username}</p>
+          <div className="messageBox backgroundBlue border border-dark border-1 my-2 py-0">
+            {messageBubble}
+          </div>
+        </div>
+      )
+      : (
+        <div className="messageContainer justifyStart">
+          <div className="messageBox backgroundLight  border border-dark border-1 my-2 text-dark">
+            {messageBubble}
+          </div>
+          <p className="sentText pl-10 ">{user}</p>
+        </div>
+      )
+  );
 }
 
 export default Message;

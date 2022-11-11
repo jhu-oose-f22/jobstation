@@ -14,7 +14,7 @@ import ScrollToTop from "react-scroll-to-top";
 
 export default function Dashboard({ posts }) {
     // const {user} = useContext(UserContext);
-
+    
     return (
         <div className="vh-100">
             <ScrollToTop
@@ -27,7 +27,8 @@ export default function Dashboard({ posts }) {
                 
                 
                 <Grid container rowSpacing={2}>
-                    {posts.map((post) => (
+                    {
+                    posts.map((post) => (
                         <Grid key={post._id} item xs={12} sm={12} lg={12}>
                             <PostCard post={post} />
                         </Grid>

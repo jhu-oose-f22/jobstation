@@ -1,6 +1,5 @@
 
 import Pipeless from "pipeless";
-import Post from "../models/post.js";
 
 const defaultClient = Pipeless.ApiClient.instance;
 // Configure API key authorization: App_API_Key
@@ -122,67 +121,6 @@ export const createEventsForFakeUsers = async (user) => {
     
 }
 
-export const createFakeUsers = async (req, res) => {
-    const {users} = req.body;
-    
-    for (const user of users){
-        createEventsForFakeUsers(user);
-
-        var userEvents = [];
-        var userBatch = [];
-        for (const tag of user.tags){
-            userBatch.push({
-                start_object: {id: user.name, type: 'user'},
-                relationship: {type: 'taggedWith'},
-                end_object: {id: tag, type: 'tag'}
-            });
-            
-            if (userBatch.length >= 10){
-                userEvents.push(userBatch);
-                userBatch = [];
-            }
-        } 
-        if(userBatch) userEvents.push(userBatch);
-        for (const userEvent of userEvents){
-            const opts = JSON.stringify({
-                events: userEvent,
-                synchronous: false
-            });
-            //console.log(opts);
-            pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
-                if (error) {
-                    console.error(error);
-                } else {
-                    //console.log('API called successfully. Returned data: ' + data);
-                }
-            });
-        }
-        const opts = JSON.stringify({
-            events: [
-                {
-                    start_object: {id: user.name, type: 'user'},
-                    relationship: {type: 'interestedIn'},
-                    end_object: {id: user.title, type: 'post'}
-                },
-                {
-                    start_object: {id: user.name, type: 'user'},
-                    relationship: {type: 'interestedIn'},
-                    end_object: {id: user.title, type: 'company'}
-                }
-            ]
-        })
-        pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
-            if (error) {
-                console.error(error);
-            } else {
-                //console.log('API called successfully. Returned data: ' + data);
-            }
-        });
-    }
-    res.status(201).json("added fake users")
-    
-}
-
 export const createEventsForUsers = async (name, tags) => {
     var Events = [];
     var eventBatch = [];
@@ -294,10 +232,90 @@ export const getRelatedContentsTitle = async ( userName, ContentsType ) => {
             const results = (new Function("return " + response.text))();
             
             for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
-            // return RelatedContentsNames;
         }
     });
-    //console.log(RelatedContentsNames);
 
     return RelatedContentsNames;
+}
+
+export const getRecommendedContentsTitle = async ( userName, ContentsType ) => {
+    var opts = JSON.stringify({
+        object: {id: userName, type: ContentsType},
+        content_tagged_relationship_type: 'taggedWith',
+    });
+    var RelatedContentsNames = [];
+    recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+            const results = (new Function("return " + response.text))();
+            
+            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
+        }
+    });
+
+    return RelatedContentsNames;
+}
+
+//For test
+export const createFakeUsers = async (req, res) => {
+    const {users} = req.body;
+    
+    for (const user of users){
+        createEventsForFakeUsers(user);
+
+        var userEvents = [];
+        var userBatch = [];
+        for (const tag of user.tags){
+            userBatch.push({
+                start_object: {id: user.name, type: 'user'},
+                relationship: {type: 'taggedWith'},
+                end_object: {id: tag, type: 'tag'}
+            });
+            
+            if (userBatch.length >= 10){
+                userEvents.push(userBatch);
+                userBatch = [];
+            }
+        } 
+        if(userBatch) userEvents.push(userBatch);
+        for (const userEvent of userEvents){
+            const opts = JSON.stringify({
+                events: userEvent,
+                synchronous: false
+            });
+            console.log(opts);
+            pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
+                if (error) {
+                    console.error(error);
+                } else {
+                    console.log('API called successfully. Returned data: ' + data);
+                }
+            });
+        }
+        const opts = JSON.stringify({
+            events: [
+                {
+                    start_object: {id: user.name, type: 'user'},
+                    relationship: {type: 'interestedIn'},
+                    end_object: {id: user.title, type: 'post'}
+                },
+                {
+                    start_object: {id: user.name, type: 'user'},
+                    relationship: {type: 'interestedIn'},
+                    end_object: {id: user.title, type: 'company'}
+                }
+            ]
+        })
+        pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
+            if (error) {
+                console.error(error);
+            } else {
+                console.log('API called successfully. Returned data: ' + data);
+            }
+        });
+    }
+    res.status(201).json("added fake users")
+    
 }

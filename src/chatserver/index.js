@@ -27,10 +27,14 @@ app.use(router);
 
 connectDB();
 
+
+const allClients = [];
 io.on('connect', (socket) => {
-  // //console.log(socket);
+  allClients.push(socket);
+  console.log(allClients.length)
+
   socket.on('join', async ({ name, room }, callback) => {
-    // //console.log(name, room);
+    console.log(name, room);
     // this should be added to the group database
     // //console.log(name, room);
     const { error, user } = addUser({ id: socket.id, name, room });
@@ -59,12 +63,13 @@ io.on('connect', (socket) => {
   socket.on('sendMessage', async (message, callback) => {
     const user = getUser(socket.id);
 
-    // //console.log(user.room);
-    //console.log('sending------------')
-    
-    io.to(user.room).emit('message', { user: user.name, text: message });
+    // console.log(user.room);
+    console.log('sending------------')
+    if (user.room) {
+      io.to(user.room).emit('message', { user: user.name, text: message });
 
-    await chatMessageController.storeChatMessage(user.room, message, user.name);
+      await chatMessageController.storeChatMessage(user.room, message, user.name);
+    }
 
     // //console.log(`a message: ${message} has been sent.`);
 
@@ -78,10 +83,13 @@ io.on('connect', (socket) => {
       io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
     }
+
+    const i = allClients.indexOf(socket);
+    allClients.splice(i, 1);
   })
 });
 
 mongoose.connection.once('open', () => {
   //console.log('Connected to MongoDB');
-  server.listen(process.env.PORT || 4000, () => //console.log(`Server has started.`));
+  server.listen(process.env.PORT || 4000, () => console.log(`Server has started.`));
 });

@@ -24,7 +24,12 @@ export default function Dashboard(props) {
         fetch(`/posts/${user._id}`)
             .then((res)=> res.json())
             .then((posts) => {
-                setPostsOfCurrentUser(posts);
+                if(typeof(posts)===String){
+                    setPostsOfCurrentUser([]);
+                }
+                else{
+                    setPostsOfCurrentUser(posts);
+                }
             })
         
     }, [user])

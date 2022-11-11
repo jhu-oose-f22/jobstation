@@ -2,7 +2,6 @@ import Group from "../models/group.js";
 import mongoose from "mongoose";
 import User from "../models/user.js";
 import Tag from "../models/tag.js";
-import { updateUser } from "./users.js";
 
 import { getRelatedContentsTitle } from "../middleware/recommend.js";
 
@@ -177,13 +176,14 @@ export const removeGroup = async (req, res) => {
 
 export const updateGroup = async (req, res) => {
     const { id } = req.params;
-    const { groupName, owner, tags, intro, avatar } = req.body;
+    const { groupName, owner, tags, groupIntro, avatar } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(404).send(`No group with id: ${id}`);
-    const updatedGroup = { groupName, owner, tags, intro, avatar, _id: id };
-    await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
-    res.json(updatedGroup);
+    const updatedGroup = { groupName, owner, tags, groupIntro, avatar };
+    let resGroup = await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
+    console.log(resGroup);
+    return res.status(200).json(resGroup);
 };
 
 export const getRecommendedGroups = async (req, res) => {
