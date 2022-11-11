@@ -5,6 +5,7 @@ import Discussion from "./components/Discussion";
 import Footer from "./components/Footer";
 import Group from "./components/Group";
 import GroupSearchResult from "./components/GroupSearchResult";
+import PostSearchResult from "./components/Posts/PostSearchResult";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
@@ -17,6 +18,7 @@ import UserContextProvider from "./context/User";
 
 import { useDispatch } from "react-redux";
 import { getPosts } from './actions/posts'
+import PostCreate from "./components/Posts/PostCreate";
 
 function App() {
 
@@ -38,6 +40,9 @@ function App() {
                             <Route path='/discussion' >
                                 <Route index element={<Discussion />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
+                                <Route path='/discussion/create' element={<PostCreate />} />
+                                {/*<Route path='/discussion/edit' element={<PostEdit />} />*/}
+                                <Route path='/discussion/search-result/:searchInput' element={<PostSearchResult />} />
                             </Route>
 
 

@@ -1,8 +1,6 @@
 import Group from "../models/group.js";
 import mongoose from "mongoose";
 import User from "../models/user.js";
-import Tag from "../models/tag.js";
-import { updateUser } from "./users.js";
 
 import { getRelatedContentsTitle } from "../middleware/recommend.js";
 
@@ -58,18 +56,17 @@ export const getGroupByUser = async (req, res) => {
 };
 
 export const createGroup = async (req, res) => {
-    const { groupName, groupIntro, groupTag, owner } = req.body;
+    const { groupName, groupIntro, tags, owner } = req.body;
     console.log('tag in controller create');
-    console.log(groupTag);
+    console.log(tags);
     
     // const tagArray = [groupTag];
     const newGroup = await Group.createGroup({
         groupName,
         groupIntro,
-        groupTag,
+        tags,
         owner,
     });
-    const inputTag = await Tag.createTags(groupTag);
     try {
         await newGroup.save();
         let creator = await User.findOne({ username: owner });

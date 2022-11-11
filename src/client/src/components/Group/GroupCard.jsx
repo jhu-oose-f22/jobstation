@@ -4,16 +4,6 @@ import { useContext, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
 export default function GroupCard({ group, joined = false, listname = '' }) {
-    /**
-     * group: {
-                groupId: '23',
-                groupname: 'Meta OA 10.1',
-                groupMemberCount: 50,
-                groupAvatar: null,
-                groupIntro: 'This is a group for practicing Meta OA on Oct.1'
-            }
-     * 
-     */
 
     // TODO Modal
     const { user } = useContext(UserContext);
@@ -35,7 +25,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
     };
 
     const handleJoin = async (e) => {
-        console.log('trying to join')
+      console.log('trying to join')
         const group_n_user = { groupId: group._id, username: user.username };
         await fetch("/group/join", {
             method: "post",
@@ -49,7 +39,6 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
         else navigate("/group");
     };
 
-    // >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div
             className="card btn shadow-sm d-flex flex-row p-0"
@@ -84,13 +73,12 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                                 className="img-fluid rounded-3 mb-3"
                                 alt={group.groupName}
                             />
-                            <strong className="card-title text-break">
+                            <strong className="card-title">
                                 {group.groupName}
                             </strong>
                         </div>
                     </Link>
                 </div>
-
                 <div className=" col-8 text-start flex-column    justify-md-content-center d-flex h-100">
                     <div
                         className=" d-flex flex-column mt-md-auto mt-0 p-2"
@@ -110,7 +98,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                             quit
                         </button>
                     )}
-                    {(!joined || listname == 'recommended') && (
+                    {(!joined || listname === 'recommended') && (
                         <button
                             type="button"
                             className="btn btn-success"

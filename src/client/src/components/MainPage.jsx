@@ -8,7 +8,7 @@ export default function MainPage(props) {
     const { user } = useContext(UserContext);
     let nextPage = '/login';
     if (isLoggedIn(user)) {
-        nextPage = '/group';
+        nextPage = '/discussion';
     }
 
     return <div className='bg-image h-100'
