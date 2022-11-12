@@ -27,7 +27,7 @@ export default function MyCalendar(props) {
         []
     )
 
-    return <div className="h-100 fade overflow-auto"
+    return <div className="h-100 fade overflow-auto fade"
         id="Calendar"
         role="tabpanel" aria-labelledby="Calendar-tab"
     >

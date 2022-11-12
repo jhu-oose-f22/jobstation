@@ -5,3 +5,11 @@
     height: 100%;
     width: 100%;
 }
+
+.tab-pane.fade {
+    z-index: -1;
+}
+
+.tab-pane.active {
+    z-index: auto;
+}
