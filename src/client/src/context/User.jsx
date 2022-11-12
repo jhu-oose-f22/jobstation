@@ -16,7 +16,7 @@ export default function UserContextProvider(props) {
     const [userLogin, setUserLogin] = useState(JSON.parse(sessionStorage.getItem('userLogin')));
     const [token, setToken] = useState(sessionStorage.getItem('token'));
     const userStorage = JSON.parse(localStorage.getItem('userLogin'));
-    const tokenStorage = JSON.parse(localStorage.getItem('token'));
+    const tokenStorage = localStorage.getItem('token');
 
     // TODO get user status.
     useEffect(() => {

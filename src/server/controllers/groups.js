@@ -87,15 +87,15 @@ export const joinGroup = async (req, res) => {
         else {
             console.log(updated)
 
-            
+
             updated.memberCount += 1;
             updated.members.push(userId);
             const updatedGroup = await Group.findByIdAndUpdate(
                 groupId,
-                { 
+                {
                     memberCount: targetGroup.memberCount + 1,
                     members: updated.members
-                 },
+                },
             );
             console.log(updatedGroup)
 
@@ -129,7 +129,7 @@ export const quitGroup = async (req, res) => {
                 updated
             );
         } else {
-            await Group.findByIdAndRemove(groupId );
+            await Group.findByIdAndRemove(groupId);
         }
         let targetUser = await User.findById(userId);
         targetUser.groups = targetUser.groups.filter(
@@ -195,9 +195,21 @@ export const getRecommendedGroups = async (req, res) => {
         }
         await delay(500);
         //console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
+        const recommendedGroups = await Group.find({ groupName: { "$in": RelatedContentsNames } });
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 };
+
+
+export const getGroupById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const group = await Group.findById(id);
+        res.status(200).json(group);
+    }
+    catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

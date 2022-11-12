@@ -89,10 +89,14 @@ const InfoBar = ({ group }) => {
           >
             <i className='fa-solid fa-user-group' color='white'></i>
           </button>
-          <button className='btn m-2 px-0 py-1 info-bar'>
-            <Link to="../">
-              <i className='fa-solid fa-xmark fa-lg' color='white'></i>
-            </Link>
+          <button className='btn m-2 px-0 py-1 info-bar'
+            type="button"
+            onClick={() => {
+              navigate('../');
+            }
+            }
+          >
+            <i className='fa-solid fa-xmark fa-lg' color='white'></i>
           </button>
         </div>
       </div>

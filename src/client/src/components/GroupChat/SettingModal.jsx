@@ -4,8 +4,10 @@ import { TagSelection } from "../Utils/Tag";
 import Error from "../Utils/Error";
 import axios from "axios";
 import { API_URL } from "../../context/Const";
+import { useNavigate } from "react-router-dom";
 
 export default function SettingModal({ group, setGroup }) {
+    const navigate = useNavigate();
 
     const { user } = useContext(UserContext);
     const readOnly = user._id !== group.owner;
@@ -48,7 +50,7 @@ export default function SettingModal({ group, setGroup }) {
                                 () => {
                                     setGroup({ ...updatedGroup });
                                     console.log(group)
-                                    window.alert("Group updated successfully!");
+                                    navigate('/group/chat', { state: { group: { ...updatedGroup } } });
                                 },
                                 (err) => {
                                     console.log(err)

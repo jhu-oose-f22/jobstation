@@ -11,5 +11,5 @@
 }
 
 .tab-pane.active {
-    z-index: auto;
+    z-index: 1;
 }

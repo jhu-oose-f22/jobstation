@@ -19,8 +19,8 @@ import {
     getPostsBySearch
 } from "./controllers/posts.js";
 
-import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups } from "./controllers/groups.js";
-import { updateUserById, getAllUser, signin, signup, removeUser, updateUser, getUserById } from "./controllers/users.js";
+import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups, getGroupById } from "./controllers/groups.js";
+import { updateUserById, getAllUser, signin, signup, removeUser, updateUser, getUserById, getUserNames } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
@@ -49,7 +49,7 @@ router.get('/discuss/user/:userName', getRecommendedPosts);
 
 //Group
 
-// router.get('/group/:id', getGroup);
+router.get('/group/find/:id', getGroupById);
 router.post('/group/create', createTags, createGroupEvent, createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused 
 // router.delete('/group/:id', removeGroup); 
@@ -73,8 +73,9 @@ router.post('/user/update', updateUserById);
 router.get('/profile/:userId', getUserById);
 
 router.get('/user', getAllUser);
-// router.get('/profile/:username', getUserProfile);
 
+// router.get('/profile/:username', getUserProfile);
+router.get('/groupuser/:groupId', getUserNames);
 
 //Tags
 router.get('/tags', getTags);
