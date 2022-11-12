@@ -19,7 +19,10 @@ const userSchema = mongoose.Schema({
 		default: []
 	},
 	tags: [String],
-	posts: [String],
+	posts: {
+		type: [mongoose.ObjectId],
+		default: []
+	},
 	createdAt: {
 		type: Date,
 		default: new Date()

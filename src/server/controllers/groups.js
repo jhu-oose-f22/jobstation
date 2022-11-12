@@ -39,16 +39,12 @@ export const getGroupsByInput = async (req, res) => {
 
 export const getGroupByUser = async (req, res) => {
     try {
-        const targetUser = await User.findOne({
-            username: req.params.username,
-        });
+        const targetUser = await User.findById(req.params.userId).exec();
 
         const targetGroups = await Group.find({
             _id: { $in: targetUser.groups },
         });
 
-        // console.log("target groups");
-        // console.log(targetGroups);
         res.status(200).json(targetGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -67,10 +63,11 @@ export const createGroup = async (req, res) => {
     });
     try {
         await newGroup.save();
-        let creator = await User.findOne({ username: owner });
+        let creator = await User.findById(owner);
         creator.groups.push(newGroup._id);
-        const updatedUser = await User.findOneAndUpdate(
-            { username: owner },
+        // A.findByIdAndUpdate(id, update, options, callback) // executes
+        const updatedUser = await User.findByIdAndUpdate(
+            owner,
             creator
         );
         res.status(201).json(newGroup);
@@ -81,34 +78,43 @@ export const createGroup = async (req, res) => {
 
 export const joinGroup = async (req, res) => {
     try {
-        const { groupId, username } = req.body;
+        const { groupId, userId } = req.body;
+        console.log(`join group: ${groupId}, ${userId}`);
         const targetGroup = await Group.findById(groupId);
-        if (targetGroup.members.includes(username))
+        let updated = targetGroup;
+        if (targetGroup.members.includes(userId))
             res.status(200).json("already in, unable to join");
         else {
-            let updated = targetGroup;
+            console.log(updated)
+
+            
             updated.memberCount += 1;
-            updated.members.push(username);
-            const updatedGroup = await Group.findOneAndUpdate(
-                { _id: groupId },
-                updated
+            updated.members.push(userId);
+            const updatedGroup = await Group.findByIdAndUpdate(
+                groupId,
+                { 
+                    memberCount: targetGroup.memberCount + 1,
+                    members: updated.members
+                 },
             );
-            let targetUser = await User.findOne({ username: username });
+            console.log(updatedGroup)
+
+            let targetUser = await User.findById(userId);
             targetUser.groups.push(groupId);
-            const updatedUser = await User.findOneAndUpdate(
-                { username: username },
+            const updatedUser = await User.findByIdAndUpdate(
+                userId,
                 targetUser
             );
             res.status(200).json(updatedGroup);
         }
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ message: `asdfasf ${error.message}` });
     }
 };
 
 export const quitGroup = async (req, res) => {
     try {
-        const { groupId, username } = req.body;
+        const { groupId, userId } = req.body;
 
         const targetGroup = await Group.findById(groupId);
 
@@ -116,22 +122,22 @@ export const quitGroup = async (req, res) => {
         updated.memberCount = updated.memberCount - 1;
         if (updated.memberCount > 0) {
             updated.members = updated.members.filter(
-                (member) => member !== username
+                (member) => member !== userId
             );
-            const updatedGroup = await Group.findOneAndUpdate(
-                { _id: groupId },
+            const updatedGroup = await Group.findByIdAndUpdate(
+                groupId,
                 updated
             );
         } else {
-            await Group.findOneAndDelete({ _id: groupId });
+            await Group.findByIdAndRemove(groupId );
         }
-        let targetUser = await User.findOne({ username: username });
+        let targetUser = await User.findById(userId);
         targetUser.groups = targetUser.groups.filter(
             (id) => `${id}` !== groupId
         );
 
-        const updatedUser = await User.findOneAndUpdate(
-            { username: username },
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
             targetUser
         );
 
@@ -180,7 +186,7 @@ export const getRecommendedGroups = async (req, res) => {
     try {
         const ContentsType = "company";
         const RelatedContentsNames = await getRelatedContentsTitle(
-            req.params.userName,
+            req.params.userId,
             ContentsType
         );
 
@@ -188,8 +194,8 @@ export const getRecommendedGroups = async (req, res) => {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
         await delay(500);
-        console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find({ groupName: { "$in": RelatedContentsNames } });
+        //console.log(RelatedContentsNames);
+        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });

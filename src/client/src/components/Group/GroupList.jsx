@@ -49,14 +49,14 @@ export default function GroupList({ listName, groups = [], search = false }) {
             return <Navigate to="/" />;
     }
     const handleCreate = async (e) => {
-        // console.log(`before add: ${user.username}`);
+        // //console.log(`before add: ${user.username}`);
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
             tags: [newGroupTag],
-            owner: user.username,
+            owner: user._id,
         };
-        console.log('tag when creating');
+        //console.log('tag when creating');
 
         await fetch("/group/create", {
             method: "POST",
@@ -66,7 +66,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
             body: JSON.stringify(newGroup)
         })
             .then((res) => res.json())
-        // .then((data) => console.log(data));
+            // .then((data) => //console.log(data));
 
         window.history.go(0);
         // navigate("/group");

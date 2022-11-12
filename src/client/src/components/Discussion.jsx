@@ -44,13 +44,13 @@ export default function Discussion(props) {
 
     const handleLoadRec = () => {
         setIsRecommend(true);
-        console.log("get the recommend posts for user");
+        //console.log("get the recommend posts for user");
 
     };
 
     const handleLoadAll = () => {
         setIsRecommend(false);
-        console.log("get posts for user");
+        //console.log("get posts for user");
 
     };
 

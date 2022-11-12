@@ -11,9 +11,9 @@ export const getAllPosts = async (req, res) => {
         const targetPost = await Post.list();
         res.status(200).json(targetPost);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
-}
+};
 
 export const getPostsBySearch = async (req, res) => {
     try {
@@ -49,11 +49,6 @@ export const getRecommendedPosts = async (req, res) => {
         await delay(200);
 
         const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
-        if(recommendedPosts < 20){
-            const hotPosts = await Post.find();
-        }
-        console.log('typeof(recommendedPosts)');
-        console.log(recommendedPosts);
         res.status(200).json(recommendedPosts);
 
     } catch (error) {
@@ -113,36 +108,13 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
     const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(404).send(`No post with id: ${id}`);
     const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
-    res.json(updatedPost);
-}
-
-export const dislikePost = async (req, res) => {
-    const { id } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-    const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount - 1 }, { new: true });
-    res.json(updatedPost);
-}
-
-//Comments functions
-export const createComment = async (req, res) => {
-    const { postId, userId, message } = req.body;
-    if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send(`No post with id: ${postId}`);
-    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No post with id: ${userId}`);
-    console.log(message, userId);
-    const newComment = await Comment.create({message, userId});
-    const post = await Post.findById(postId);
     const updatedPost = await Post.findByIdAndUpdate(
-        postId,
-        {
-            commentCount: post.commentCount + 1 ,
-            $push: { comments: newComment._id },
-        }, 
+        id,
+        { likeCount: post.likeCount + 1 },
         { new: true }
-    
     );
     res.json(updatedPost);
 }
