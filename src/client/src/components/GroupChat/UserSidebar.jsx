@@ -7,7 +7,7 @@ const UserSidebar = ({ usersOnline, group }) => {
 
   const { user } = useContext(UserContext);
 
-  const isOwner = group.owner === user.username;
+  const isOwner = group.owner === user._id;
 
   const toggleGroupMember = (e) => {
     console.log(e.target.innerText);
@@ -35,7 +35,7 @@ const UserSidebar = ({ usersOnline, group }) => {
         onClick={isOwner && user.name !== group.owner ? toggleGroupMember : null}
       >
         <div className="d-flex align-items-center">
-          <div>
+          <div className=" d-flex align-items-center">
             <img className="" width={30}
               title={`${user.name}`}
               src={(user.avatar !== '' && user.avatar) || `https://ui-avatars.com/api/?name=${user.name}&background=random&bold=true&rounded=true`} alt={`user ${user.name}`} />

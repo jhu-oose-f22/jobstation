@@ -8,7 +8,7 @@ import { API_URL } from "../../context/Const";
 export default function SettingModal({ group, setGroup }) {
 
     const { user } = useContext(UserContext);
-    const readOnly = user.username !== group.owner;
+    const readOnly = user._id !== group.owner;
 
     const [groupName, setGroupName] = useState(group.groupName);
     const [groupTags, setGroupTags] = useState(group.tags);

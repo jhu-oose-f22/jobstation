@@ -23,7 +23,7 @@ const Chat = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const name = user.username;
+  const name = user._id;
   const [group, setGroup] = useState(
     state.group
   );
@@ -34,7 +34,7 @@ const Chat = () => {
 
 
   useEffect(() => {
-    if (!state.group || !isLoggedIn(user) || state.group.members.indexOf(user.username) === -1) return;
+    if (!state.group || !isLoggedIn(user) || state.group.members.indexOf(name) === -1) return;
     if (Object.keys(group).length === 0) return;
     socket.emit("join", { name: name, room: group._id }, (error) => {
       console.log(group.groupName)
@@ -78,7 +78,7 @@ const Chat = () => {
     }
   };
 
-  if (!state || !state.group || state.group.members.indexOf(user.username) === -1 || !isLoggedIn(user)) {
+  if (!state || !state.group || state.group.members.indexOf(user._id) === -1 || !isLoggedIn(user)) {
     window.alert("You are not a member of this group");
     return <Navigate to='../' />
   }

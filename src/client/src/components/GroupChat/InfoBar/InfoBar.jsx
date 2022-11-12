@@ -66,7 +66,7 @@ const InfoBar = ({ group }) => {
                 axios.post(API_URL + '/group/quit',
                   {
                     groupId: group._id,
-                    username: user.username,
+                    username: user._id,
                   }).then(() => {
                     window.alert('You have left the group');
                     navigate('../');

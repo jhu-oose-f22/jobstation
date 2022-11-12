@@ -60,7 +60,7 @@ router.get('/group/:userId', getGroupByUser);
 router.post('/group/quit', quitGroup)
 router.post('/group/join', joinGroup)
 
-router.get('/group/user/:userName', getRecommendedGroups); 
+router.get('/group/user/:userName', getRecommendedGroups);
 
 
 //User
