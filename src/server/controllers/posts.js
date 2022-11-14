@@ -9,7 +9,22 @@ import {
 
 export const getAllPosts = async (req, res) => {
     try {
-        const targetPost = await Post.list();
+        let targetPost = await Post.list();//getPosts 拿到creator查到username 加进去
+        for (let post of targetPost) {
+            
+            //const targetUser = await User.findById(userId);
+            let targetCreator = post.creator;
+            // const {userId, newUsername, email, tags} = 
+            const targetUserName = await User.findById(targetCreator);
+            const updatedInfo = {
+                creatorName: targetUserName,
+            }
+            post.push(updatedInfo)
+            // const tagName = { Name: tag };
+            // const findedTags = await this.find({ Name: tag });
+            // if (!findedTags.length) newTags.push(tagName);
+        }
+
         res.status(200).json(targetPost);
     } catch (error) {
         res.status(404).json({ message: error.message });
