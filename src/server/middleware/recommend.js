@@ -4,11 +4,11 @@ import Pipeless from "pipeless";
 const defaultClient = Pipeless.ApiClient.instance;
 // Configure API key authorization: App_API_Key
 const App_API_Key = defaultClient.authentications['App_API_Key'];
-App_API_Key.apiKey = "Bearer MNDNbrAo4GWzuYkJvDx8qcpDxsXUtn4heGd6WGrS"
+App_API_Key.apiKey = "Bearer AD3DFmGXck8ZnhQQbtNhrfwb36mXRa64M3incCLa"
 
 const pipeApi = new Pipeless.GeneralApi();
 export const recommendApi = new Pipeless.RecommendationsApi();
-export const appId = 1694; // {Number} 
+export const appId = 1702; // {Number} 
 // const opts = {};
 
 //create

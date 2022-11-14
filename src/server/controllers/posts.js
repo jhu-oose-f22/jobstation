@@ -2,9 +2,7 @@ import Post from "../models/post.js";
 import Comment from "../models/comment.js";
 
 import mongoose from "mongoose";
-import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
-import Group from "../models/group.js";
-
+import { getRelatedContentsTitle } from "../middleware/recommend.js";
 
 export const getAllPosts = async (req, res) => {
     try {
