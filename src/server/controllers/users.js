@@ -5,6 +5,8 @@ import Group from "../models/group.js";
 
 import User from "../models/user.js";
 
+import { createUsersEvents } from "../middleware/recommend.js";
+
 const secret = 'test';
 
 export const signin = async (req, res) => {
@@ -27,7 +29,7 @@ export const signin = async (req, res) => {
     }
 };
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, createUsersEvents) => {
     const { email, password, username, tags = [] } = req.body;
 
     try {
@@ -38,6 +40,8 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const result = await User.create({ email, password: hashedPassword, username: username, tags });
+
+        createUsersEvents(result);
 
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
         res.status(201).json({ result, token });

@@ -65,7 +65,9 @@ router.get('/group/user/:userName', getRecommendedGroups);
 
 //User
 router.post('/signin', signin);
-router.post('/signup', createUsersEvents, signup);
+// router.post('/signup', createUsersEvents, signup);
+router.post('/signup', signup);
+router.post('/createUserEvent', createUsersEvents);
 router.delete('/user/:id', removeUser);
 // router.patch('/user/update/:id', updateUser);
 
