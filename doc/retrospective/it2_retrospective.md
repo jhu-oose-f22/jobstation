@@ -16,4 +16,3 @@
 ## Summary
 
 We have already built the basic functions of discussion and group sections and are ready to add the recommendation function(beyond CRUD).
-

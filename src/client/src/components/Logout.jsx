@@ -26,7 +26,7 @@ export default function Logout() {
                 setTimer(null);
             }
         }
-    }, [toggleUser, countdown])
+    }, [toggleUser, countdown, timer, navigate]);
 
 
     return <div className='bg-image h-100'

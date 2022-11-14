@@ -1,8 +1,6 @@
 import Group from "../models/group.js";
 import mongoose from "mongoose";
 import User from "../models/user.js";
-import Tag from "../models/tag.js";
-import { updateUser } from "./users.js";
 
 import { getRelatedContentsTitle } from "../middleware/recommend.js";
 
@@ -55,9 +53,7 @@ export const getGroupByUser = async (req, res) => {
 
 export const createGroup = async (req, res) => {
     const { groupName, groupIntro, tags, owner } = req.body;
-    // console.log('tag in controller create');
-    // console.log(tags);
-    
+    console.log('tag in controller create');
     // const tagArray = [groupTag];
     const newGroup = await Group.createGroup({
         groupName,
@@ -65,7 +61,6 @@ export const createGroup = async (req, res) => {
         tags,
         owner,
     });
-    const inputTag = await Tag.createTags(tags);
     try {
         await newGroup.save();
         let creator = await User.findById(owner);
@@ -92,15 +87,15 @@ export const joinGroup = async (req, res) => {
         else {
             console.log(updated)
 
-            
+
             updated.memberCount += 1;
             updated.members.push(userId);
             const updatedGroup = await Group.findByIdAndUpdate(
                 groupId,
-                { 
+                {
                     memberCount: targetGroup.memberCount + 1,
                     members: updated.members
-                 },
+                },
             );
             console.log(updatedGroup)
 
@@ -134,7 +129,7 @@ export const quitGroup = async (req, res) => {
                 updated
             );
         } else {
-            await Group.findByIdAndRemove(groupId );
+            await Group.findByIdAndRemove(groupId);
         }
         let targetUser = await User.findById(userId);
         targetUser.groups = targetUser.groups.filter(
@@ -177,13 +172,14 @@ export const removeGroup = async (req, res) => {
 
 export const updateGroup = async (req, res) => {
     const { id } = req.params;
-    const { groupName, owner, tags, intro, avatar } = req.body;
+    const { groupName, owner, tags, groupIntro, avatar } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(404).send(`No group with id: ${id}`);
-    const updatedGroup = { groupName, owner, tags, intro, avatar, _id: id };
-    await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
-    res.json(updatedGroup);
+    const updatedGroup = { groupName, owner, tags, groupIntro, avatar };
+    let resGroup = await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
+    console.log(resGroup);
+    return res.status(200).json(resGroup);
 };
 
 export const getRecommendedGroups = async (req, res) => {
@@ -199,9 +195,21 @@ export const getRecommendedGroups = async (req, res) => {
         }
         await delay(500);
         //console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
+        const recommendedGroups = await Group.find({ groupName: { "$in": RelatedContentsNames } });
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 };
+
+
+export const getGroupById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const group = await Group.findById(id);
+        res.status(200).json(group);
+    }
+    catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

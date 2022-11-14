@@ -1,8 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import Group from "../models/group.js";
 
 import User from "../models/user.js";
+
+import { createUsersEvents } from "../middleware/recommend.js";
 
 const secret = 'test';
 
@@ -26,7 +29,7 @@ export const signin = async (req, res) => {
     }
 };
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, createUsersEvents) => {
     const { email, password, username, tags = [] } = req.body;
 
     try {
@@ -37,6 +40,8 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const result = await User.create({ email, password: hashedPassword, username: username, tags });
+
+        createUsersEvents(result);
 
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
         res.status(201).json({ result, token });
@@ -105,7 +110,7 @@ export const getAllUser = async (req, res) => {
 
 export const updateUserById = async (req, res) => {
     try {
-        const {userId, newUsername, email, tags} = req.body;
+        const { userId, newUsername, email, tags } = req.body;
         // //console.log('tags in controller')
         // //console.log(tags);
         const targetUser = await User.findById(userId);
@@ -142,3 +147,18 @@ export const getUserById = async (req, res) => {
 
 }
 
+export const getUserNames = async (req, res) => {
+    try {
+        const { members } = await Group.findById(req.params.groupId);
+        const usernames = await User.find({
+            '_id': {
+                $in: members
+            }
+        }, 'username');
+        // console.log(usernames);
+
+        res.status(200).json(usernames);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

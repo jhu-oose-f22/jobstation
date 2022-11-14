@@ -1,0 +1,29 @@
+ .ql-toolbar.ql-snow {
+
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     height: 25%;
+ }
+
+ .ql-formats {
+     overflow-x: auto;
+ }
+
+ .ql-container.ql-snow {
+     overflow-y: auto;
+     height: 75%;
+ }
+
+ #send {
+     position: absolute;
+     width: fit-content;
+     right: 5px;
+     bottom: 5px;
+     border-radius: 10px;
+     border: 1px solid #ccc;
+ }
+
+ form {
+     position: relative;
+ }

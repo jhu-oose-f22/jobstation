@@ -1,15 +1,11 @@
 import mongoose from "mongoose";
 
 const commentSchema = mongoose.Schema({
-    // ID: Number,
-    title: String,
     message: String,
-    creator: String,
-    tags: [String],
-    selectedFile: {
-        type: String,
-        default: 0
+    creator: {
+        type: mongoose.ObjectId
     },
+    comments: [String],
     likeCount: {
         type: Number,
         default: 0
@@ -20,6 +16,13 @@ const commentSchema = mongoose.Schema({
     },
 });
 
+class CommentClass {
+    static async list({ offset = 0 } = {}) {
+        return await this.find({}).skip(offset);
+      }
+}
+
+commentSchema.loadClass(CommentClass);
 
 const Comment = mongoose.model('Comment', commentSchema);
 
