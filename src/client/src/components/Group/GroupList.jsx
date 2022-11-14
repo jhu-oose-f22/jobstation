@@ -30,7 +30,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
             );
         });
     }
-    
+
     // }
     switch (listName) {
         case "recommended":
@@ -49,14 +49,14 @@ export default function GroupList({ listName, groups = [], search = false }) {
             return <Navigate to="/" />;
     }
     const handleCreate = async (e) => {
-        // console.log(`before add: ${user.username}`);
+        // //console.log(`before add: ${user.username}`);
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
             tags: [newGroupTag],
-            owner: user.username,
+            owner: user._id,
         };
-        console.log('tag when creating');
+        //console.log('tag when creating');
 
         await fetch("/group/create", {
             method: "POST",
@@ -66,19 +66,19 @@ export default function GroupList({ listName, groups = [], search = false }) {
             body: JSON.stringify(newGroup)
         })
             .then((res) => res.json())
-            // .then((data) => console.log(data));
+            // .then((data) => //console.log(data));
 
         window.history.go(0);
         // navigate("/group");
 
     };
 
-// =======
-        // navigate("/group");
+    // =======
+    // navigate("/group");
 
     // };
 
-// >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
+    // >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div className="accordion-item py-5 border-0">
             <div className=" accordion-header my-2" id={listName}>
@@ -100,31 +100,31 @@ export default function GroupList({ listName, groups = [], search = false }) {
             >
                 <ul className=" d-flex overflow-auto flex-wrap">
                     {groups}
-
-                    <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
-                        <div
-                            className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
-                            style={{
-                                width: 270,
-                                height: 200,
-                            }}
-                        >
-                            <button
-                                className="btn btn-outline-light w-100 text-center"
-                                type="button"
+                    {listName === "join" &&
+                        <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
+                            <div
+                                className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
+                                style={{
+                                    width: 270,
+                                    height: 200,
+                                }}
                             >
-                                <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
-                            </button>
-                            <button
-                                className="btn btn-outline-light w-100"
-                                data-bs-toggle="modal"
-                                type="button"
-                                data-bs-target={`#addGroupModal${listName}`}
-                            >
-                                <i className="fa-solid fa-plus fa-5x text-dark text-opacity-25"></i>
-                            </button>
-                        </div>
-                    </li>
+                                <button
+                                    className="btn btn-outline-light w-100 text-center"
+                                    type="button"
+                                >
+                                    <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
+                                </button>
+                                <button
+                                    className="btn btn-outline-light w-100"
+                                    data-bs-toggle="modal"
+                                    type="button"
+                                    data-bs-target={`#addGroupModal${listName}`}
+                                >
+                                    <i className="fa-solid fa-plus fa-5x text-dark text-opacity-25"></i>
+                                </button>
+                            </div>
+                        </li>}
                 </ul>
                 {/* {groupTitle === "Your Groups"? */}
                 <div

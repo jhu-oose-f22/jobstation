@@ -2,16 +2,18 @@ import Post from "../models/post.js";
 import Comment from "../models/comment.js";
 
 import mongoose from "mongoose";
-import { getRelatedContentsTitle } from "../middleware/recommend.js";
+import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
+import Group from "../models/group.js";
+
 
 export const getAllPosts = async (req, res) => {
     try {
         const targetPost = await Post.list();
         res.status(200).json(targetPost);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
-}
+};
 
 export const getPostsBySearch = async (req, res) => {
     try {
@@ -39,46 +41,58 @@ export const getPostsBySearch = async (req, res) => {
 
 export const getRecommendedPosts = async (req, res) => {
     try {
-        const ContentsType = "post"; 
-        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);  
-        function delay(time){
+        const ContentsType = "post";
+        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);
+        function delay(time) {
             return new Promise(resolve => setTimeout(resolve, time));
         }
         await delay(200);
 
-        const recommendedPosts = await Post.find( { title: { "$in": RelatedContentsNames } } );
-        if(recommendedPosts < 20){
-            const hotPosts = await Post.find();
-        }
-        console.log('typeof(recommendedPosts)');
-        console.log(recommendedPosts);
+        const recommendedPosts = await Post.find({ title: { "$in": RelatedContentsNames } });
         res.status(200).json(recommendedPosts);
 
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 }
 
 export const createPost = async (req, res) => {
-    const {title, message, creator, tags} = req.body;
-    const newPost = await Post.createPost({title, message, creator, tags});
+    const { title, message, creator, tags } = req.body;
+    const newPost = await Post.createPost({ title, message, creator, tags });
     try {
         await newPost.save();
         res.status(201).json(newPost);
     } catch (error) {
-        res.status(204).json({ message: error.message});
+        res.status(204).json({ message: error.message });
     }
 }
 
+export const getPostsByUserId = async (req, res) => {
+    try {
+        // const  userId  = ;
+        //console.log(req.params.userId);
+        const targetUser = await User.findById(req.params.userId);
+        // //console.log('get posts by username ');
+        // //console.log(targetUser);
+        const targetPosts = await Post.find({
+            _id: { $in: targetUser.posts },
+        });
+        res.status(201).json(targetPosts);
+        // //console.log(targetPosts);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
 export const getPostsByTags = async (req, res) => {
     try {
-        const {tags} = req.body;
+        const { tags } = req.body;
         // console.log(tags);
-        const targetPosts = await Post.find( { tags: {$all: tags}});
+        const targetPosts = await Post.find({ tags: { $all: tags } });
         res.status(201).json(targetPosts);
         // console.log(targetPosts);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 
 }
@@ -88,14 +102,14 @@ export const getPostById = async (req, res) => {
         const targetPost = await Post.findById(req.params.id);
         res.status(200).json(targetPost);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 }
 
 export const updatePost = async (req, res) => {
     const { id } = req.params;
     const { title, message, creator, tags } = req.body;
-    
+
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     const updatedPost = { creator, title, message, tags, _id: id };
     await Post.findByIdAndUpdate(id, updatedPost, { new: true });
@@ -131,30 +145,30 @@ export const createComment = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send(`No post with id: ${postId}`);
     if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No post with id: ${userId}`);
     console.log(message, userId);
-    const newComment = await Comment.create({message, userId});
+    const newComment = await Comment.create({ message, userId });
     const post = await Post.findById(postId);
     const updatedPost = await Post.findByIdAndUpdate(
         postId,
         {
-            commentCount: post.commentCount + 1 ,
+            commentCount: post.commentCount + 1,
             $push: { comments: newComment._id },
-        }, 
+        },
         { new: true }
-    
+
     );
     res.json(updatedPost);
 }
 
-export const deleteComment = async(req, res) => {
-    try{
+export const deleteComment = async (req, res) => {
+    try {
         const { commentId, postId } = req.params;
         if (!mongoose.Types.ObjectId.isValid(commentId)) return res.status(404).send(`No comment with id: ${commentId}`);
         await Comment.findByIdAndRemove(commentId);
         //delet dubcomment
-        await Post.updateMany( {$pull: {comments: commentId}} )
+        await Post.updateMany({ $pull: { comments: commentId } })
         res.json({ message: "Comment deleted successfully." });
-    } catch (error){
-        res.status(404).json({ message: error.message});
+    } catch (error) {
+        res.status(404).json({ message: error.message });
     }
 }
 
@@ -173,7 +187,7 @@ export const getComment = async (req, res) => {
         const targetComment = await Comment.findById(req.params.id);
         res.status(200).json(targetComment);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
 }
 

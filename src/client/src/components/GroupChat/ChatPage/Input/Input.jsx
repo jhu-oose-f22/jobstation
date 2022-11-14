@@ -46,6 +46,7 @@ function Input({ setMessage, sendMessage, message }) {
       <button id="send" className="btn btn-success text-center px-2 py-1" onClick={e => {
         sendMessage(e);
       }}>
+        <i className="fa-regular fa-paper-plane me-2"></i>
         Send
       </button>
     </form>

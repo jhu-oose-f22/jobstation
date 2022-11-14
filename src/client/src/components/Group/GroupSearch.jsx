@@ -9,13 +9,14 @@ export default function SearchGroup({ groups }) {
     const navigate = useNavigate();
     let done = false;
     const handleSearch = async (e) => {
+        if (searchInput === '') return;
         await fetch(`/group/search/${searchInput}`)
             .then((res) => res.json())
             .then((data) => (searchResult = data));
         done = true;
 
         if (done === true) {
-            console.log(searchResult);
+            //console.log(searchResult);
 
             navigate("/group/search-result", {
                 state: {

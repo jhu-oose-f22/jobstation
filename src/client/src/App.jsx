@@ -9,6 +9,7 @@ import PostSearchResult from "./components/Posts/PostSearchResult";
 import Chat from "./components/Chat";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
+import Dashboard from "./components/Dashboard";
 import MainPage from "./components/MainPage";
 import Navbar from "./components/NavBar/Navbar";
 import Post from "./components/Posts/Post/Post";
@@ -56,10 +57,10 @@ function App() {
                             <Route path='/login' element={<Login />} />
                             <Route path='/logout' element={<Logout />} />
 
+                            <Route path='/dashboard' element={<Dashboard />} />
 
                             {/* TODO */}
                             <Route path='/profile' element={<ToDo />} />
-                            <Route path='/dashboard' element={<ToDo />} />
                             <Route path='/settings' element={<ToDo />} />
                             <Route path='/notifications' element={<ToDo />} />
 

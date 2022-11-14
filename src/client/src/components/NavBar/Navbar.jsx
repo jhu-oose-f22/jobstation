@@ -20,12 +20,13 @@ const Navbar = (props) => {
     const { user } = useContext(UserContext);
 
     return (
-        <nav className='sticky-top navbar navbar-expand-lg navbar-dark bg-dark text-light py-0'
+        <nav className='navbar navbar-expand-lg navbar-dark bg-dark text-light py-0'
             style={{
                 height: '7vh',
+                zIndex: "100",
             }}
         >
-            <div className='container-lg align-items-center justify-content-center'>
+            <div className='container-lg align-items-center justify-content-center bg-dark'>
                 <div className='navbar-brand'>
                     <Logo />
                 </div>

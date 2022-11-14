@@ -27,10 +27,14 @@ app.use(router);
 
 connectDB();
 
+
+const allClients = [];
 io.on('connect', (socket) => {
-  // console.log(socket);
+  allClients.push(socket);
+  console.log(allClients.length)
+
   socket.on('join', async ({ name, room }, callback) => {
-    // console.log(name, room);
+    console.log(name, room);
     // this should be added to the group database
     // console.log(name, room);
     const { error, user } = addUser({ id: socket.id, name, room });
@@ -61,10 +65,11 @@ io.on('connect', (socket) => {
 
     // console.log(user.room);
     console.log('sending------------')
-    
-    io.to(user.room).emit('message', { user: user.name, text: message });
+    if (user.room) {
+      io.to(user.room).emit('message', { user: user.name, text: message });
 
-    await chatMessageController.storeChatMessage(user.room, message, user.name);
+      await chatMessageController.storeChatMessage(user.room, message, user.name);
+    }
 
     // console.log(`a message: ${message} has been sent.`);
 
@@ -78,6 +83,9 @@ io.on('connect', (socket) => {
       io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
     }
+
+    const i = allClients.indexOf(socket);
+    allClients.splice(i, 1);
   })
 });
 

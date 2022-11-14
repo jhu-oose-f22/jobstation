@@ -4,49 +4,57 @@ import { io } from "socket.io-client";
 import { isLoggedIn, UserContext } from "../context/User";
 
 import UserSidebar from "./GroupChat/UserSidebar";
-import Messages from "./GroupChat/Messages/Messages";
-import InfoBar from "./GroupChat/InfoBar";
-import Input from "./GroupChat/Input/Input";
+import InfoBar from "./GroupChat/InfoBar/InfoBar";
 
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import SettingModal from "./GroupChat/SettingModal";
+import GroupCalendar from "./GroupChat/GroupCalendar";
+import LeftSidebar from "./GroupChat/LeftSidebar";
+import ChatPage from "./GroupChat/ChatPage";
+
+import "./GroupChat/Chat.css";
 
 const ENDPOINT = "localhost:4000";
 
+const socket = io(ENDPOINT);
 
-const Chat = (props) => {
+const Chat = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const name = user.username;
-  const [room, setRoom] = useState('');
-  const [users, setUsers] = useState("");
+  const name = user._id;
+  const [group, setGroup] = useState(
+    state.group
+  );
+  const [usersOnline, setUsersOnline] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [socket, setSocket] = useState(io(ENDPOINT));
+  const [isConnected, setIsConnected] = useState(socket.connected);
+
+
   useEffect(() => {
-    if (!state.room) navigate('../');
-    setRoom(state.room);
-    if (room === '') return;
-    console.log(name, room);
-    socket.on('connect', (e) => { console.log(e) });
-    socket.emit("join", { name, room }, (error) => {
+    if (!state.group || !isLoggedIn(user) || state.group.members.indexOf(name) === -1) return;
+    if (Object.keys(group).length === 0) return;
+    socket.emit("join", { name: name, room: group._id }, (error) => {
+      console.log(group.groupName)
       if (error) {
         console.log(error);
       }
     });
 
+    socket.on('connect', (e) => { setIsConnected(true) });
+
+    socket.on('disconnect', (e) => { setIsConnected(false) });
 
     return () => {
-      console.log("disconnect");
-      socket.disconnect();
-      socket.off();
+      socket.off("connect");
+      socket.off("disconnect");
     }
-
-  }, [state, name, room, socket, setRoom, navigate]);
+  }, []);
 
   useEffect(() => {
-    if (room === '') return;
+    if (Object.keys(group).length === 0) return;
     socket.on("history", history => {
       setMessages(history);
     })
@@ -54,18 +62,24 @@ const Chat = (props) => {
       setMessages([...messages, message]);
     });
     socket.on("roomData", ({ users }) => {
-      setUsers(users);
+      setUsersOnline(users);
     });
-  }, [messages, socket, room]);
+    return () => {
+      socket.off("history");
+      socket.off("message");
+      socket.off("roomData");
+    }
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
-    if (message) {
+    if (message && isConnected) {
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
 
-  if (!state) {
+  if (!state || !state.group || state.group.members.indexOf(user._id) === -1 || !isLoggedIn(user)) {
+    window.alert("You are not a member of this group");
     return <Navigate to='../' />
   }
 
@@ -73,11 +87,11 @@ const Chat = (props) => {
   return (
     <div className="h-100 d-flex flex-column bg-img m-0 w-100"
       style={{
-        backgroundImage: `url(https://source.unsplash.com/random/?${room.slice(0, room.indexOf(' ') + 1)})`,
+        backgroundImage: `url(https://source.unsplash.com/random/?${group.groupName.slice(0, group.groupName.indexOf(' ') + 1)})`,
         backgroundSize: 'cover',
       }}
     >
-      <InfoBar room={room} />
+      <InfoBar group={group} />
       <div className="d-flex"
         style={
           {
@@ -85,20 +99,37 @@ const Chat = (props) => {
           }
         }
       >
-        <div className="w-100 d-flex flex-column align-items-between justify-content-center h-100 ">
-          <Messages messages={messages} name={name} />
-          <Input
-            message={message}
-            setMessage={setMessage}
-            sendMessage={sendMessage}
-          />
+        <div className="col-2 h-100 collapse" id="sidebarLeft">
+          <LeftSidebar />
         </div>
-        <div className="col-md-2 h-100 collapse show"
-          id='sidebar'
+        <div className="tab-content w-100 h-100"
+          style={
+            {
+              position: "relative"
+            }
+          }
         >
-          <UserSidebar users={users} />
+          {/* Pages */}
+          {/* 1. Chat */}
+          <ChatPage states={
+            {
+              messages, message, setMessage, sendMessage
+            }
+          } />
+
+          {/* 2. Calendar */}
+          <GroupCalendar group={group} />
+
+
+        </div>
+        <div className="col-4 col-md-2 h-100 collapse show"
+          id='sidebarUser'
+        >
+          <UserSidebar usersOnline={usersOnline} group={group} />
         </div>
       </div>
+
+      <SettingModal group={group} setGroup={setGroup} />
     </div>
   );
 };

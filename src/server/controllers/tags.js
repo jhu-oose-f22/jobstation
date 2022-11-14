@@ -9,8 +9,8 @@ export const createTags = async (req, res, next) => {
         await Tag.createTags(tags);
         next();
     } catch (error) {
-        res.status(204).json({ message: error.message });
-        next();
+
+        return res.status(400).json({ message: error.message });
     }
 }
 
