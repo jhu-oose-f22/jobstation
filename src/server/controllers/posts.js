@@ -58,6 +58,7 @@ export const getRecommendedPosts = async (req, res) => {
 
 export const createPost = async (req, res) => {
     const { title, message, creator, tags } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(creator)) return res.status(404).send(`No user with id: ${creator}`);
     const newPost = await Post.createPost({ title, message, creator, tags });
     try {
         await newPost.save();
@@ -143,7 +144,7 @@ export const dislikePost = async (req, res) => {
 export const createComment = async (req, res) => {
     const { postId, userId, message } = req.body;
     if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send(`No post with id: ${postId}`);
-    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No post with id: ${userId}`);
+    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
     console.log(message, userId);
     const newComment = await Comment.create({ message, userId });
     const post = await Post.findById(postId);

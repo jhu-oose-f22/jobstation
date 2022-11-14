@@ -4,7 +4,9 @@ const postSchema = mongoose.Schema({
     // ID: Number,
     title: String,
     message: String,
-    creator: String,
+    creator: {
+        type: mongoose.ObjectId
+    },
     comments: [String],
     tags: [String],
     likeCount: {

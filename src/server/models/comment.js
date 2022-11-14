@@ -2,7 +2,9 @@ import mongoose from "mongoose";
 
 const commentSchema = mongoose.Schema({
     message: String,
-    creator: String,
+    creator: {
+        type: mongoose.ObjectId
+    },
     comments: [String],
     likeCount: {
         type: Number,

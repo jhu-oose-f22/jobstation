@@ -258,25 +258,6 @@ export const getRecommendedContentsTitle = async ( userName, ContentsType ) => {
     return RelatedContentsNames;
 }
 
-export const getRecommendedContentsTitle = async ( userName, ContentsType ) => {
-    var opts = JSON.stringify({
-        object: {id: userName, type: ContentsType},
-        content_tagged_relationship_type: 'taggedWith',
-    });
-    var RelatedContentsNames = [];
-    recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('API called successfully. Returned data: ' + data);
-            const results = (new Function("return " + response.text))();
-            
-            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
-        }
-    });
-
-    return RelatedContentsNames;
-}
 
 //For test
 export const createFakeUsers = async (req, res) => {
