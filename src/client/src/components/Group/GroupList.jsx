@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
+import { TagSelection } from "../Utils/Tag";
+
 
 export default function GroupList({ listName, groups = [], search = false }) {
     const { user } = useContext(UserContext);
@@ -9,7 +11,9 @@ export default function GroupList({ listName, groups = [], search = false }) {
 
     const [newGroupName, setNewGroupName] = useState({});
     const [newGroupIntro, setNewGroupIntro] = useState({});
-    const [newGroupTag, setNewGroupTag] = useState({});
+    const [newGroupTag, setNewGroupTag] = useState([]);
+    const [error, setError] = useState('');
+
 
     let groupTitle;
     // TODO throttle all groups
@@ -49,14 +53,12 @@ export default function GroupList({ listName, groups = [], search = false }) {
             return <Navigate to="/" />;
     }
     const handleCreate = async (e) => {
-        // //console.log(`before add: ${user.username}`);
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
-            tags: [newGroupTag],
+            tags: newGroupTag,
             owner: user._id,
         };
-        //console.log('tag when creating');
 
         await fetch("/group/create", {
             method: "POST",
@@ -66,19 +68,11 @@ export default function GroupList({ listName, groups = [], search = false }) {
             body: JSON.stringify(newGroup)
         })
             .then((res) => res.json())
-            // .then((data) => //console.log(data));
 
         window.history.go(0);
-        // navigate("/group");
 
     };
 
-    // =======
-    // navigate("/group");
-
-    // };
-
-    // >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div className="accordion-item py-5 border-0">
             <div className=" accordion-header my-2" id={listName}>
@@ -182,6 +176,9 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                         />
                                     </div>
                                     <div className="form-group">
+                                        <TagSelection tag={newGroupTag} setTag={setNewGroupTag} setError={setError} />
+                                    </div>
+                                    {/* <div className="form-group">
                                         <label for="groupTag">
                                             Tag
                                         </label>
@@ -193,7 +190,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                                 setNewGroupTag(e.target.value)
                                             }
                                         />
-                                    </div>
+                                    </div> */}
                                     <button
                                         type="button"
                                         className="btn btn-secondary"
