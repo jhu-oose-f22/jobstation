@@ -117,12 +117,16 @@ export const quitGroup = async (req, res) => {
         const { groupId, userId } = req.body;
 
         const targetGroup = await Group.findById(groupId);
+        if (!targetGroup.members.includes(userId)) {
+            res.status(200).json("not in the group");
+            return;
+        }
 
         let updated = targetGroup;
         updated.memberCount = updated.memberCount - 1;
         if (updated.memberCount > 0) {
             updated.members = updated.members.filter(
-                (member) => member !== userId
+                (member) => member != userId
             );
             const updatedGroup = await Group.findByIdAndUpdate(
                 groupId,

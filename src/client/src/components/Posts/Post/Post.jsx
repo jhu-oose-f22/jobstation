@@ -3,7 +3,6 @@ import {Button, Link, Stack} from "@mui/material";
 import React, {useContext, useEffect, useState} from "react";
 import {isLoggedIn, UserContext} from "../../../context/User";
 import Avatar from "@mui/material/Avatar";
-import DefaultComponent from "../comments";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined";
 
@@ -11,7 +10,7 @@ export default function Post(props) {
     const {user} = useContext(UserContext);
     const { postId } = useParams();
     const [post, setPost] = useState("");
-    const [isUser,setIsUser] = useState(false);
+    const [isUser,setIsUser] = useState(true);
     const navigate = useNavigate();
     console.log(postId)
 
@@ -39,14 +38,19 @@ export default function Post(props) {
         else{
             setIsUser(false);
         }
-    },[isUser])
+    },[post])
 
     const handleEdit = (event) => {
         navigate('/discussion/edit')
     };
 
-    const handleDelete = () => {
-        alert('delete the post');
+    const handleDelete = async () => {
+        // alert
+        await fetch(`/discuss/post/${postId}`, {
+            method: "delete",
+        }).then((res) => console.log(res));
+        // show success
+        navigate('/discussion');
     };
 
     const handleLike = async () => {

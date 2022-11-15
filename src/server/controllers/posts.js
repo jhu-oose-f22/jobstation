@@ -67,9 +67,6 @@ export const getPostsBySearch = async (req, res) => {
                     title: { $regex: input, $options: "i" },
                 },
                 {
-                    creator: { $regex: input, $options: "i" },
-                },
-                {
                     tags: { $regex: input, $options: "i" },
                 },
             ],
@@ -112,18 +109,15 @@ export const createPost = async (req, res) => {
 
 export const getPostsByUserId = async (req, res) => {
     try {
-        // const  userId  = ;
-        //console.log(req.params.userId);
-        const targetUser = await User.findById(req.params.userId);
-        // //console.log('get posts by username ');
-        // //console.log(targetUser);
+        
         const targetPosts = await Post.find({
-            _id: { $in: targetUser.posts },
+            creator: req.params.userId
         });
+        if (targetPosts.length === 0) 
+            console.log(`user ${req.params.userId} has no post`); 
         res.status(201).json(targetPosts);
-        // //console.log(targetPosts);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json([]);
     }
 };
 
