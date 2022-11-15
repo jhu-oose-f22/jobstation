@@ -27,6 +27,7 @@ const PostSearchResult = (props) => {
                 setPosts(fetched);
             });
     },[])
+    console.log(posts);
     if (!isLoggedIn(user)) {
         return <Navigate to='/login'/>;
     }
