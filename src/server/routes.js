@@ -32,7 +32,8 @@ router.get('/discuss', getAllPosts);
 // 00
 router.get('/posts/:userId', getPostsByUserId);
 
-router.post('/discuss/create', createTags, createPostEvent, createPost);
+router.post('/discuss/create', createTags, createPost);
+// router.post('/discuss/create', createTags, createPostEvent, createPost);
 router.get('/discuss/post/:id', getPostById);
 router.get('/discuss/tags', getPostsByTags);
 router.patch('/discuss/like/:id', likePost);
@@ -50,7 +51,8 @@ router.get('/discuss/user/:userName', getRecommendedPosts);
 //Group
 
 router.get('/group/find/:id', getGroupById);
-router.post('/group/create', createTags, createGroupEvent, createGroup);
+router.post('/group/create', createTags, createGroup);
+// router.post('/group/create', createTags, createGroupEvent, createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused 
 // router.delete('/group/:id', removeGroup); 
 router.patch('/group/update/:id', createTags, updateGroup);
@@ -67,7 +69,7 @@ router.get('/group/user/:userName', getRecommendedGroups);
 router.post('/signin', signin);
 // router.post('/signup', createUsersEvents, signup);
 router.post('/signup', signup);
-router.post('/createUserEvent', createUsersEvents);
+// router.post('/createUserEvent', createUsersEvents);
 router.delete('/user/:id', removeUser);
 // router.patch('/user/update/:id', updateUser);
 

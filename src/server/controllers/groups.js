@@ -2,7 +2,7 @@ import Group from "../models/group.js";
 import mongoose from "mongoose";
 import User from "../models/user.js";
 
-import { getRelatedContentsTitle } from "../middleware/recommend.js";
+import { getRelatedContentsTitle, createGroupEvent } from "../middleware/recommend.js";
 
 export const getGroups = async (req, res) => {
     try {
@@ -55,13 +55,14 @@ export const createGroup = async (req, res) => {
     const { groupName, groupIntro, tags, owner } = req.body;
     console.log('tag in controller create');
     // const tagArray = [groupTag];
-    const newGroup = await Group.createGroup({
-        groupName,
-        groupIntro,
-        tags,
-        owner,
-    });
+    
     try {
+        const newGroup = await Group.createGroup({
+            groupName,
+            groupIntro,
+            tags,
+            owner,
+        });
         await newGroup.save();
         let creator = await User.findById(owner);
         creator.groups.push(newGroup._id);
@@ -70,6 +71,8 @@ export const createGroup = async (req, res) => {
             owner,
             creator
         );
+        console.log(newGroup);
+        await createGroupEvent(newGroup.id, newGroup.tags, newGroup.owner);
         res.status(201).json(newGroup);
     } catch (error) {
         res.status(204).json({ message: error.message });

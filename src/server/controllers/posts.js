@@ -2,7 +2,7 @@ import Post from "../models/post.js";
 import Comment from "../models/comment.js";
 
 import mongoose from "mongoose";
-import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
+import { getRelatedContentsTitle, createPostEvent } from "../middleware/recommend.js";
 import Group from "../models/group.js";
 
 
@@ -59,8 +59,10 @@ export const getRecommendedPosts = async (req, res) => {
 export const createPost = async (req, res) => {
     const { title, message, creator, tags } = req.body;
     if (!mongoose.Types.ObjectId.isValid(creator)) return res.status(404).send(`No user with id: ${creator}`);
-    const newPost = await Post.createPost({ title, message, creator, tags });
     try {
+        const newPost = await Post.createPost({ title, message, creator, tags });
+        console.log("postId: ", newPost.id),
+        await createPostEvent(newPost.id, newPost.tags, newPost.creator);
         await newPost.save();
         res.status(201).json(newPost);
     } catch (error) {
