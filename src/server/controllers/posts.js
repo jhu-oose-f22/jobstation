@@ -1,6 +1,6 @@
 import Post from "../models/post.js";
 import Comment from "../models/comment.js";
-
+import User from "../models/user.js";
 import mongoose from "mongoose";
 import { getRelatedContentsTitle, appId, recommendApi } from "../middleware/recommend.js";
 import Group from "../models/group.js";
@@ -8,22 +8,49 @@ import Group from "../models/group.js";
 
 export const getAllPosts = async (req, res) => {
     try {
-        let targetPost = await Post.list();//getPosts 拿到creator查到username 加进去
-        for (let post of targetPost) {
-            
+        let targetPost = await Post.find();//getPosts 拿到creator查到username 加进去
+        // console.log('I am here 0')
+        // console.log(targetPost)
+        for (let post in targetPost) {
             //const targetUser = await User.findById(userId);
-            let targetCreator = post.creator;
+            // console.log(post)
+            let targetCreator = targetPost[post].creator;
+            // console.log(targetCreator[post])
             // const {userId, newUsername, email, tags} = 
-            const targetUserName = await User.findById(targetCreator);
-            const updatedInfo = {
-                creatorName: targetUserName,
-            }
-            post.push(updatedInfo)
+            let targetUserName = await User.findById(targetCreator);
+            // let targetUserName = await User.findById(targetCreator);
+            // console.log(targetUserName)
+            var target = targetPost[post]
+            var source = { creatorName: targetUserName.username }
+            console.log(target)
+            console.log(source)
+            // targetPost[post] = Object.assign(target, source);
+            targetPost[post] = Object.assign(target, { likeCount: 3 });
+            targetPost[post] = Object.assign(target, source);
+            console.log(targetPost[post].creatorName)
+            // console.log(target, target == result);
+            // var target = { name: 'guxin', age: 18 }
+            // var source = { state: 'signle', age: 22 }
+            // var result = Object.assign(target, source)
+            // console.log(target)
+            // var source = { creatorName: targetUserName.username }
+            // console.log(source)
+            // var result=Object.assign(targetPost[post],source)
+            // console.log(targetPost[post]);
+            // const result = Object.assign(targetPost[post], source);
+            // console.log(targetPost[post],targetPost[post]==result);
+            // const updatedInfo = {
+            //     creatorName: targetUserName,
+            // }
+            // console.log('I am here 1')
+            // targetPost[post].push(updatedInfo)
+            
+            // console.log(result)
             // const tagName = { Name: tag };
             // const findedTags = await this.find({ Name: tag });
             // if (!findedTags.length) newTags.push(tagName);
         }
-
+        res.status(200).json(targetPost[0].creatorName + targetPost[1].creatorName);
         res.status(200).json(targetPost);
     } catch (error) {
         res.status(404).json({ message: error.message });
