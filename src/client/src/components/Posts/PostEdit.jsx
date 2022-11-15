@@ -1,11 +1,12 @@
-import PostForm from "../Form/PostForm";
 
-const PostCreate = () => {
+import PostFormEdit from "../Form/PostEditForm";
+
+const PostEdit = () => {
     return(
         <div>
-            <PostForm/>
+            <PostFormEdit/>
         </div>
     );
 }
 
-export default PostCreate;
+export default PostEdit;

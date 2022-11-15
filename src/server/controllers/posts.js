@@ -8,7 +8,8 @@ import Group from "../models/group.js";
 
 export const getAllPosts = async (req, res) => {
     try {
-        const targetPost = await Post.list();
+        const targetPost = await Post.list(); //array
+
         res.status(200).json(targetPost);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -23,9 +24,6 @@ export const getPostsBySearch = async (req, res) => {
             $or: [
                 {
                     title: { $regex: input, $options: "i" },
-                },
-                {
-                    creator: { $regex: input, $options: "i" },
                 },
                 {
                     tags: { $regex: input, $options: "i" },
@@ -81,7 +79,7 @@ export const getPostsByUserId = async (req, res) => {
         res.status(201).json(targetPosts);
         // //console.log(targetPosts);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json([]);
     }
 };
 

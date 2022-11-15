@@ -6,7 +6,7 @@ import {createPost} from "../../actions/posts";
 import {useNavigate} from "react-router-dom";
 import {isLoggedIn, UserContext} from "../../context/User";
 
-const PostForm = ({formType}) => {
+const PostFormEdit = ({formType}) => {
 
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ const PostForm = ({formType}) => {
     return (
         <Paper className="container-lg mt-5">
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Typography variant="h6">{formType==='edit' ? `Editing"` : 'Creating a Post'}</Typography>
+                <Typography variant="h6">{formType==='edit' ? `Editing"` : 'Editing'}</Typography>
                 {/*<TextField name="creator" variant="standard" label="Creator" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />*/}
                 <TextField name="title" variant="standard" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField name="message" variant="standard" label="Message" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
@@ -39,4 +39,4 @@ const PostForm = ({formType}) => {
     );
 }
 
-export default PostForm
+export default PostFormEdit
