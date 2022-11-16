@@ -12,8 +12,8 @@ export default function SearchResult() {
 
     const location = useLocation();
     const result = location.state.groups;
-    console.log("result page")
-    console.log(result);
+    //console.log("result page")
+    //console.log(result);
 
   const { user } = useContext(UserContext);
   if (!isLoggedIn(user)) {

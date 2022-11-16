@@ -1,8 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import Group from "../models/group.js";
 
 import User from "../models/user.js";
+
+import { createUsersEvents } from "../middleware/recommend.js";
 
 const secret = 'test';
 
@@ -37,13 +40,16 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const result = await User.create({ email, password: hashedPassword, username: username, tags });
+        console.log(result);
+
+        await createUsersEvents(result._id.toString(), result.tags);
 
         const token = jwt.sign({ email: result.email, id: result._id }, secret, { expiresIn: "1h" });
         res.status(201).json({ result, token });
     } catch (error) {
         res.status(500).json({ message: error.message });
 
-        console.log(error);
+        //console.log(error);
     }
 };
 
@@ -82,20 +88,22 @@ export const updateUser = async (req, res) => {
     const user = await User.findById(id);
     res.json(user);
 }
+
 export const getUser = async (req, res) => {
     try {
         const targetUser = await User.findById(req.params.id);
-        console.log(targetUser);
+        //console.log(targetUser);
         res.status(200).json(targetUser);
 
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
+
 export const getAllUser = async (req, res) => {
     try {
         const targetUser = await User.find({});
-        // console.log(targetUser);
+        // //console.log(targetUser);
         res.status(200).json(targetUser);
 
     } catch (error) {
@@ -103,12 +111,36 @@ export const getAllUser = async (req, res) => {
     }
 }
 
-export const getUserByUsername = async (req, res) => {
+export const updateUserById = async (req, res) => {
     try {
-        console.log('getUserByUsername')
-        console.log(req.prams.username)
-        const targetUser = await User.findOne({ username: req.prams.username });
-        console.log(targetUser);
+        const { userId, newUsername, email, tags } = req.body;
+        // //console.log('tags in controller')
+        // //console.log(tags);
+        const targetUser = await User.findById(userId);
+        let updated = targetUser;
+        updated.tags = tags;
+        updated.username = newUsername;
+        updated.email = email;
+        // //console.log('updated');
+        // //console.log(updated[0]);
+        const updatedGroup = await User.findByIdAndUpdate(
+            userId,
+            updated
+        );
+        // //console.log(targetUser);
+        res.status(200).json(updated);
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const getUserById = async (req, res) => {
+    try {
+        // //console.log('get user profile')
+        // //console.log(req.params.userId)
+        const targetUser = await User.findById(req.params.userId);
+        // //console.log(targetUser);
 
         res.status(200).json(targetUser);
 
@@ -116,4 +148,20 @@ export const getUserByUsername = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 
+}
+
+export const getUserNames = async (req, res) => {
+    try {
+        const { members } = await Group.findById(req.params.groupId);
+        const usernames = await User.find({
+            '_id': {
+                $in: members
+            }
+        }, 'username');
+        // console.log(usernames);
+
+        res.status(200).json(usernames);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 }

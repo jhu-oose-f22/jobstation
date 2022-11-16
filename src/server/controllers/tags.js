@@ -2,15 +2,15 @@ import Tag from "../models/tag.js";
 
 
 export const createTags = async (req, res, next) => {
-    const { groupTag } = req.body;
+    const { tags } = req.body;
     console.log('middleware: createTags')
-    console.log(groupTag);
+    console.log(tags);
     try {
-        await Tag.createTags(groupTag);
+        await Tag.createTags(tags);
         next();
     } catch (error) {
-        res.status(204).json({ message: error.message });
-        next();
+
+        return res.status(400).json({ message: error.message });
     }
 }
 

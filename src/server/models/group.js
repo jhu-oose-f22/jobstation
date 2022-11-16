@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 const groupSchema = mongoose.Schema({
     groupName: String,
     groupIntro: String,
-    owner: String, //should be user
-    members: {
-        type: [String],
-        default: []
+    owner: {
+        type: mongoose.ObjectId
     },
+    members: {
+		type: [mongoose.ObjectId],
+		default: []
+	},
     tags: [String],
     avatar: String,
     memberCount: {
@@ -21,16 +23,12 @@ const groupSchema = mongoose.Schema({
 }, ['']);
 
 class GroupClass{
-    static async createGroup({groupName, groupIntro, groupTag, owner,  avatar = ''}){
-        // if (groupName && owner && tags){
-        if (groupName){
-        console.log(`creating new group: ${owner}`);
-
-            // const memberCount = member.lenth;
+    static async createGroup({groupName, groupIntro, tags, owner,  avatar = ''}){
+        if (groupName && owner && tags){
             const newGroup = await this.create({
                 groupName,
                 groupIntro,
-                tags: groupTag,
+                tags: tags,
                 owner,
                 members: [owner]
                 // tags,
@@ -40,7 +38,7 @@ class GroupClass{
             return newGroup;
         }
         else{
-            throw new Error('Missing component of a group.');
+            console.error('Missing component of a group.');
         }
     }
 }

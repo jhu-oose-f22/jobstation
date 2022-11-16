@@ -4,6 +4,7 @@ const tagSchema = mongoose.Schema({
     Name: {
         type: String,
         unique: true,
+        max: 20,
     },
     createdAt: {
         type: Date,
@@ -13,8 +14,8 @@ const tagSchema = mongoose.Schema({
 
 class TagClass {
     static async createTags(tags) {
-        console.log("in model tag");
-        console.log(tags);
+        //console.log("in model tag");
+        //console.log(tags);
         const newTags = [];
         for (const tag of tags) {
             const tagName = { Name: tag };

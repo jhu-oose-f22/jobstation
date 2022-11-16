@@ -6,7 +6,7 @@ import { API_URL } from "../../context/Const";
 export default function TagList({ tag, isHidden = true, onClick = () => { } }) {
     return <div className="d-flex align-items-center">
         tags:
-        {!tag || Object.keys(tag).length === 0 ?
+        {!tag || tag.length === 0 ?
             <span className="text-muted ms-2"> no tags</span>
             :
             <div className={`${isHidden ? "d-flex overflow-hidden" : "d-fluid"}`}>{tag.map((val, idx) => {
@@ -31,7 +31,7 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
                 setTagList(res.data);
             },
             (err) => {
-                console.log(err.message);
+                //console.log(err.message);
             }
         );
     };
@@ -55,7 +55,11 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
                         e => {
                             e.preventDefault();
                             setError('');
-                            if (tagInput === '') {
+                            if (tagInput.length > 10) {
+                                setError('Tag name is too long!');
+                                return;
+                            }
+                            else if (tagInput === '') {
                                 setError('Please enter a tag');
                                 return
                             }
@@ -64,13 +68,8 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
                                 return
                             }
 
-                            if (allTagList.find(({ Name }) => Name === tagInput)) {
-                                setTag([...tag, tagInput]);
-                                setTagInput('');
-                            } else {
-                                setError('Tag not found');
-                                return;
-                            }
+                            setTag([...tag, tagInput]);
+                            setTagInput('');
                         }
                     }
                 >
@@ -87,8 +86,8 @@ export function TagSelection({ tag, setTag, setError = () => { } }) {
         </div>
         <datalist id="tagList" className="options align-self-end">
             {/* <option value="AA">AA</option> */}
-            {allTagList.map(({ Name }) => {
-                return <option key={Name} value={Name}>{Name}</option>
+            {allTagList.map(({ Name }, idx) => {
+                return <option key={idx} value={Name}>{Name}</option>
             })}
         </datalist>
     </div>

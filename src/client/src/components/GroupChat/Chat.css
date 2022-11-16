@@ -1,0 +1,15 @@
+.tab-pane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.tab-pane.fade {
+    z-index: -1;
+}
+
+.tab-pane.active {
+    z-index: 1;
+}

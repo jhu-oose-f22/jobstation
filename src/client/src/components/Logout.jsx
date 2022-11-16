@@ -10,7 +10,7 @@ export default function Logout() {
 
     useEffect(() => {
         if (countdown > 0) {
-            setTimer(setTimeout(() => {
+            setTimer(window.setTimeout(() => {
                 setCountdown(countdown - 1);
             }, 1000));
         } else {
@@ -22,11 +22,11 @@ export default function Logout() {
             localStorage.clear();
             sessionStorage.clear();
             if (timer) {
-                clearTimeout(timer);
+                window.clearTimeout(timer);
                 setTimer(null);
             }
         }
-    }, [toggleUser, countdown])
+    }, [toggleUser, countdown, timer, navigate]);
 
 
     return <div className='bg-image h-100'

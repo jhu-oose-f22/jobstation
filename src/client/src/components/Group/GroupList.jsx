@@ -2,6 +2,9 @@ import { useContext, useState } from "react";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
+import { TagSelection } from "../Utils/Tag";
+import { API_URL } from "../../context/Const";
+
 
 export default function GroupList({ listName, groups = [], search = false }) {
     const { user } = useContext(UserContext);
@@ -9,7 +12,9 @@ export default function GroupList({ listName, groups = [], search = false }) {
 
     const [newGroupName, setNewGroupName] = useState({});
     const [newGroupIntro, setNewGroupIntro] = useState({});
-    const [newGroupTag, setNewGroupTag] = useState({});
+    const [newGroupTag, setNewGroupTag] = useState([]);
+    const [error, setError] = useState('');
+
 
     let groupTitle;
     // TODO throttle all groups
@@ -30,7 +35,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
             );
         });
     }
-    
+
     // }
     switch (listName) {
         case "recommended":
@@ -49,16 +54,14 @@ export default function GroupList({ listName, groups = [], search = false }) {
             return <Navigate to="/" />;
     }
     const handleCreate = async (e) => {
-        // console.log(`before add: ${user.username}`);
         const newGroup = {
             groupName: newGroupName,
             groupIntro: newGroupIntro,
-            groupTag: [newGroupTag],
-            owner: user.username,
+            tags: newGroupTag,
+            owner: user._id,
         };
-        console.log('tag when creating');
-        console.log(newGroup.groupTag)
-        await fetch("/group/create", {
+
+        await fetch(`${API_URL}/group/create`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -66,19 +69,11 @@ export default function GroupList({ listName, groups = [], search = false }) {
             body: JSON.stringify(newGroup)
         })
             .then((res) => res.json())
-            // .then((data) => console.log(data));
 
         window.history.go(0);
-        // navigate("/group");
 
     };
 
-// =======
-        // navigate("/group");
-
-    // };
-
-// >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div className="accordion-item py-5 border-0">
             <div className=" accordion-header my-2" id={listName}>
@@ -100,31 +95,31 @@ export default function GroupList({ listName, groups = [], search = false }) {
             >
                 <ul className=" d-flex overflow-auto flex-wrap">
                     {groups}
-
-                    <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
-                        <div
-                            className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
-                            style={{
-                                width: 270,
-                                height: 200,
-                            }}
-                        >
-                            <button
-                                className="btn btn-outline-light w-100 text-center"
-                                type="button"
+                    {listName === "join" &&
+                        <li className=" list-group-item border-0 d-flex align-items-center justify-content-center">
+                            <div
+                                className="card d-flex flex-row p-0 align-content-between justify-content-center shadow-lg"
+                                style={{
+                                    width: 270,
+                                    height: 200,
+                                }}
                             >
-                                <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
-                            </button>
-                            <button
-                                className="btn btn-outline-light w-100"
-                                data-bs-toggle="modal"
-                                type="button"
-                                data-bs-target={`#addGroupModal${listName}`}
-                            >
-                                <i className="fa-solid fa-plus fa-5x text-dark text-opacity-25"></i>
-                            </button>
-                        </div>
-                    </li>
+                                <button
+                                    className="btn btn-outline-light w-100 text-center"
+                                    type="button"
+                                >
+                                    <i className="fa-solid fa-ellipsis fa-5x text-dark text-opacity-25"></i>
+                                </button>
+                                <button
+                                    className="btn btn-outline-light w-100"
+                                    data-bs-toggle="modal"
+                                    type="button"
+                                    data-bs-target={`#addGroupModal${listName}`}
+                                >
+                                    <i className="fa-solid fa-plus fa-5x text-dark text-opacity-25"></i>
+                                </button>
+                            </div>
+                        </li>}
                 </ul>
                 {/* {groupTitle === "Your Groups"? */}
                 <div
@@ -182,6 +177,9 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                         />
                                     </div>
                                     <div className="form-group">
+                                        <TagSelection tag={newGroupTag} setTag={setNewGroupTag} setError={setError} />
+                                    </div>
+                                    {/* <div className="form-group">
                                         <label for="groupTag">
                                             Tag
                                         </label>
@@ -193,7 +191,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
                                                 setNewGroupTag(e.target.value)
                                             }
                                         />
-                                    </div>
+                                    </div> */}
                                     <button
                                         type="button"
                                         className="btn btn-secondary"

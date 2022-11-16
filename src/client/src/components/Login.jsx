@@ -27,8 +27,6 @@ export default function Login(props) {
         axios.post(`${API_URL}/signin`, { email, password }).then(
             (res) => {
                 console.log(res.data);
-                sessionStorage.setItem('userLogin', JSON.stringify(res.data.result));
-                sessionStorage.setItem('token', res.data.token);
                 if (remember) {
                     localStorage.setItem('userLogin', JSON.stringify(res.data.result));
                     localStorage.setItem('token', res.data.token);
@@ -37,9 +35,9 @@ export default function Login(props) {
                 toggleToken(res.data.token);
             },
             (err) => {
-                console.log(err.response.data);
+                //console.log(err.response.data);
                 setError(err.response.data.message);
-                console.log(error)
+                //console.log(error)
             }
         )
         // localStorage.setItem('userLogin', JSON.stringify(userLogin));
@@ -54,14 +52,14 @@ export default function Login(props) {
 
         axios.post(`${API_URL}/signup`, { email, password, username: userName, tags: tag }).then(
             (res) => {
-                console.log(res.data);
+                //console.log(res.data);
                 sessionStorage.setItem('userLogin', JSON.stringify(res.data.result));
                 sessionStorage.setItem('token', res.data.token);
                 toggleUser(res.data.result);
                 toggleToken(res.data.token);
             },
             (err) => {
-                console.log(err.response.data);
+                //console.log(err.response.data);
                 setError(err.response.data.message);
             })
 

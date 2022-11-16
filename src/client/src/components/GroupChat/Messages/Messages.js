@@ -6,11 +6,16 @@ import Message from './Message/Message';
 
 import './Messages.css';
 
-const Messages = ({ messages, name }) => {
+const Messages = ({ messages, usernames }) => {
 
-  return (<ScrollToBottom className="messages py-2 m-0 h-100 bg-light bg-opacity-75  border border-start border-light border-opacity-50">
-     {/*{console.log(messages)}*/}
-    {messages.map((message, i) => <div key={i}><Message message={message} name={name} /></div>)}
+  return (<ScrollToBottom className="messages py-2 m-0 h-100 bg-light bg-opacity-75  border border-start border-light border-opacity-50"
+    behavior="auto"
+  >
+    {/* {console.log(messages)} */}
+    {messages.map((message, i) => <div key={i}><Message message={{
+      text: message.text,
+      user: usernames.get(message.user),
+    }} /></div>)}
   </ScrollToBottom>
   );
 }
