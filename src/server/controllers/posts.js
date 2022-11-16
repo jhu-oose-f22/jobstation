@@ -2,7 +2,7 @@ import Post from "../models/post.js";
 import Comment from "../models/comment.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
-import { getRelatedContentsTitle, createPostEvent } from "../middleware/recommend.js";
+import { getRelatedContentsTitle, createPostEvent, createLikeEvent, getRecommendedContentsTitle } from "../middleware/recommend.js";
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -49,13 +49,26 @@ export const getPostsBySearch = async (req, res) => {
 export const getRecommendedPosts = async (req, res) => {
     try {
         const ContentsType = "post";
-        const RelatedContentsNames = await getRelatedContentsTitle(req.params.id, ContentsType);
+        var RelatedContentsIds = await getRelatedContentsTitle(req.params.id, ContentsType);
+
+        var RecommendedContentIds = await getRecommendedContentsTitle(req.params.id);
+
         function delay(time) {
             return new Promise(resolve => setTimeout(resolve, time));
         }
-        await delay(200);
+        await delay(300);
+        console.log("RelatedContentsIds")
+        console.log(RelatedContentsIds.length)
 
-        const targetPosts = await Post.find({ title: { "$in": RelatedContentsNames } });
+        const RecommendRst = RelatedContentsIds.concat(RecommendedContentIds);
+
+        console.log(RecommendRst)
+        const targetPosts = await Post.find({ _id: { "$in": RecommendRst } });
+        console.log(targetPosts.length)
+
+        // if( targetPosts.length < 20 ){
+
+        // }
 
         for (let i in targetPosts) {
             let creator = await User.findById(targetPosts[i].creator);
@@ -152,10 +165,15 @@ export const deletePost = async (req, res) => {
 }
 
 export const likePost = async (req, res) => {
-    const { id } = req.params;
+    const { id, userId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
+
     const post = await Post.findById(id);
     const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+
+    await createLikeEvent(id, userId);
+
     res.json(updatedPost);
 }
 

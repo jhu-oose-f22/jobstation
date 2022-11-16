@@ -4,11 +4,19 @@ import Pipeless from "pipeless";
 const defaultClient = Pipeless.ApiClient.instance;
 // Configure API key authorization: App_API_Key
 const App_API_Key = defaultClient.authentications['App_API_Key'];
-App_API_Key.apiKey = "Bearer AD3DFmGXck8ZnhQQbtNhrfwb36mXRa64M3incCLa"
 
 const pipeApi = new Pipeless.GeneralApi();
 export const recommendApi = new Pipeless.RecommendationsApi();
-export const appId = 1702; // {Number} 
+
+// //for test
+// export const appId = 1702; // {Number} 
+// App_API_Key.apiKey = "Bearer AD3DFmGXck8ZnhQQbtNhrfwb36mXRa64M3incCLa"
+
+//for demo
+export const appId = 1704; // {Number} 
+App_API_Key.apiKey = "Bearer y6nPow5uY91F2n2QsYxSjPTLhqdMKfyV34HdG4jb"
+
+
 // const opts = {};
 
 /*
@@ -68,6 +76,23 @@ export const createPostEvent = async (id, tags, creator) => {
         }
     });
     
+}
+
+export const createLikeEvent = async (id, userId) => {
+    const Opts = JSON.stringify({
+        event: {
+            start_object: {id: userId, type: 'user'},
+            relationship: {type: 'liked'},
+            end_object: {id: id, type: 'post'}
+        }
+    });
+    pipeApi.createEvent(appId, Opts, (error, data, response) => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Liked post API called successfully. Returned data: ' + data);
+        }
+    });
 }
 
 export const createGroupEvent = async (id, tags, creator) => {
@@ -227,6 +252,8 @@ export const getRelatedContentsTitle = async ( userId, ContentsType ) => {
         object: {id: userId, type: ContentsType},
         content_tagged_relationship_type: 'taggedWith',
     });
+    console.log(opts)
+
     var RelatedContentsNames = [];
     recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
         if (error) {
@@ -242,13 +269,18 @@ export const getRelatedContentsTitle = async ( userId, ContentsType ) => {
     return RelatedContentsNames;
 }
 
-export const getRecommendedContentsTitle = async ( userId, ContentsType ) => {
+export const getRecommendedContentsTitle = async ( userId ) => {
+
+
     var opts = JSON.stringify({
-        object: {id: userId, type: ContentsType},
+        object: {id: userId, type: "user"},
+        content_object_type: 'post',
+        primary_positive_relationship_type: 'liked',
         content_tagged_relationship_type: 'taggedWith',
+        content_tag_object_type: 'tag'
     });
     var RelatedContentsNames = [];
-    recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
+    recommendApi.getRecommendedContent(appId, opts, (error, data, response) => {
         if (error) {
             console.error(error);
         } else {

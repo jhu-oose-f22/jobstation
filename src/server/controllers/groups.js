@@ -191,17 +191,14 @@ export const updateGroup = async (req, res) => {
 export const getRecommendedGroups = async (req, res) => {
     try {
         const ContentsType = "company";
-        const RelatedContentsNames = await getRelatedContentsTitle(
-            req.params.userId,
-            ContentsType
-        );
+        const RelatedContentsIds = await getRelatedContentsTitle(req.params.id, ContentsType);
 
         function delay(time) {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
-        await delay(500);
-        //console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find({ groupName: { "$in": RelatedContentsNames } });
+        await delay(300);
+        const recommendedGroups = await Group.find({ _id: { "$in": RelatedContentsIds } });
+
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });

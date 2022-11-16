@@ -36,7 +36,7 @@ router.post('/discuss/create', createTags, createPost);
 // router.post('/discuss/create', createTags, createPostEvent, createPost);
 router.get('/discuss/post/:id', getPostById);
 router.get('/discuss/tags', getPostsByTags);
-router.patch('/discuss/like/:id', likePost);
+router.patch('/discuss/like/post/:id/user/:userId', likePost);
 router.get('/discuss/search/:input', getPostsBySearch);
 router.patch('/discuss/update/:id', createTags, updatePost);
 router.delete('/discuss/post/:id', deletePost);

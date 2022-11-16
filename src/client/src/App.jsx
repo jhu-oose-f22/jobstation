@@ -39,7 +39,7 @@ function App() {
                                 <Route index element={<Discussion />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
                                 <Route path='/discussion/create' element={<PostCreate />} />
-                                <Route path='/discussion/edit' element={<PostEdit />} />
+                                <Route path='/discussion/edit/:postId' element={<PostEdit />} />
                                 <Route path='/discussion/search-result/:searchInput' element={<PostSearchResult />} />
                             </Route>
 
