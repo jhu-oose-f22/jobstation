@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import { useContext, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import {API_URL} from "../../context/Const";
 
 export default function GroupCard({ group, joined = false, listname = "" }) {
     // TODO Modal
@@ -10,7 +11,7 @@ export default function GroupCard({ group, joined = false, listname = "" }) {
 
     const handleQuit = async (e) => {
         const group_n_user = { groupId: group._id, userId: user._id };
-        await fetch("/group/quit", {
+        await fetch(`${API_URL}/group/quit`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",
@@ -25,7 +26,7 @@ export default function GroupCard({ group, joined = false, listname = "" }) {
     const handleJoin = async (e) => {
         //console.log('trying to join')
         const group_n_user = { groupId: group._id, userId: user._id };
-        await fetch("/group/join", {
+        await fetch(`${API_URL}/group/join`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",

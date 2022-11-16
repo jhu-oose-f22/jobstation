@@ -5,6 +5,7 @@ import { isLoggedIn, UserContext } from "../context/User";
 import GroupList from "./Group/GroupList";
 import Banner from "./Utils/Banner";
 import SearchGroup from "./Group/GroupSearch";
+import {API_URL} from "../context/Const";
 export default function Group(props) {
     const { user } = useContext(UserContext);
 
@@ -12,7 +13,7 @@ export default function Group(props) {
     const [recommendedGroups, setRecommmendedGroups] = useState([]);
     useEffect(() => {
         if (!isLoggedIn(user)) return;
-        fetch(`/group/${user._id}`)
+        fetch(`${API_URL}/group/${user._id}`)
             .then((res) => res.json())
             .then((fetched) => {
                 setGroups(fetched);

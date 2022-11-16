@@ -21,7 +21,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function RecipeReviewCard({post}) {
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
-    const avatarSrc = `https://ui-avatars.com/api/?name=${post.creator}&background=random&bold=true`;
+    const avatarSrc = `https://ui-avatars.com/api/?name=${post.creatorName}&background=random&bold=true`;
     const newPage = `/discussion/post/${post._id}`;
     const shareLink = `localhost:3000/discussion/post/${post._id}`;
     const handleOnePost = () => {

@@ -5,6 +5,8 @@ import {isLoggedIn, UserContext} from "../../../context/User";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined";
+import {CommentList} from "./CommentList";
+import {API_URL} from "../../../context/Const";
 
 export default function Post(props) {
     const {user} = useContext(UserContext);
@@ -15,14 +17,14 @@ export default function Post(props) {
     console.log(postId)
 
     useEffect(()=>{
-        fetch(`/discuss/post/${postId}`)
+        fetch(`${API_URL}/discuss/post/${postId}`)
             .then((res) => res.json())
             .then((fetched) => {
                 setPost(fetched);
             });
     },[])
 
-    const avatarSrc = `https://ui-avatars.com/api/?name=${post.creator}&background=random&bold=true`;
+    const avatarSrc = `https://ui-avatars.com/api/?name=${post.creatorName}&background=random&bold=true`;
     let postTags = post.tags;
     if(postTags===undefined){
         postTags=[];
@@ -41,12 +43,12 @@ export default function Post(props) {
     },[post])
 
     const handleEdit = (event) => {
-        navigate('/discussion/edit')
+        navigate(`/discussion/edit/${postId}`)
     };
 
     const handleDelete = async () => {
         // alert
-        await fetch(`/discuss/post/${postId}`, {
+        await fetch(`${API_URL}/discuss/post/${postId}`, {
             method: "delete",
         }).then((res) => console.log(res));
         // show success
@@ -54,7 +56,7 @@ export default function Post(props) {
     };
 
     const handleLike = async () => {
-        await fetch(`/discuss/like/${postId}`,{
+        await fetch(`${API_URL}/discuss/like/${postId}`,{
             method: "PATCH",
         }).
             then((res) => res.json());
@@ -90,7 +92,7 @@ export default function Post(props) {
             <Avatar src={avatarSrc} />
             <div className="text-muted small mb-4">
                 <div className="d-flex flex-row align-items-center my-2 justify-content-start">
-                    <strong>{post.creator}</strong>
+                    <strong>{post.creatorName}</strong>
                     <div className='text-muted ms-auto'>last updated {`${post.createdAt}`}</div>
                 </div>
             </div>
@@ -111,6 +113,7 @@ export default function Post(props) {
             <div className=' body-content'>
                 {post.message}
             </div>
+            <CommentList comments = {postId}/>
         </div>
     );
 }
