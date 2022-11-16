@@ -14,10 +14,9 @@ import LeftSidebar from "./GroupChat/LeftSidebar";
 import ChatPage from "./GroupChat/ChatPage";
 
 import "./GroupChat/Chat.css";
+import {CHAT_URL} from "../context/Const";
 
-const ENDPOINT = "localhost:4000";
-
-const socket = io(ENDPOINT);
+const socket = io(CHAT_URL);
 
 const Chat = () => {
   const { state } = useLocation();

@@ -22,7 +22,7 @@ export default function Discussion(props) {
     useEffect(() => {
         if (!isLoggedIn(user)) return;
         if (isRecommend) {
-            fetch(`${API_URL}/discuss/user/${user.username}`)
+            fetch(`${API_URL}/discuss/user/${user._id}`)
                 .then((res) => res.json())
                 .then((fetched) => {
                     setRecPosts(fetched);

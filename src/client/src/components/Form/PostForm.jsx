@@ -1,8 +1,5 @@
 import React, {useContext, useState} from "react";
 import {Box, Button, Paper, TextField, Typography} from "@mui/material";
-
-import {useDispatch} from "react-redux";
-import {createPost} from "../../actions/posts";
 import {useNavigate} from "react-router-dom";
 import {isLoggedIn, UserContext} from "../../context/User";
 import axios from "axios";
@@ -13,7 +10,6 @@ const PostForm = ({formType}) => {
     const navigate = useNavigate();
     const creator = user._id;
     const [postData,setPostData] = useState({creator:creator,title:'',tags:'',message:'',selectFile:''})
-    const dispatch = useDispatch();
 
     if (!isLoggedIn(user)) return;
     const handleSubmit = (e) =>{
