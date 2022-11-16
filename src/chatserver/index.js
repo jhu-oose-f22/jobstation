@@ -65,7 +65,7 @@ io.on('connect', (socket) => {
 
     // console.log(user.room);
     console.log('sending------------')
-    if (user.room) {
+    if (user && user.room) {
       io.to(user.room).emit('message', { user: user.name, text: message });
 
       await chatMessageController.storeChatMessage(user.room, message, user.name);
@@ -80,8 +80,10 @@ io.on('connect', (socket) => {
     const user = removeUser(socket.id);
 
     if (user) {
-      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      // io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+    } else {
+      console.log('user is undefined');
     }
 
     const i = allClients.indexOf(socket);

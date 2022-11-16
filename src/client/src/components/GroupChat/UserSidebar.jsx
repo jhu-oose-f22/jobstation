@@ -3,38 +3,24 @@ import React, { useContext, useEffect, useState } from "react";
 import { API_URL } from "../../context/Const";
 import { UserContext } from "../../context/User";
 
-const UserSidebar = ({ usersOnline, group }) => {
+const UserSidebar = ({ usersOnline, group, userNames }) => {
 
   const { user } = useContext(UserContext);
 
   const isOwner = group.owner === user._id;
 
-  const [userNames, setUserNames] = useState(new Map());
-  useEffect(() => {
-    if (!group) return;
-    axios.get(API_URL + "/groupuser/" + group._id).then(
-      (res) => {
-        setUserNames(new Map(res.data.map((({ _id, username }) => [_id, username]))));
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }, [group]);
 
 
-  const toggleGroupMember = (e) => {
-    console.log(e.target.innerText);
-    e.preventDefault();
-    let res = window.confirm(`Are you sure you want to remove ${e.target.innerText} from the group?`);
+
+  const toggleGroupMember = (userId, userName) => {
+    let res = window.confirm(`Are you sure you want to remove ${userName} from the group?`);
     if (!res) return;
-    console.log(e.target.innerText)
     axios.post(API_URL + '/group/quit',
       {
         groupId: group._id,
-        username: e.target.innerText,
+        userId,
       }).then(() => {
-        window.alert(`${e.target.innerText} have left the group`);
+        window.alert(`${userName} has left the group`);
       }, (err) => {
         window.alert('Something went wrong');
         console.log(err);
@@ -46,9 +32,12 @@ const UserSidebar = ({ usersOnline, group }) => {
   const userOnlineList = usersOnline ? usersOnline.map((user) => {
     let username = userNames.get(user.name);
     return (
-      <li className="btn btn-dark rounded-0" key={user.id} value={user.name}
+      <li className="btn btn-dark rounded-0" key={user.name} value={user.name}
         title={`${username} is online`}
-        onClick={isOwner && user.name !== group.owner ? toggleGroupMember : null}
+        onClick={isOwner && user.name !== group.owner ? (e) => {
+          e.preventDefault();
+          toggleGroupMember(user.name, username);
+        } : null}
       >
         <div className="d-flex align-items-center">
           <div className=" d-flex align-items-center">
@@ -61,7 +50,9 @@ const UserSidebar = ({ usersOnline, group }) => {
               }}
             ></i>
           </div>
-          <span className={user.name === group.owner ? "text-danger" : ' text-white'}>{username + (user.name === group.owner ? " (Owner)" : "")}</span>
+          <span className={user.name === group.owner ? "text-danger" : ' text-white'}>
+            {username + (user.name === group.owner ? " (Owner)" : "")}
+          </span>
         </div>
       </li>
     );
@@ -70,9 +61,12 @@ const UserSidebar = ({ usersOnline, group }) => {
   // Here username is the username
   const userOfflineList = group.members.filter((userId) => { return !(usersOnline && usersOnline.find((u) => u && u.name === userId)) }).map((userId) => {
     let username = userNames.get(userId);
-    return <li className="btn btn-dark rounded-0" key={username} value={username}
+    return <li className="btn btn-dark rounded-0" key={userId} value={userId}
       title={`${username} is offline`}
-      onClick={isOwner && userId !== group.owner ? toggleGroupMember : null}
+      onClick={isOwner && userId !== group.owner ? (e) => {
+        e.preventDefault();
+        toggleGroupMember(userId, username);
+      } : null}
     >
       <div className="d-flex align-items-center text-secondary" >
         <div className="h-100 d-flex align-items-center">

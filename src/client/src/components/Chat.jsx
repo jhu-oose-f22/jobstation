@@ -14,7 +14,8 @@ import LeftSidebar from "./GroupChat/LeftSidebar";
 import ChatPage from "./GroupChat/ChatPage";
 
 import "./GroupChat/Chat.css";
-import {CHAT_URL} from "../context/Const";
+import axios from "axios";
+import { API_URL, CHAT_URL } from "../context/Const";
 
 const socket = io(CHAT_URL);
 
@@ -46,6 +47,10 @@ const Chat = () => {
 
     socket.on('disconnect', (e) => { setIsConnected(false) });
 
+    socket.on("history", history => {
+      messages.push(...history);
+    })
+
     return () => {
       socket.off("connect");
       socket.off("disconnect");
@@ -54,12 +59,11 @@ const Chat = () => {
 
   useEffect(() => {
     if (Object.keys(group).length === 0) return;
-    socket.on("history", history => {
-      setMessages(history);
-    })
+
     socket.on("message", (message) => {
-      setMessages([...messages, message]);
+      messages.push(message);
     });
+
     socket.on("roomData", ({ users }) => {
       setUsersOnline(users);
     });
@@ -76,6 +80,19 @@ const Chat = () => {
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
+
+  const [userNames, setUserNames] = useState(new Map());
+  useEffect(() => {
+    if (!group) return;
+    axios.get(API_URL + "/groupuser/" + group._id).then(
+      (res) => {
+        setUserNames(new Map(res.data.map((({ _id, username }) => [_id, username]))));
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }, [group, usersOnline]);
 
   if (!state || !state.group || state.group.members.indexOf(user._id) === -1 || !isLoggedIn(user)) {
     window.alert("You are not a member of this group");
@@ -112,7 +129,7 @@ const Chat = () => {
           {/* 1. Chat */}
           <ChatPage states={
             {
-              messages, message, setMessage, sendMessage
+              messages, message, setMessage, sendMessage, userNames
             }
           } />
 
@@ -124,7 +141,7 @@ const Chat = () => {
         <div className="col-4 col-md-2 h-100 collapse show"
           id='sidebarUser'
         >
-          <UserSidebar usersOnline={usersOnline} group={group} />
+          <UserSidebar usersOnline={usersOnline} group={group} userNames={userNames} />
         </div>
       </div>
 
