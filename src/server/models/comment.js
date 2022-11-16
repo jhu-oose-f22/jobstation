@@ -14,6 +14,7 @@ const commentSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    creatorName: String,
 });
 
 class CommentClass {

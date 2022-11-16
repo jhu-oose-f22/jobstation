@@ -215,6 +215,12 @@ export const createUsersEvents = async (userId, tags) => {
     
 }
 
+//like event
+// export const createLikeEvent = async (res, res) => {
+//     { user, post } = res.
+// }
+
+
 //recommend
 export const getRelatedContentsTitle = async ( userId, ContentsType ) => {
     var opts = JSON.stringify({

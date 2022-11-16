@@ -7,6 +7,7 @@ const postSchema = mongoose.Schema({
     creator: {
         type: mongoose.ObjectId
     },
+    creatorName: String,
     comments: [String],
     tags: [String],
     likeCount: {
@@ -38,11 +39,8 @@ class PostClass {
             });
         }
         else{
-            throw new Error('Missing component of a post');
+            console.error('Missing component of a post');
         }
-        
-        
-        //specify user in session as creator when added user model 
     }
 
     static async getByID({ id } = {}){

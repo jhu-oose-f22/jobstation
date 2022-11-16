@@ -88,6 +88,7 @@ export const updateUser = async (req, res) => {
     const user = await User.findById(id);
     res.json(user);
 }
+
 export const getUser = async (req, res) => {
     try {
         const targetUser = await User.findById(req.params.id);
@@ -98,6 +99,7 @@ export const getUser = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
+
 export const getAllUser = async (req, res) => {
     try {
         const targetUser = await User.find({});

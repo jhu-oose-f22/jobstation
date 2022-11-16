@@ -3,55 +3,17 @@ import Comment from "../models/comment.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
 import { getRelatedContentsTitle, createPostEvent } from "../middleware/recommend.js";
-import Group from "../models/group.js";
-
 
 export const getAllPosts = async (req, res) => {
     try {
-        let targetPost = await Post.find();//getPosts 拿到creator查到username 加进去
-        // console.log('I am here 0')
-        // console.log(targetPost)
-        for (let post in targetPost) {
-            //const targetUser = await User.findById(userId);
-            // console.log(post)
-            let targetCreator = targetPost[post].creator;
-            // console.log(targetCreator[post])
-            // const {userId, newUsername, email, tags} = 
-            let targetUserName = await User.findById(targetCreator);
-            // let targetUserName = await User.findById(targetCreator);
-            // console.log(targetUserName)
-            var target = targetPost[post]
-            var source = { creatorName: targetUserName.username }
-            console.log(target)
-            console.log(source)
-            // targetPost[post] = Object.assign(target, source);
-            targetPost[post] = Object.assign(target, { likeCount: 3 });
-            targetPost[post] = Object.assign(target, source);
-            console.log(targetPost[post].creatorName)
-            // console.log(target, target == result);
-            // var target = { name: 'guxin', age: 18 }
-            // var source = { state: 'signle', age: 22 }
-            // var result = Object.assign(target, source)
-            // console.log(target)
-            // var source = { creatorName: targetUserName.username }
-            // console.log(source)
-            // var result=Object.assign(targetPost[post],source)
-            // console.log(targetPost[post]);
-            // const result = Object.assign(targetPost[post], source);
-            // console.log(targetPost[post],targetPost[post]==result);
-            // const updatedInfo = {
-            //     creatorName: targetUserName,
-            // }
-            // console.log('I am here 1')
-            // targetPost[post].push(updatedInfo)
-            
-            // console.log(result)
-            // const tagName = { Name: tag };
-            // const findedTags = await this.find({ Name: tag });
-            // if (!findedTags.length) newTags.push(tagName);
+        let targetPosts = await Post.find();
+
+        for (let i in targetPosts) {
+            let creator = await User.findById(targetPosts[i].creator);
+            targetPosts[i].creatorName = creator.username;
         }
-        res.status(200).json(targetPost[0].creatorName + targetPost[1].creatorName);
-        res.status(200).json(targetPost);
+
+        res.status(200).json(targetPosts);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -71,6 +33,12 @@ export const getPostsBySearch = async (req, res) => {
                 },
             ],
         });
+
+        for (let i in targetPosts) {
+            let creator = await User.findById(targetPosts[i].creator);
+            targetPosts[i].creatorName = creator.username;
+        }
+
         console.log(targetPosts);
         res.status(200).json(targetPosts);
     } catch (error) {
@@ -87,9 +55,14 @@ export const getRecommendedPosts = async (req, res) => {
         }
         await delay(200);
 
-        const recommendedPosts = await Post.find({ title: { "$in": RelatedContentsNames } });
-        res.status(200).json(recommendedPosts);
+        const targetPosts = await Post.find({ title: { "$in": RelatedContentsNames } });
 
+        for (let i in targetPosts) {
+            let creator = await User.findById(targetPosts[i].creator);
+            targetPosts[i].creatorName = creator.username;
+        }
+
+        res.status(200).json(targetPosts);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -117,6 +90,12 @@ export const getPostsByUserId = async (req, res) => {
         });
         if (targetPosts.length === 0) 
             console.log(`user ${req.params.userId} has no post`); 
+
+        for (let i in targetPosts) {
+            let creator = await User.findById(targetPosts[i].creator);
+            targetPosts[i].creatorName = creator.username;
+        }
+
         res.status(201).json(targetPosts);
     } catch (error) {
         res.status(404).json([]);
@@ -126,10 +105,16 @@ export const getPostsByUserId = async (req, res) => {
 export const getPostsByTags = async (req, res) => {
     try {
         const { tags } = req.body;
-        // console.log(tags);
+
         const targetPosts = await Post.find({ tags: { $all: tags } });
+
+        for (let i in targetPosts) {
+            let creator = await User.findById(targetPosts[i].creator);
+            targetPosts[i].creatorName = creator.username;
+        }
+
         res.status(201).json(targetPosts);
-        // console.log(targetPosts);
+
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -139,6 +124,10 @@ export const getPostsByTags = async (req, res) => {
 export const getPostById = async (req, res) => {
     try {
         const targetPost = await Post.findById(req.params.id);
+
+        let creator = await User.findById(targetPost.creator);
+        targetPost.creatorName = creator.username;
+
         res.status(200).json(targetPost);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -184,7 +173,7 @@ export const createComment = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send(`No post with id: ${postId}`);
     if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
     console.log(message, userId);
-    const newComment = await Comment.create({ message, userId });
+    const newComment = await Comment.create({ message, creator: userId });
     const post = await Post.findById(postId);
     const updatedPost = await Post.findByIdAndUpdate(
         postId,
@@ -195,7 +184,7 @@ export const createComment = async (req, res) => {
         { new: true }
 
     );
-    res.json(updatedPost);
+    res.json(newComment);
 }
 
 export const deleteComment = async (req, res) => {
@@ -219,8 +208,6 @@ export const likeComment = async (req, res) => {
     res.json(updatedComment);
 }
 
-
-
 export const getComment = async (req, res) => {
     try {
         const targetComment = await Comment.findById(req.params.id);
@@ -236,6 +223,12 @@ export const getComments = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
         const post = await Post.findById(id);
         const comments = await Comment.find({ $all: { _id: post.comments } });
+
+        for (let i in comments){
+            let creator = await User.findById(comments[i].creator);
+            comments[i].creatorName = creator.username;
+        }
+
         res.status(200).json(comments);
     } catch (error) {
         res.status(404).json({ message: error.message });
