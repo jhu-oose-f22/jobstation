@@ -49,7 +49,7 @@ export const getPostsBySearch = async (req, res) => {
 export const getRecommendedPosts = async (req, res) => {
     try {
         const ContentsType = "post";
-        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);
+        const RelatedContentsNames = await getRelatedContentsTitle(req.params.id, ContentsType);
         function delay(time) {
             return new Promise(resolve => setTimeout(resolve, time));
         }

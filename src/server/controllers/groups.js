@@ -54,7 +54,6 @@ export const getGroupByUser = async (req, res) => {
 export const createGroup = async (req, res) => {
     const { groupName, groupIntro, tags, owner } = req.body;
     console.log('tag in controller create');
-    // const tagArray = [groupTag];
     
     try {
         const newGroup = await Group.createGroup({

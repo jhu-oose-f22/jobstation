@@ -21,7 +21,7 @@ export default function Discussion(props) {
     useEffect(() => {
         if (!isLoggedIn(user)) return;
         if (isRecommend) {
-            fetch(`/discuss/user/${user.username}`)
+            fetch(`/discuss/user/${user._id}`)
                 .then((res) => res.json())
                 .then((fetched) => {
                     setRecPosts(fetched);

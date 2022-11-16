@@ -46,7 +46,7 @@ router.get('/discuss/post/:id/comments', getComments);
 router.delete('/discuss/post/:postId/comment/:commentId', deleteComment);
 router.patch('/discuss/comment/like/:id', likeComment);
 
-router.get('/discuss/user/:userName', getRecommendedPosts);
+router.get('/discuss/user/:id', getRecommendedPosts);
 
 //Group
 
@@ -62,8 +62,7 @@ router.get('/group/:userId', getGroupByUser);
 router.post('/group/quit', quitGroup)
 router.post('/group/join', joinGroup)
 
-router.get('/group/user/:userName', getRecommendedGroups);
-
+router.get('/group/user/:id', getRecommendedGroups);
 
 //User
 router.post('/signin', signin);
