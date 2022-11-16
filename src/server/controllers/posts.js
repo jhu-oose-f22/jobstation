@@ -2,7 +2,7 @@ import Post from "../models/post.js";
 import Comment from "../models/comment.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
-import { getRelatedContentsTitle, createPostEvent, createLikeEvent, getRecommendedContentsTitle } from "../middleware/recommend.js";
+import { getRelatedContentsTitle, createPostEvent, createActionEvent, getRecommendedContentsTitle } from "../middleware/recommend.js";
 
 export const getAllPosts = async (req, res) => {
     try {
@@ -172,7 +172,7 @@ export const likePost = async (req, res) => {
     const post = await Post.findById(id);
     const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
 
-    await createLikeEvent(id, userId);
+    await createActionEvent(id, userId, "liked");
 
     res.json(updatedPost);
 }
@@ -193,7 +193,7 @@ export const createComment = async (req, res) => {
     console.log(message, userId);
     const newComment = await Comment.create({ message, creator: userId });
     const post = await Post.findById(postId);
-    const updatedPost = await Post.findByIdAndUpdate(
+    await Post.findByIdAndUpdate(
         postId,
         {
             commentCount: post.commentCount + 1,
@@ -202,12 +202,13 @@ export const createComment = async (req, res) => {
         { new: true }
 
     );
+    
     res.json(newComment);
 }
 
 export const deleteComment = async (req, res) => {
     try {
-        const { commentId, postId } = req.params;
+        const { commentId } = req.params;
         if (!mongoose.Types.ObjectId.isValid(commentId)) return res.status(404).send(`No comment with id: ${commentId}`);
         await Comment.findByIdAndRemove(commentId);
         //delet dubcomment

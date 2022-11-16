@@ -78,11 +78,11 @@ export const createPostEvent = async (id, tags, creator) => {
     
 }
 
-export const createLikeEvent = async (id, userId) => {
+export const createActionEvent = async (id, userId, action) => {
     const Opts = JSON.stringify({
         event: {
             start_object: {id: userId, type: 'user'},
-            relationship: {type: 'liked'},
+            relationship: {type: action},
             end_object: {id: id, type: 'post'}
         }
     });
@@ -94,6 +94,7 @@ export const createLikeEvent = async (id, userId) => {
         }
     });
 }
+
 
 export const createGroupEvent = async (id, tags, creator) => {
 
@@ -240,12 +241,6 @@ export const createUsersEvents = async (userId, tags) => {
     
 }
 
-//like event
-// export const createLikeEvent = async (res, res) => {
-//     { user, post } = res.
-// }
-
-
 //recommend
 export const getRelatedContentsTitle = async ( userId, ContentsType ) => {
     var opts = JSON.stringify({
@@ -276,6 +271,7 @@ export const getRecommendedContentsTitle = async ( userId ) => {
         object: {id: userId, type: "user"},
         content_object_type: 'post',
         primary_positive_relationship_type: 'liked',
+        secondary_positive_relationship_type: 'commentedOn',
         content_tagged_relationship_type: 'taggedWith',
         content_tag_object_type: 'tag'
     });
