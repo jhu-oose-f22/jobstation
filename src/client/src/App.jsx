@@ -15,11 +15,8 @@ import Navbar from "./components/NavBar/Navbar";
 import Post from "./components/Posts/Post/Post";
 import ToDo from "./components/Utils/ToDo";
 import UserContextProvider from "./context/User";
-
-
-import { useDispatch } from "react-redux";
-import { getPosts } from './actions/posts'
 import PostCreate from "./components/Posts/PostCreate";
+import PostEdit from "./components/Posts/PostEdit";
 
 function App() {
 
@@ -42,7 +39,7 @@ function App() {
                                 <Route index element={<Discussion />} />
                                 <Route path='/discussion/post/:postId' element={<Post />} />
                                 <Route path='/discussion/create' element={<PostCreate />} />
-                                {/*<Route path='/discussion/edit' element={<PostEdit />} />*/}
+                                <Route path='/discussion/edit/:postId' element={<PostEdit />} />
                                 <Route path='/discussion/search-result/:searchInput' element={<PostSearchResult />} />
                             </Route>
 

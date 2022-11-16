@@ -4,6 +4,7 @@ import { useState, useEffect, useContext,ChangeEvent } from "react";
 import React from 'react';
 import { TagSelection } from "../Utils/Tag";
 import { isLoggedIn, UserContext } from "../../context/User";
+import {API_URL} from "../../context/Const";
 
 import {
     MDBCol,
@@ -53,7 +54,7 @@ export default function Profile({ profile }) {
             email: varyingEmail,
             tags: tag,
         }
-        await fetch(`/user/update`, {
+        await fetch(`${API_URL}/user/update`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",
@@ -72,24 +73,24 @@ export default function Profile({ profile }) {
         setTag(profile.tags);
     }, [profile]);
 
-    let tagsOfCurrentUser = profile.tags?.map((tagg) => {
+    let tagsOfCurrentUser = profile.tags?.map((tag) => {
         return (
-            <MDBCardText key={tagg} className="text-muted">{tagg}</MDBCardText>
+            <div
+                className="btn btn-outline-secondary btn-sm mx-1"
+                underline="none"
+            >
+                {tag}
+            </div>
         );
-    });
+    })
     return (
         <section style={{ backgroundColor: '#eee' }}>
             <MDBContainer className="py-5">
                 <MDBRow>
                     <MDBCol>
                         <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-                            <MDBBreadcrumbItem>
-                                <a href='#'>Home</a>
-                            </MDBBreadcrumbItem>
-                            <MDBBreadcrumbItem>
-                                <a href="#">User</a>
-                            </MDBBreadcrumbItem>
-                            <MDBBreadcrumbItem active>User Profile</MDBBreadcrumbItem>
+                            
+                            <MDBBreadcrumbItem active> Profile</MDBBreadcrumbItem>
                         </MDBBreadcrumb>
                     </MDBCol>
                 </MDBRow>
@@ -104,8 +105,7 @@ export default function Profile({ profile }) {
                                     className="rounded-circle"
                                     style={{ width: '150px' }}
                                     fluid />
-                                {/* <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
+                                
                                 <div className="d-flex justify-content-center mb-2">
                                     {/* <MDBBtn>Edit</MDBBtn> */}
                                     <MDBBtn
@@ -199,97 +199,17 @@ export default function Profile({ profile }) {
                                         <MDBCardText>IntersestedArea</MDBCardText>
                                     </MDBCol>
                                     <MDBCol sm="9">
-                                        {tagsOfCurrentUser}
-                                        {/* <MDBCardText className="text-muted">{profile.tags[0]}</MDBCardText>
-                    <MDBCardText className="text-muted">{profile.tags[1]}</MDBCardText> */}
+                                        
+                                        <strong className="text-muted">
+                                            {tagsOfCurrentUser}
+                                        </strong>
+                                        
                                     </MDBCol>
                                 </MDBRow>
-                                {/* <hr /> */}
-                                {/* <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Mobile</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">(098) 765-4321</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
-                  </MDBCol>
-                </MDBRow> */}
+                                
                             </MDBCardBody>
                         </MDBCard>
 
-                        {/* <MDBRow>
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow> */}
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>

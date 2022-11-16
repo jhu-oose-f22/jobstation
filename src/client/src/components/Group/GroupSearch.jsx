@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/User";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import {API_URL} from "../../context/Const";
 
 export default function SearchGroup({ groups }) {
     const [searchInput, setSearchInput] = useState("");
@@ -10,7 +11,7 @@ export default function SearchGroup({ groups }) {
     let done = false;
     const handleSearch = async (e) => {
         if (searchInput === '') return;
-        await fetch(`/group/search/${searchInput}`)
+        await fetch(`${API_URL}/group/search/${searchInput}`)
             .then((res) => res.json())
             .then((data) => (searchResult = data));
         done = true;

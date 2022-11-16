@@ -4,6 +4,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 import Banner from "./Utils/Banner";
 import {Grid, switchClasses} from "@mui/material";
 import PostCard from "./Posts/PostCard";
+import {API_URL} from "../context/Const";
 
 
 export default function Discussion(props) {
@@ -21,13 +22,13 @@ export default function Discussion(props) {
     useEffect(() => {
         if (!isLoggedIn(user)) return;
         if (isRecommend) {
-            fetch(`/discuss/user/${user.username}`)
+            fetch(`${API_URL}/discuss/user/${user._id}`)
                 .then((res) => res.json())
                 .then((fetched) => {
                     setRecPosts(fetched);
                 });
         } else {
-            fetch(`/discuss`)
+            fetch(`${API_URL}/discuss`)
                 .then((res) => res.json())
                 .then((fetched) => {
                     setAllPosts(fetched);
@@ -44,7 +45,7 @@ export default function Discussion(props) {
 
     const handleLoadRec = () => {
         setIsRecommend(true);
-        //console.log("get the recommend posts for user");
+        //console.log("get the recommended posts for user");
 
     };
 

@@ -15,11 +15,9 @@ import ChatPage from "./GroupChat/ChatPage";
 
 import "./GroupChat/Chat.css";
 import axios from "axios";
-import { API_URL } from "../context/Const";
+import { API_URL, CHAT_URL } from "../context/Const";
 
-const ENDPOINT = "localhost:4000";
-
-const socket = io(ENDPOINT);
+const socket = io(CHAT_URL);
 
 const Chat = () => {
   const { state } = useLocation();

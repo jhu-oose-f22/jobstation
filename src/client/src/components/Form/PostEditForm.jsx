@@ -1,33 +1,46 @@
-import React, {useContext, useState} from "react";
-import {Box, Button, Paper, TextField, Typography} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import {Button, Paper, TextField, Typography} from "@mui/material";
+import {useDispatch} from "react-redux";
+import {useNavigate, useParams} from "react-router-dom";
 import {isLoggedIn, UserContext} from "../../context/User";
 import axios from "axios";
-import { API_URL } from "../../context/Const";
-const PostForm = ({formType}) => {
+import {API_URL} from "../../context/Const";
+
+const PostFormEdit = ({formType}) => {
 
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
+    const { postId } = useParams();
     const creator = user._id;
     const [postData,setPostData] = useState({creator:creator,title:'',tags:'',message:'',selectFile:''})
+
+    useEffect(()=>{
+        fetch(`${API_URL}/discuss/post/${postId}`)
+            .then((res) => res.json())
+            .then((fetched) => {
+                setPostData(fetched);
+            });
+    },[])
+
+
+    const dispatch = useDispatch();
 
     if (!isLoggedIn(user)) return;
     const handleSubmit = (e) =>{
 
         e.preventDefault();
-
-        axios.post(`${API_URL}/discuss/create`,postData).then((res) => console.log(res) ,(err)=>{
+        axios.patch(`${API_URL}/discuss/update/${postId}`,postData).then((res) => console.log(res) ,(err)=>{
             console.log(err);
         })
 
-        navigate('/discussion');
+        navigate(`/discussion/post/${postId}`);
 
     }
 
     return (
         <Paper className="container-lg mt-5">
             <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Typography variant="h6">{formType==='edit' ? `Editing"` : 'Creating a Post'}</Typography>
+                <Typography variant="h6">{formType==='edit' ? `Editing"` : 'Editing'}</Typography>
                 {/*<TextField name="creator" variant="standard" label="Creator" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />*/}
                 <TextField name="title" variant="standard" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField name="message" variant="standard" label="Message" fullWidth multiline rows={15} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
@@ -39,4 +52,4 @@ const PostForm = ({formType}) => {
     );
 }
 
-export default PostForm
+export default PostFormEdit

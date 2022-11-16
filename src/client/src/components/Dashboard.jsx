@@ -5,6 +5,7 @@ import MyPosts from "./Dashboard/MyPosts";
 import { isLoggedIn, UserContext } from "../context/User";
 import Banner from "./Utils/Banner";
 import { TagSelection } from "./Utils/Tag";
+import {API_URL} from "../context/Const";
 
 export default function Dashboard(props) {
     const {user, toggleUser} = useContext(UserContext);
@@ -14,14 +15,14 @@ export default function Dashboard(props) {
     const [postsOfCurrentUser, setPostsOfCurrentUser] = useState([]);
     useEffect(() => {
         if (!isLoggedIn(user)) return;
-        fetch(`/profile/${user._id}`)
+        fetch(`${API_URL}/profile/${user._id}`)
             .then((res) => res.json())
             .then((profile) => {
                 setUserProfile(profile);
                 // setTag(profile.tags);
                 // //console.log(profile);
             })
-        fetch(`/posts/${user._id}`)
+        fetch(`${API_URL}/posts/${user._id}`)
             .then((res)=> res.json())
             .then((posts) => {
                 setPostsOfCurrentUser(posts);

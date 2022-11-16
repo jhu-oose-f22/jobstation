@@ -2,7 +2,7 @@ import Group from "../models/group.js";
 import mongoose from "mongoose";
 import User from "../models/user.js";
 
-import { getRelatedContentsTitle } from "../middleware/recommend.js";
+import { getRelatedContentsTitle, createGroupEvent } from "../middleware/recommend.js";
 
 export const getGroups = async (req, res) => {
     try {
@@ -54,14 +54,14 @@ export const getGroupByUser = async (req, res) => {
 export const createGroup = async (req, res) => {
     const { groupName, groupIntro, tags, owner } = req.body;
     console.log('tag in controller create');
-    // const tagArray = [groupTag];
-    const newGroup = await Group.createGroup({
-        groupName,
-        groupIntro,
-        tags,
-        owner,
-    });
+    
     try {
+        const newGroup = await Group.createGroup({
+            groupName,
+            groupIntro,
+            tags,
+            owner,
+        });
         await newGroup.save();
         let creator = await User.findById(owner);
         creator.groups.push(newGroup._id);
@@ -70,6 +70,8 @@ export const createGroup = async (req, res) => {
             owner,
             creator
         );
+        console.log(newGroup);
+        await createGroupEvent(newGroup.id, newGroup.tags, newGroup.owner);
         res.status(201).json(newGroup);
     } catch (error) {
         res.status(204).json({ message: error.message });
@@ -117,12 +119,16 @@ export const quitGroup = async (req, res) => {
         const { groupId, userId } = req.body;
 
         const targetGroup = await Group.findById(groupId);
+        if (!targetGroup.members.includes(userId)) {
+            res.status(200).json("not in the group");
+            return;
+        }
 
         let updated = targetGroup;
         updated.memberCount = updated.memberCount - 1;
         if (updated.memberCount > 0) {
             updated.members = updated.members.filter(
-                (member) => member !== userId
+                (member) => member != userId
             );
             const updatedGroup = await Group.findByIdAndUpdate(
                 groupId,
@@ -185,17 +191,14 @@ export const updateGroup = async (req, res) => {
 export const getRecommendedGroups = async (req, res) => {
     try {
         const ContentsType = "company";
-        const RelatedContentsNames = await getRelatedContentsTitle(
-            req.params.userId,
-            ContentsType
-        );
+        const RelatedContentsIds = await getRelatedContentsTitle(req.params.id, ContentsType);
 
         function delay(time) {
             return new Promise((resolve) => setTimeout(resolve, time));
         }
-        await delay(500);
-        //console.log(RelatedContentsNames);
-        const recommendedGroups = await Group.find({ groupName: { "$in": RelatedContentsNames } });
+        await delay(300);
+        const recommendedGroups = await Group.find({ _id: { "$in": RelatedContentsIds } });
+
         res.status(200).json(recommendedGroups);
     } catch (error) {
         res.status(404).json({ message: error.message });

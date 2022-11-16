@@ -4,6 +4,7 @@ import {Navigate, useNavigate, useParams} from "react-router-dom";
 import Banner from "../Utils/Banner";
 import {Grid} from "@mui/material";
 import PostCard from "./PostCard";
+import {API_URL} from "../../context/Const";
 
 const PostSearchResult = (props) => {
 
@@ -14,19 +15,19 @@ const PostSearchResult = (props) => {
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
-        // e.preventDefault();
         const newPage = `/discussion/search-result/${searchNewInput}`;
         navigate(newPage);
         window.history.go(0);
     };
     console.log(searchInput);
     useEffect(()=>{
-        fetch(`/discuss/search/${searchInput}`)
+        fetch(`${API_URL}/discuss/search/${searchInput}`)
             .then((res) => res.json())
             .then((fetched) => {
                 setPosts(fetched);
             });
     },[])
+    console.log(posts);
     if (!isLoggedIn(user)) {
         return <Navigate to='/login'/>;
     }

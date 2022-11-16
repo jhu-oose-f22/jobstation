@@ -2,16 +2,16 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import { useContext, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import {API_URL} from "../../context/Const";
 
-export default function GroupCard({ group, joined = false, listname = '' }) {
-
+export default function GroupCard({ group, joined = false, listname = "" }) {
     // TODO Modal
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleQuit = async (e) => {
         const group_n_user = { groupId: group._id, userId: user._id };
-        await fetch("/group/quit", {
+        await fetch(`${API_URL}/group/quit`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",
@@ -21,21 +21,19 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
 
         window.history.go(0);
         // navigate("/group");
-
     };
 
     const handleJoin = async (e) => {
-      //console.log('trying to join')
-      const group_n_user = { groupId: group._id, userId: user._id };
-        await fetch("/group/join", {
+        //console.log('trying to join')
+        const group_n_user = { groupId: group._id, userId: user._id };
+        await fetch(`${API_URL}/group/join`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",
             },
             body: JSON.stringify(group_n_user),
         }).then((res) => console.log(res));
-        if (listname === 'recommended')
-            window.history.go(0);
+        if (listname === "recommended") window.history.go(0);
         else navigate("/group");
     };
 
@@ -85,10 +83,23 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                             overflow: "auto",
                         }}
                     >
-                        <h3>{group.tags}</h3>
+                        {/* <h3>{group.tags.map(tag => `${tag} `)}</h3> */}
+                        <strong className="text-muted">
+                            {group.tags.map((tag) => {
+                                return (
+                                    <div
+                                        // href={'./'}
+                                        className="btn btn-outline-secondary btn-sm mx-1"
+                                        underline="none"
+                                    >
+                                        {tag}
+                                    </div>
+                                );
+                            })}
+                        </strong>
                         <p className="card-text ">{group.groupIntro}</p>
                     </div>
-                    {joined && (listname !== 'recommended') && (
+                    {joined && listname !== "recommended" && (
                         <button
                             type="button"
                             className="btn btn-danger"
@@ -97,7 +108,7 @@ export default function GroupCard({ group, joined = false, listname = '' }) {
                             quit
                         </button>
                     )}
-                    {(!joined || listname === 'recommended') && (
+                    {(!joined || listname === "recommended") && (
                         <button
                             type="button"
                             className="btn btn-success"

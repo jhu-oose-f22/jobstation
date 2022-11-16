@@ -4,6 +4,7 @@ const tagSchema = mongoose.Schema({
     Name: {
         type: String,
         unique: true,
+        max: 20,
     },
     createdAt: {
         type: Date,

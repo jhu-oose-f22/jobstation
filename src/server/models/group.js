@@ -24,12 +24,7 @@ const groupSchema = mongoose.Schema({
 
 class GroupClass{
     static async createGroup({groupName, groupIntro, tags, owner,  avatar = ''}){
-        // if (groupName && owner && tags){
-        if (groupName){
-        //console.log(`creating new group: ${owner}`);
-            // console.log('tags group model creating');
-            // console.log(tags);
-            // const memberCount = member.lenth;
+        if (groupName && owner && tags){
             const newGroup = await this.create({
                 groupName,
                 groupIntro,
@@ -43,7 +38,7 @@ class GroupClass{
             return newGroup;
         }
         else{
-            throw new Error('Missing component of a group.');
+            console.error('Missing component of a group.');
         }
     }
 }
