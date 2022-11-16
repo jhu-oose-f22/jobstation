@@ -30,7 +30,7 @@ class GroupClass{
             const newGroup = await this.create({
                 groupName,
                 groupIntro,
-                tags: [groupTag],
+                tags: groupTag,
                 owner,
                 members: [owner]
                 // tags,

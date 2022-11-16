@@ -31,7 +31,7 @@ export default function SearchResult() {
       <div className="accordion">
         <SearchGroup groups={[]}/>
         <GroupList listName="related" groups={result} search={true} />
-        <GroupList listName="recommended" />
+        {/* <GroupList listName="recommended" /> */}
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ export const recommendApi = new Pipeless.RecommendationsApi();
 export const appId = 1694; // {Number} 
 // const opts = {};
 
-
+//create
 export const createPostEvent = async (req, res, next) => {
     const {title, tags} = req.body;
     var postEvents = [];
@@ -49,10 +49,10 @@ export const createPostEvent = async (req, res, next) => {
 }
 
 export const createGroupEvent = async (req, res, next) => {
-    const {groupName, tags} = req.body;
+    const {groupName, groupTag} = req.body;
     var groupEvents = [];
     var eventBatch = [];
-    for (const tag of tags){
+    for (const tag of groupTag){
         eventBatch.push({
             start_object: {id: groupName, type: 'company'},
             relationship: {type: 'taggedWith'},
@@ -83,7 +83,7 @@ export const createGroupEvent = async (req, res, next) => {
     next();
 }
 
-export const createEventsForUser = async (user) => {
+export const createEventsForFakeUsers = async (user) => {
     const {name, tags} = user;
     var Events = [];
     var eventBatch = [];
@@ -122,55 +122,11 @@ export const createEventsForUser = async (user) => {
     
 }
 
-
-
-export const getRelatedContentsTitle = async ( userName, ContentsType ) => {
-    var opts = JSON.stringify({
-        object: {id: userName, type: ContentsType},
-        content_tagged_relationship_type: 'taggedWith',
-    });
-    var RelatedContentsNames = [];
-    recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('API called successfully. Returned data: ' + data);
-            const results = (new Function("return " + response.text))();
-            
-            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
-            // return RelatedContentsNames;
-        }
-    });
-    console.log(RelatedContentsNames);
-
-    return RelatedContentsNames;
-}
-
-export const getRelatedContents = async ( userName, ContentsType ) => {
-    var opts = JSON.stringify({
-        object: {id: userName, type: "post"},
-        content_tagged_relationship_type: 'taggedWith',
-    });
-    
-    await recommendApi.getRelatedContent(appId, opts,(error, data, response) => {
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('API called successfully. Returned data: ' + data);
-            const results = (new Function("return " + response.text))();
-            var RelatedContentsNames = [];
-            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
-            return RelatedContentsNames;
-        }
-    });
-    // return RelatedContentsNames;
-}
-
 export const createFakeUsers = async (req, res) => {
     const {users} = req.body;
     
     for (const user of users){
-        createEventsForUser(user);
+        createEventsForFakeUsers(user);
 
         var userEvents = [];
         var userBatch = [];
@@ -227,3 +183,121 @@ export const createFakeUsers = async (req, res) => {
     
 }
 
+export const createEventsForUsers = async (name, tags) => {
+    var Events = [];
+    var eventBatch = [];
+    for (const tag of tags){
+        eventBatch.push({
+            start_object: {id: name, type: 'post'},
+            relationship: {type: 'taggedWith'},
+            end_object: {id: tag, type: 'tag'}
+        });
+        eventBatch.push({
+            start_object: {id: name, type: 'company'},
+            relationship: {type: 'taggedWith'},
+            end_object: {id: tag, type: 'tag'}
+        });
+        if (eventBatch.length >= 10){
+            Events.push(eventBatch);
+            eventBatch = [];
+        }
+    } 
+    if(eventBatch) Events.push(eventBatch);
+    for (const Event of Events){
+        const opts = JSON.stringify({
+            events: Event,
+            synchronous: false
+        });
+        console.log(opts);
+        pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
+            if (error) {
+                console.error(error);
+            } else {
+                console.log('API called successfully. Returned data: ' + data);
+            }
+        });
+    }
+    return
+}
+
+export const createUsersEvents = async (req, res, next) => {
+    const {tags, username} = req.body;
+    
+    createEventsForUsers(username, tags);
+
+    var userEvents = [];
+    var userBatch = [];
+    for (const tag of tags){
+        userBatch.push({
+            start_object: {id: username, type: 'user'},
+            relationship: {type: 'taggedWith'},
+            end_object: {id: tag, type: 'tag'}
+        });
+        
+        if (userBatch.length >= 10){
+            userEvents.push(userBatch);
+            userBatch = [];
+        }
+    } 
+    if(userBatch) userEvents.push(userBatch);
+    for (const userEvent of userEvents){
+        const opts = JSON.stringify({
+            events: userEvent,
+            synchronous: false
+        });
+        console.log(opts);
+        pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
+            if (error) {
+                console.error(error);
+            } else {
+                console.log('API called successfully. Returned data: ' + data);
+            }
+        });
+    }
+    const opts = JSON.stringify({
+        events: [
+            {
+                start_object: {id: username, type: 'user'},
+                relationship: {type: 'interestedIn'},
+                end_object: {id: username, type: 'post'}
+            },
+            {
+                start_object: {id: username, type: 'user'},
+                relationship: {type: 'interestedIn'},
+                end_object: {id: username, type: 'company'}
+            }
+        ]
+    })
+    pipeApi.createEventsBatch(appId, opts, (error, data, response) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+        }
+    });
+    next();
+    
+}
+
+//recommend
+export const getRelatedContentsTitle = async ( userName, ContentsType ) => {
+    var opts = JSON.stringify({
+        object: {id: userName, type: ContentsType},
+        content_tagged_relationship_type: 'taggedWith',
+    });
+    var RelatedContentsNames = [];
+    recommendApi.getRelatedContent(appId, opts, (error, data, response) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('API called successfully. Returned data: ' + data);
+            const results = (new Function("return " + response.text))();
+            
+            for ( var item of results.items ) RelatedContentsNames.push( item.object.id );
+            // return RelatedContentsNames;
+        }
+    });
+    console.log(RelatedContentsNames);
+
+    return RelatedContentsNames;
+}

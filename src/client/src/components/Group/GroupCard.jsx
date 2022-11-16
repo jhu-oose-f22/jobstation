@@ -3,7 +3,7 @@ import { UserContext } from "../../context/User";
 import { useContext, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
-export default function GroupCard({ group, joined = false }) {
+export default function GroupCard({ group, joined = false, listname = '' }) {
     /**
      * group: {
                 groupId: '23',
@@ -44,11 +44,12 @@ export default function GroupCard({ group, joined = false }) {
             },
             body: JSON.stringify(group_n_user),
         }).then((res) => res.json());
-
-        // window.history.go(0);
-        navigate("/group");
+        if (listname === 'recommended')
+            window.history.go(0);
+        else navigate("/group");
     };
 
+// >>>>>>> 0e8f77957ac039a052a3e34550de8824ede01b5f
     return (
         <div
             className="card btn shadow-sm d-flex flex-row p-0"
@@ -100,7 +101,7 @@ export default function GroupCard({ group, joined = false }) {
                         <h3>{group.tags}</h3>
                         <p className="card-text ">{group.groupIntro}</p>
                     </div>
-                    {joined && (
+                    {joined && (listname !== 'recommended') && (
                         <button
                             type="button"
                             className="btn btn-danger"
@@ -109,7 +110,7 @@ export default function GroupCard({ group, joined = false }) {
                             quit
                         </button>
                     )}
-                    {!joined && (
+                    {(!joined || listname == 'recommended') && (
                         <button
                             type="button"
                             className="btn btn-success"

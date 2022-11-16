@@ -59,8 +59,17 @@ export const getGroupByUser = async (req, res) => {
 
 export const createGroup = async (req, res) => {
     const { groupName, groupIntro, groupTag, owner } = req.body;
-    const inputTag = await Tag.createTags([groupTag]);
-    const newGroup = await Group.createGroup({ groupName, groupIntro, groupTag, owner });
+    console.log('tag in controller create');
+    console.log(groupTag);
+    
+    // const tagArray = [groupTag];
+    const newGroup = await Group.createGroup({
+        groupName,
+        groupIntro,
+        groupTag,
+        owner,
+    });
+    const inputTag = await Tag.createTags(groupTag);
     try {
         await newGroup.save();
         let creator = await User.findOne({ username: owner });
@@ -96,10 +105,7 @@ export const joinGroup = async (req, res) => {
                 targetUser
             );
             res.status(200).json(updatedGroup);
-
         }
-       
-
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -172,21 +178,24 @@ export const updateGroup = async (req, res) => {
     const updatedGroup = { groupName, owner, tags, intro, avatar, _id: id };
     await Group.findByIdAndUpdate(id, updatedGroup, { new: true });
     res.json(updatedGroup);
-}
+};
 
 export const getRecommendedGroups = async (req, res) => {
     try {
-        const ContentsType = "company"; 
-        const RelatedContentsNames = await getRelatedContentsTitle(req.params.userName, ContentsType);
-        
-        function delay(time){
-            return new Promise(resolve => setTimeout(resolve, time));
-        }
-        await delay(1000);
+        const ContentsType = "company";
+        const RelatedContentsNames = await getRelatedContentsTitle(
+            req.params.userName,
+            ContentsType
+        );
 
+        function delay(time) {
+            return new Promise((resolve) => setTimeout(resolve, time));
+        }
+        await delay(500);
+        console.log(RelatedContentsNames);
         const recommendedGroups = await Group.find( { groupName: { "$in": RelatedContentsNames } } );
         res.status(200).json(recommendedGroups);
     } catch (error) {
-        res.status(404).json({ message: error.message});
+        res.status(404).json({ message: error.message });
     }
-}
+};

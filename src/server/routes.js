@@ -8,8 +8,7 @@ import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember
 import { getAllUser, signin, signup, removeUser, updateUser, getUser, getUserByUsername } from "./controllers/users.js";
 import { createTags, getTags } from "./controllers/tags.js";
 
-import { createPostEvent, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
-
+import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
 
 const router = express.Router();
 
@@ -42,11 +41,9 @@ router.post('/group/join', joinGroup)
 router.get('/group/user/:userName', getRecommendedGroups); //用假用户的名字
 
 
-
 //User
 router.post('/signin', signin);
-router.post('/signup', signup);
-
+router.post('/signup', createUsersEvents, signup);
 router.delete('/user/:id', removeUser);
 router.patch('/user/update/:id', updateUser);
 router.get('/user/:username', getUserByUsername);
@@ -59,6 +56,5 @@ router.get('/tags', getTags);
 
 //recommand
 router.post('/fakeusers', createFakeUsers); //设置了三个有tag的用户：zpu2, frontendBoy, testBoy
-
 
 export default router;

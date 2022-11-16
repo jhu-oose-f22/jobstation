@@ -24,7 +24,6 @@ const userSchema = mongoose.Schema({
 		type: Date,
 		default: new Date()
 	},
-
 });
 
 export default mongoose.model("User", userSchema);

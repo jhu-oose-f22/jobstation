@@ -134,13 +134,19 @@ So far,
  on the topright of the page. All three fields(title, tags, body) are required to be posted.
   - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can only view the post.
   -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
+  
 
 2. group live chat
-- View existing groups
-- join a group and chat with group members, rich-text supported
+   - View existing groups
+   - join a group and chat with group members, rich-text supported
 
-3. Recommendation System.
-- Get Recommended Groups based on tags you like.
+3. User tags
+   - Select interesting tags at registration
+   - Add / Delete tags at the dashboard.
+
+
+4. Recommendation System.
+   - Get recommended groups and posts based on the user's tags.
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -148,15 +154,17 @@ So far,
 - [x] Add SRS
 
 - [x] Add Group Chat
-  - [x] Backend
-    - socket, database interaction
-  - [x] Frontend
-    - rich-text supported
+  - [X] Group CRUD
+  - [x] Group chatroom 
+    - Backend: socket, database interaction
+    - Frontend: rich-text supported
 
-- [ ] Add Job Forum
-  - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
+- [x] Add Job Forum
+  - [x] Posts CRUD
   - [x] Rewrite frontend using React
-  - [x] Add Recommendation System
+  
+- [x] Add Recommendation System
+  - [x] Recommemd possibly interesting groups/posts for users based on the tags they chose at registration.
 
 <!-- - [ ] Add Job Board
   - [ ] Add CRUD
