@@ -166,15 +166,27 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
     const { id, userId } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
-
-    const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
-
-    await createActionEvent(id, userId, "liked");
-
-    res.json(updatedPost);
+    
+    try{
+        const post = await Post.findById(id);
+        if (userId in post.likedUser){
+            const updatedPost = await Post.findByIdAndUpdate(id, { 
+                likeCount: post.likeCount + 1,
+                $push: { likedUser: userId },
+            }, { new: true });
+            await createActionEvent(id, userId, "liked");
+            res.json(updatedPost);
+        }
+        else{
+            res.status(404).json({ message: error.message });
+        }
+    }catch (error){
+        res.status(404).json({ message: error.message });
+    }
+    
 }
 
 export const dislikePost = async (req, res) => {
@@ -223,7 +235,9 @@ export const likeComment = async (req, res) => {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Comment with id: ${id}`);
     const comment = await Comment.findById(id);
-    const updatedComment = await Comment.findByIdAndUpdate(id, { likeCount: comment.likeCount + 1 }, { new: true });
+    const updatedComment = await Comment.findByIdAndUpdate(id, { 
+        likeCount: comment.likeCount + 1
+    }, { new: true });
     res.json(updatedComment);
 }
 

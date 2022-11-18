@@ -10,6 +10,7 @@ const postSchema = mongoose.Schema({
     creatorName: String,
     comments: [String],
     tags: [String],
+    likedUser: [mongoose.ObjectId],
     likeCount: {
         type: Number,
         default: 0
