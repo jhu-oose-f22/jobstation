@@ -8,13 +8,13 @@ const App_API_Key = defaultClient.authentications['App_API_Key'];
 const pipeApi = new Pipeless.GeneralApi();
 export const recommendApi = new Pipeless.RecommendationsApi();
 
-// //for test
-// export const appId = 1702; // {Number} 
-// App_API_Key.apiKey = "Bearer AD3DFmGXck8ZnhQQbtNhrfwb36mXRa64M3incCLa"
+//for test
+export const appId = 1702; // {Number} 
+App_API_Key.apiKey = "Bearer AD3DFmGXck8ZnhQQbtNhrfwb36mXRa64M3incCLa"
 
-//for demo
-export const appId = 1704; // {Number} 
-App_API_Key.apiKey = "Bearer y6nPow5uY91F2n2QsYxSjPTLhqdMKfyV34HdG4jb"
+// //for demo
+// export const appId = 1704; // {Number} 
+// App_API_Key.apiKey = "Bearer y6nPow5uY91F2n2QsYxSjPTLhqdMKfyV34HdG4jb"
 
 
 // const opts = {};
