@@ -3,6 +3,7 @@ import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import GroupCard from "./GroupCard";
 import { TagSelection } from "../Utils/Tag";
+import { API_URL } from "../../context/Const";
 
 
 export default function GroupList({ listName, groups = [], search = false }) {
@@ -60,7 +61,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
             owner: user._id,
         };
 
-        await fetch("/group/create", {
+        await fetch(`${API_URL}/group/create`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json",

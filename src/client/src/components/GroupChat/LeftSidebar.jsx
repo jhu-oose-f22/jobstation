@@ -17,6 +17,7 @@ export default function LeftSidebar() {
             data-bs-toggle="list"
             data-bs-target={`#${btnName}`}
             role="tab"
+            key={btnName}
             aria-controls={btnName}
         >
             {btnIcons[i]}

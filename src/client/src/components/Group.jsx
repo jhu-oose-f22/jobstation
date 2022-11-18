@@ -18,6 +18,12 @@ export default function Group(props) {
             .then((fetched) => {
                 setGroups(fetched);
             });
+        fetch(`${API_URL}/group/user/${user._id}`)
+            .then((res) => res.json())
+            .then((fetched) => {
+                console.log(fetched)
+                setRecommmendedGroups(fetched);
+            });
         
     }, []);
     if (!isLoggedIn(user)) {

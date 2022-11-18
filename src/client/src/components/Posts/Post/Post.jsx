@@ -56,7 +56,7 @@ export default function Post(props) {
     };
 
     const handleLike = async () => {
-        await fetch(`${API_URL}/discuss/like/${postId}`,{
+        await fetch(`${API_URL}/discuss/like/post/${postId}/user/${user._id}`,{
             method: "PATCH",
         }).
             then((res) => res.json());
@@ -113,7 +113,7 @@ export default function Post(props) {
             <div className=' body-content'>
                 {post.message}
             </div>
-            <CommentList comments = {postId}/>
+            <CommentList postId = {postId}/>
         </div>
     );
 }

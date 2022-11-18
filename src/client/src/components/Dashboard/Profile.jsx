@@ -4,6 +4,7 @@ import { useState, useEffect, useContext,ChangeEvent } from "react";
 import React from 'react';
 import { TagSelection } from "../Utils/Tag";
 import { isLoggedIn, UserContext } from "../../context/User";
+import {API_URL} from "../../context/Const";
 
 import {
     MDBCol,
@@ -53,7 +54,7 @@ export default function Profile({ profile }) {
             email: varyingEmail,
             tags: tag,
         }
-        await fetch(`/user/update`, {
+        await fetch(`${API_URL}/user/update`, {
             method: "post",
             headers: {
                 "Content-type": "application/json",

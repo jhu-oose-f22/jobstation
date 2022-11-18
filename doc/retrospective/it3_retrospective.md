@@ -3,20 +3,22 @@
 ## 1. Delivery
 
 - Implement the posts and groups recommendation function by storing events data on a graph database and gaining the recommended content based on users' tag.
-
 - Designed the tags collection and how users, posts and groups interact with tags. Implemented tags middleware that enable the frontend automatically process tags when interact with user, posts and groups.
-
 - Debuged and Updated the CRUD functions in frontend in discussion and group sections. Connection the frontend to backend.
-
 - Achieved user signin and signup function with authorization and setting informations for recommendation function.
 
-## 2. To-do list
+## 2. Challenges
+
+- Implementing recommendation. When implementing the recommendation function, it is hard to find proper APIs for recommendation functions and the chosen API is not open to change or ideal for the server.
+- Merging different branches. We use several branches for different features in this iteration. However, we made changes in same documents so there are plenty of  conflicts which takes long time to merge. 
+
+## 3. To-do list
 
 - [ ] Fixing bugs in CRUD functions.
 - [ ] Meeting the must-to-have requirements.
 - [ ] Deploying the application.
 
-## 3. Plan for next iteration
+## 4. Plan for next iteration
 
 We are planning to finish tasks besides deploying before Nov 9th, and deploying the application before Nov 16th.
 
