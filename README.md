@@ -93,6 +93,11 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
+### URLs of the deployment 
+[Frontend:  https://jobstation.netlify.app/](https://jobstation.netlify.app/)  
+[Server:  https://it4-chat.onrender.com](https://it4-chat.onrender.com)  
+[Server for group chat: https://it4-chat-frug.onrender.com](https://it4-chat-frug.onrender.com)
+
 ### Install prerequisites and run locally  
 
 - Start chat server.   
@@ -129,24 +134,21 @@ So far,
   - **sign up**: enter valid username, email, and password to sign up
   - **sign in**: sign in using username and password
   - **sign out**: click Sign out and user will be redirect to the sign up / log in page. 
-- Create, modify, delete, and search post/group. (Only backend supports these operations. Frontend and backend have yet to be integrated.)
+- Create, modify, delete, and search post/group. 
   - **create**: After log in, user can create a new post. 
  on the topright of the page. All three fields(title, tags, body) are required to be posted.
-  - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can only view the post.
-  -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
   
+  - **modify&delete**: Owner of the post have permission to modify or delete the post, while other users can view/like/comment the post.
+  -  **search**: Click the magnifier button on the topright to search post. All three fields of the post(title, tag, body) are supported for search. 
 
 2. group live chat
-   - View existing groups
-   - join a group and chat with group members, rich-text supported
-
-3. User tags
-   - Select interesting tags at registration
-   - Add / Delete tags at the dashboard.
+- View existing groups
+- join a group and chat with group members, rich-text supported
+- group owner can remove a member if they misbehaves
 
 
-4. Recommendation System.
-   - Get recommended groups and posts based on the user's tags.
+3. Recommendation System.
+- Get Recommended Groups based on tags you like.
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -154,17 +156,15 @@ So far,
 - [x] Add SRS
 
 - [x] Add Group Chat
-  - [X] Group CRUD
-  - [x] Group chatroom 
-    - Backend: socket, database interaction
-    - Frontend: rich-text supported
+  - [x] Backend
+    - socket, database interaction
+  - [x] Frontend
+    - rich-text supported
 
 - [x] Add Job Forum
-  - [x] Posts CRUD
+  - [x] Refactor/Refine/Rewrite CRUD of Iteration 1
   - [x] Rewrite frontend using React
-  
-- [x] Add Recommendation System
-  - [x] Recommemd possibly interesting groups/posts for users based on the tags they chose at registration.
+  - [x] Add Recommendation System
 
 <!-- - [ ] Add Job Board
   - [ ] Add CRUD
