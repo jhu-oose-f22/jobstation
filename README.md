@@ -95,7 +95,7 @@
 ## Getting Started
 ### URLs of the deployment 
 [Frontend:  https://jobstation.netlify.app/](https://jobstation.netlify.app/)  
-[Server:  https://it4-chat.onrender.com](https://it4-chat.onrender.com)  
+[Server:  https://it4-back.onrender.com](https://it4-back.onrender.com)  
 [Server for group chat: https://it4-chat-frug.onrender.com](https://it4-chat-frug.onrender.com)
 
 ### Install prerequisites and run locally  
