@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/User";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
-import { API_URL } from "../../context/Const";
+import {API_URL} from "../../context/Const";
 
 export default function SearchGroup({ groups }) {
     const [searchInput, setSearchInput] = useState("");
