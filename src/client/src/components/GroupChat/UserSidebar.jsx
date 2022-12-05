@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../context/Const";
 import { UserContext } from "../../context/User";
@@ -35,11 +36,13 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
       window.alert(`${userName} has left the group`);
       socket.emit("refresh");
     });
+
   }
 
   // Here user.name is the id of the user (not the name)
   const userOnlineList = usersOnline ? usersOnline.map((user) => {
     let username = userNames.get(user.name);
+
     if (username)
       return (
         <li className="btn btn-dark rounded-0" key={user.name} value={user.name}
@@ -86,15 +89,18 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
               title={`${username}`}
               src={`https://ui-avatars.com/api/?name=${username}&background=random&bold=true&rounded=true`} alt={`user ${username}`} />
             <i className="mask fa-solid fa-circle fa-sm " color='gray'
+
               style={{
                 transform: 'translate(-75%, 75%)',
               }}
             ></i>
           </div>
+
           <span className={userId === group.owner ? "text-danger" : ' text-secondary'}>{username + (userId === group.owner ? "(Owner)" : "")}</span>
         </div>
       </li>
     else return null;
+
   });
 
   return (

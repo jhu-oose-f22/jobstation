@@ -66,6 +66,7 @@ io.on('connect', (socket) => {
     socket.on('sendMessage', async (message, callback) => {
         const user = getUser(socket.id);
 
+
         // console.log(user.room);
         console.log(user);
 
@@ -93,6 +94,7 @@ io.on('connect', (socket) => {
         const user = getUser(socket.id);
         io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
+
     })
 
     socket.on('disconnect', () => {
@@ -109,6 +111,7 @@ io.on('connect', (socket) => {
         const i = allClients.indexOf(socket);
         allClients.splice(i, 1);
     })
+
 });
 
 mongoose.connection.once('open', () => {

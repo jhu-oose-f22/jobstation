@@ -26,6 +26,7 @@ const Chat = () => {
   const name = user._id;
   const [group, setGroup] = useState(
     state ? state.group : {}
+
   );
   const [usersOnline, setUsersOnline] = useState("");
   const [message, setMessage] = useState("");
@@ -58,6 +59,7 @@ const Chat = () => {
       socket.emit("leave");
       socket.off("history");
       socket.off("connect");
+
     }
   }, []);
 
@@ -67,6 +69,7 @@ const Chat = () => {
     socket.on("message", (message) => {
       messages.push(message);
       setMessages([...messages]);
+
     });
 
     socket.on("roomData", ({ users }) => {
@@ -76,6 +79,7 @@ const Chat = () => {
       });
     });
     return () => {
+
       socket.off("message");
       socket.off("roomData");
     }
@@ -100,7 +104,6 @@ const Chat = () => {
       }
     );
   }, [group, usersOnline]);
-
 
   if (!state || !state.group || state.group.members.indexOf(user._id) === -1 || !isLoggedIn(user)) {
     window.alert("You are not a member of this group");
@@ -150,6 +153,7 @@ const Chat = () => {
           id='sidebarUser'
         >
           <UserSidebar usersOnline={usersOnline} group={group} userNames={userNames} socket={socket} />
+
         </div>
       </div>
 

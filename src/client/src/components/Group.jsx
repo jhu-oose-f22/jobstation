@@ -6,6 +6,7 @@ import GroupList from "./Group/GroupList";
 import Banner from "./Utils/Banner";
 import SearchGroup from "./Group/GroupSearch";
 import { API_URL } from "../context/Const";
+
 export default function Group(props) {
     const { user } = useContext(UserContext);
 
@@ -25,9 +26,12 @@ export default function Group(props) {
             .then((fetched) => {
                 // console.log(fetched)
                 const joined_ids = joined.map(group => group._id);
-                const rec = fetched.filter(group => !joined_ids.includes(group._id));
+
+                const rec = fetched.filter(group => !joined_ids.includes(group._id) );
+                setRecommmendedGroups(fetched);
                 setRecommmendedGroups(rec);
             });
+        
 
     }, []);
     if (!isLoggedIn(user)) {

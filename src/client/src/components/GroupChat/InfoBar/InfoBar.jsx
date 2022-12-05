@@ -60,6 +60,7 @@ const InfoBar = ({ group }) => {
             <div className='dropdown-divider'></div>
 
             {/* Quit */}
+
             <div className="btn dropdown-item text-danger" onClick={async () => {
               const quit = window.confirm('Are you sure you want to leave this group?')
               if (quit) {
@@ -77,6 +78,7 @@ const InfoBar = ({ group }) => {
                   navigate('/group');
 
                 });
+
               }
             }}><i className="fa-solid fa-right-from-bracket me-2"></i><span>Quit group</span></div>
           </div>
