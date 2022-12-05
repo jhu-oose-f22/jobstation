@@ -1,87 +1,106 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../context/Const";
 import { UserContext } from "../../context/User";
 
-const UserSidebar = ({ usersOnline, group, userNames }) => {
+const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
 
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const isOwner = group.owner === user._id;
 
+  useEffect(() => {
+    if (!group.members.find((member) => member === user._id)) {
+      window.alert("You are not a member of this group!");
+      navigate("/group");
+    }
+  }, [userNames, group.members]);
 
 
-
-  const toggleGroupMember = (userId, userName) => {
+  const toggleGroupMember = async (userId, userName) => {
     let res = window.confirm(`Are you sure you want to remove ${userName} from the group?`);
     if (!res) return;
-    axios.post(API_URL + '/group/quit',
-      {
+    await fetch(`${API_URL}/group/quit`, {
+      method: "post",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
         groupId: group._id,
         userId,
-      }).then(() => {
-        window.alert(`${userName} has left the group`);
-      }, (err) => {
-        window.alert('Something went wrong');
-        console.log(err);
-      }
-      )
+      }),
+    }).then((res) => {
+      window.alert(`${userName} has left the group`);
+      socket.emit("refresh");
+    });
+
   }
 
   // Here user.name is the id of the user (not the name)
   const userOnlineList = usersOnline ? usersOnline.map((user) => {
     let username = userNames.get(user.name);
-    return (
-      <li className="btn btn-dark rounded-0" key={user.name} value={user.name}
-        title={`${username} is online`}
-        onClick={isOwner && user.name !== group.owner ? (e) => {
-          e.preventDefault();
-          toggleGroupMember(user.name, username);
-        } : null}
-      >
-        <div className="d-flex align-items-center">
-          <div className=" d-flex align-items-center">
-            <img className="" width={30}
-              title={`${username}`}
-              src={(user.avatar !== '' && user.avatar) || `https://ui-avatars.com/api/?name=${username}&background=random&bold=true&rounded=true`} alt={`user ${username}`} />
-            <i className="mask fa-solid fa-circle fa-sm " color='lightgreen'
-              style={{
-                transform: 'translate(-75%, 75%)',
-              }}
-            ></i>
+
+    if (username)
+      return (
+        <li className="btn btn-dark rounded-0" key={user.name} value={user.name}
+          title={`${username} is online`}
+          onClick={isOwner && user.name !== group.owner ? (e) => {
+            e.preventDefault();
+            toggleGroupMember(user.name, username);
+          } : null}
+        >
+          <div className="d-flex align-items-center">
+            <div className=" d-flex align-items-center">
+              <img className="" width={30}
+                title={`${username}`}
+                src={(user.avatar !== '' && user.avatar) || `https://ui-avatars.com/api/?name=${username}&background=random&bold=true&rounded=true`} alt={`user ${username}`} />
+              <i className="mask fa-solid fa-circle fa-sm " color='lightgreen'
+                style={{
+                  transform: 'translate(-75%, 75%)',
+                }}
+              ></i>
+            </div>
+            <span className={user.name === group.owner ? "text-danger" : ' text-white'}>
+              {username + (user.name === group.owner ? " (Owner)" : "")}
+            </span>
           </div>
-          <span className={user.name === group.owner ? "text-danger" : ' text-white'}>
-            {username + (user.name === group.owner ? " (Owner)" : "")}
-          </span>
-        </div>
-      </li>
-    );
+        </li>
+      );
+    else return null;
   }) : null;
 
   // Here username is the username
   const userOfflineList = group.members.filter((userId) => { return !(usersOnline && usersOnline.find((u) => u && u.name === userId)) }).map((userId) => {
     let username = userNames.get(userId);
-    return <li className="btn btn-dark rounded-0" key={userId} value={userId}
-      title={`${username} is offline`}
-      onClick={isOwner && userId !== group.owner ? (e) => {
-        e.preventDefault();
-        toggleGroupMember(userId, username);
-      } : null}
-    >
-      <div className="d-flex align-items-center text-secondary" >
-        <div className="h-100 d-flex align-items-center">
-          <img className="" width={30}
-            title={`${username}`}
-            src={`https://ui-avatars.com/api/?name=${username}&background=random&bold=true&rounded=true`} alt={`user ${username}`} />
-          <i className="mask fa-solid fa-circle fa-sm " color='gray'
-            style={{
-              transform: 'translate(-75%, 75%)',
-            }}
-          ></i>
+    if (username)
+      return <li className="btn btn-dark rounded-0" key={userId} value={userId}
+        title={`${username} is offline`}
+        onClick={isOwner && userId !== group.owner ? (e) => {
+          e.preventDefault();
+          toggleGroupMember(userId, username);
+        } : null}
+      >
+        <div className="d-flex align-items-center text-secondary" >
+          <div className="h-100 d-flex align-items-center">
+            <img className="" width={30}
+              title={`${username}`}
+              src={`https://ui-avatars.com/api/?name=${username}&background=random&bold=true&rounded=true`} alt={`user ${username}`} />
+            <i className="mask fa-solid fa-circle fa-sm " color='gray'
+
+              style={{
+                transform: 'translate(-75%, 75%)',
+              }}
+            ></i>
+          </div>
+
+          <span className={userId === group.owner ? "text-danger" : ' text-secondary'}>{username + (userId === group.owner ? "(Owner)" : "")}</span>
         </div>
-        <span className={userId === group.owner ? "text-danger" : ' text-secondary'}>{username + (userId === group.owner ? "(Owner)" : "")}</span>
-      </div>
-    </li>
+      </li>
+    else return null;
+
   });
 
   return (

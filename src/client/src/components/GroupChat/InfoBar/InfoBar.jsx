@@ -60,18 +60,25 @@ const InfoBar = ({ group }) => {
             <div className='dropdown-divider'></div>
 
             {/* Quit */}
-            <div className="btn dropdown-item text-danger" onClick={() => {
+
+            <div className="btn dropdown-item text-danger" onClick={async () => {
               const quit = window.confirm('Are you sure you want to leave this group?')
               if (quit) {
-                axios.post(API_URL + '/group/quit',
-                  {
+                await fetch(`${API_URL}/group/quit`, {
+                  method: "post",
+                  headers: {
+                    "Content-type": "application/json",
+                  },
+                  body: JSON.stringify({
                     groupId: group._id,
-                    username: user._id,
-                  }).then(() => {
-                    window.alert('You have left the group');
-                    navigate('../');
-                  }
-                  )
+                    userId: user._id
+                  }),
+                }).then((res) => {
+                  window.alert(`You have left the group`);
+                  navigate('/group');
+
+                });
+
               }
             }}><i className="fa-solid fa-right-from-bracket me-2"></i><span>Quit group</span></div>
           </div>

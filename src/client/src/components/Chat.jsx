@@ -25,7 +25,8 @@ const Chat = () => {
   const { user } = useContext(UserContext);
   const name = user._id;
   const [group, setGroup] = useState(
-    state.group
+    state ? state.group : {}
+
   );
   const [usersOnline, setUsersOnline] = useState("");
   const [message, setMessage] = useState("");
@@ -48,12 +49,17 @@ const Chat = () => {
     socket.on('disconnect', (e) => { setIsConnected(false) });
 
     socket.on("history", history => {
-      messages.push(...history);
+      if (messages.length === 0) {
+        messages.push(...history);
+      }
     })
 
     return () => {
+      console.log("leave");
+      socket.emit("leave");
+      socket.off("history");
       socket.off("connect");
-      socket.off("disconnect");
+
     }
   }, []);
 
@@ -62,13 +68,18 @@ const Chat = () => {
 
     socket.on("message", (message) => {
       messages.push(message);
+      setMessages([...messages]);
+
     });
 
     socket.on("roomData", ({ users }) => {
       setUsersOnline(users);
+      axios.get(`${API_URL}/group/find/${group._id}`).then(res => {
+        setGroup(res.data);
+      });
     });
     return () => {
-      socket.off("history");
+
       socket.off("message");
       socket.off("roomData");
     }
@@ -141,7 +152,8 @@ const Chat = () => {
         <div className="col-4 col-md-2 h-100 collapse show"
           id='sidebarUser'
         >
-          <UserSidebar usersOnline={usersOnline} group={group} userNames={userNames} />
+          <UserSidebar usersOnline={usersOnline} group={group} userNames={userNames} socket={socket} />
+
         </div>
       </div>
 
