@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/User";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
-import {API_URL} from "../../context/Const";
+import { API_URL } from "../../context/Const";
 
 export default function SearchGroup({ groups }) {
     const [searchInput, setSearchInput] = useState("");
@@ -28,24 +28,24 @@ export default function SearchGroup({ groups }) {
     };
 
     return (
-        <form>
-            <div className="form-group">
-                <label for="groupName">Search</label>
+        <form className="m-2 border p-4 border-2 border-primary border-opacity-25 rounded-3">
+            <label for="groupName">Search</label>
+            <div className="form-group d-flex">
                 <input
                     className="form-control"
                     id="groupName"
                     placeholder="search here"
+                    autoComplete="off"
                     onChange={(e) => setSearchInput(e.target.value)}
                 />
+                <button
+                    type="button"
+                    className="btn btn-primary col-1"
+                    onClick={() => handleSearch()}
+                >
+                    go
+                </button>
             </div>
-
-            <button
-                type="button"
-                className="btn btn-success"
-                onClick={() => handleSearch()}
-            >
-                go
-            </button>
         </form>
     );
 }

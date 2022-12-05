@@ -56,14 +56,14 @@ const Navbar = (props) => {
                                     </div>
                                 </div>
                                 <ul className="dropdown-menu dropdown-menu-start dropdown-menu-lg-end align-items-start" aria-labelledby="navbarDropdown">
-                                    <li><Link className="dropdown-item" to="/profile">
+                                    <li><Link className="dropdown-item" to="/dashboard">
                                         <i className="fa-regular fa-user me-2"></i>
-                                        Profile
+                                        Dashboard
                                     </Link></li>
-                                    <li><Link className="dropdown-item" to="/settings">
+                                    {/* <li><Link className="dropdown-item" to="/settings">
                                         <i className="fa-solid fa-gear me-2"></i>
                                         Settings
-                                    </Link></li>
+                                    </Link></li> */}
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><Link className="dropdown-item" to="/logout">
                                         <i className="fa-solid fa-right-from-bracket me-2"></i>
@@ -71,7 +71,7 @@ const Navbar = (props) => {
                                 </ul>
                             </div>
                         </div>
-                        {/* notification */}
+                        {/* notification
                         <div className="nav-item ms-2 me-auto me-lg-3 bg-light bg-opacity-10 py-1 px-2 rounded-2">
                             <Link className="nav-link " to="/notifications">
                                 <div className='fa-layers fa-lg'>
@@ -79,7 +79,7 @@ const Navbar = (props) => {
                                     <i className="fa-solid fa-circle" data-fa-transform='shrink-10 up-4 right-4' color='red' ></i>
                                 </div>
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
 
                     :
