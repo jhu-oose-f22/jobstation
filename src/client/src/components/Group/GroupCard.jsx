@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../context/User";
 import { useContext, useState } from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import {API_URL} from "../../context/Const";
+import { API_URL } from "../../context/Const";
 
 export default function GroupCard({ group, joined = false, listname = "" }) {
     // TODO Modal
@@ -78,31 +78,36 @@ export default function GroupCard({ group, joined = false, listname = "" }) {
                 </div>
                 <div className=" col-8 text-start flex-column    justify-md-content-center d-flex h-100">
                     <div
-                        className=" d-flex flex-column mt-md-auto mt-0 p-2"
+                        className=" d-flex flex-column mt-md-auto mt-0 p-2 h-100 mb-2"
                         style={{
                             overflow: "auto",
                         }}
                     >
                         {/* <h3>{group.tags.map(tag => `${tag} `)}</h3> */}
-                        <strong className="text-muted">
-                            {group.tags.map((tag) => {
+                        <h5 className="w-100 my-2 p-2 h-100 d-flex align-items-center justify-content-center text-wrap"
+                            style={{
+                                wordBreak: "break-all",
+                            }}
+                        >{group.groupIntro}</h5>
+                        <div className="text-muted">
+                            tags:{" "}
+                            {group.tags.length > 0 ? group.tags.map((tag) => {
                                 return (
                                     <div
                                         // href={'./'}
-                                        className="btn btn-outline-secondary btn-sm mx-1"
+                                        className="btn btn-outline-secondary btn-sm mx-1 my-1"
                                         underline="none"
                                     >
                                         {tag}
                                     </div>
                                 );
-                            })}
-                        </strong>
-                        <p className="card-text ">{group.groupIntro}</p>
+                            }) : "None"}
+                        </div>
                     </div>
                     {joined && listname !== "recommended" && (
                         <button
                             type="button"
-                            className="btn btn-danger"
+                            className="btn btn-danger mx-2 mt-auto mb-2"
                             onClick={(e) => handleQuit(e)}
                         >
                             quit
@@ -111,15 +116,13 @@ export default function GroupCard({ group, joined = false, listname = "" }) {
                     {(!joined || listname === "recommended") && (
                         <button
                             type="button"
-                            className="btn btn-success"
+                            className="btn btn-success mx-2 mt-auto mb-2"
                             onClick={(e) => handleJoin(e)}
                         >
                             join
                         </button>
                     )}
-                    <span className="p-2 mt-auto w-100">
-                        <nobr className="text-muted">last: 3 mins ago</nobr>
-                    </span>
+
                 </div>
             </div>
         </div>
