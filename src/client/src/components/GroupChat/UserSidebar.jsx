@@ -20,7 +20,7 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
   }, [userNames, group.members]);
 
 
-  const toggleGroupMember = async (userId, userName) => {
+  const removeGroupMember = async (userId, userName) => {
     let res = window.confirm(`Are you sure you want to remove ${userName} from the group?`);
     if (!res) return;
     await fetch(`${API_URL}/group/quit`, {
@@ -36,7 +36,20 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
       window.alert(`${userName} has left the group`);
       socket.emit("refresh");
     });
+  }
 
+  const changeOwner = async (userId, userName) => {
+    let res = window.confirm(`Are you sure you want to make ${userName} the new owner?`);
+    if (!res) return;
+    axios.patch(`${API_URL}/group/update/${group._id}`, { ...group, owner: userId }).then(
+      (res) => {
+        console.log("Finished changing owner");
+        socket.emit("refresh");
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   // Here user.name is the id of the user (not the name)
@@ -46,13 +59,13 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
     if (username)
       return (
         <li className="btn btn-dark rounded-0" key={user.name} value={user.name}
-          title={`${username} is online`}
-          onClick={isOwner && user.name !== group.owner ? (e) => {
-            e.preventDefault();
-            toggleGroupMember(user.name, username);
-          } : null}
-        >
-          <div className="d-flex align-items-center">
+          title={`${username} is online`}>
+          <div className="d-flex align-items-center"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-haspopup="true"
+            id={user.name}
+          >
             <div className=" d-flex align-items-center">
               <img className="" width={30}
                 title={`${username}`}
@@ -67,6 +80,26 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
               {username + (user.name === group.owner ? " (Owner)" : "")}
             </span>
           </div>
+
+          {isOwner ? (user.name !== group.owner ?
+            <div className="dropdown-menu" aria-labelledby={user.name}>
+              <span className="dropdown-item text-danger"
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeGroupMember(user.name, username);
+                }
+                }
+              >Remove User</span>
+              <span className="dropdown-item text-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  changeOwner(user.name, username);
+                }
+                }
+              >Change Owner</span>
+            </div> : null)
+            : null
+          }
         </li>
       );
     else return null;
@@ -80,7 +113,7 @@ const UserSidebar = ({ usersOnline, group, userNames, socket }) => {
         title={`${username} is offline`}
         onClick={isOwner && userId !== group.owner ? (e) => {
           e.preventDefault();
-          toggleGroupMember(userId, username);
+          removeGroupMember(userId, username);
         } : null}
       >
         <div className="d-flex align-items-center text-secondary" >

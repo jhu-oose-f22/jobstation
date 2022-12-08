@@ -21,7 +21,6 @@ const socket = io(CHAT_URL);
 
 const Chat = () => {
   const { state } = useLocation();
-  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const name = user._id;
   const [group, setGroup] = useState(
@@ -145,7 +144,7 @@ const Chat = () => {
           } />
 
           {/* 2. Calendar */}
-          <GroupCalendar group={group} />
+          <GroupCalendar group={group} socket={socket} />
 
 
         </div>

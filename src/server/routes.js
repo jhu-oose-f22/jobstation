@@ -24,6 +24,7 @@ import { updateUserById, getAllUser, signin, signup, removeUser, updateUser, get
 import { createTags, getTags } from "./controllers/tags.js";
 
 import { createPostEvent, createUsersEvents, createFakeUsers, createGroupEvent } from "./middleware/recommend.js";
+import { createEvent, deleteEvent, getEventById, getEventsByGroup, updateEvent } from "./controllers/events.js";
 
 const router = express.Router();
 
@@ -79,5 +80,13 @@ router.get('/tags', getTags);
 
 //recommand
 router.post('/fakeusers', createFakeUsers);
+
+
+//Events
+router.get('/events/:eventId', getEventById);
+router.get('/events/group/:groupId', getEventsByGroup);
+router.post('/events/create', createEvent);
+router.delete('/events/delete/:eventId', deleteEvent);
+router.post('/events/update/:eventId', updateEvent);
 
 export default router;

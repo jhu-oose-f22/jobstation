@@ -68,7 +68,6 @@ io.on('connect', (socket) => {
 
 
         // console.log(user.room);
-        console.log(user);
 
         console.log('sending------------')
         if (user && user.room) {
@@ -92,7 +91,8 @@ io.on('connect', (socket) => {
 
     socket.on('refresh', () => {
         const user = getUser(socket.id);
-        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+        if (user)
+            io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
 
     })
@@ -102,7 +102,6 @@ io.on('connect', (socket) => {
         const user = removeUser(socket.id);
 
         if (user) {
-            console.log(user)
             io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
         } else {
             console.log('user is undefined');
@@ -110,6 +109,15 @@ io.on('connect', (socket) => {
 
         const i = allClients.indexOf(socket);
         allClients.splice(i, 1);
+    })
+
+    socket.on('refreshCalendar', () => {
+        const user = getUser(socket.id);
+
+        if (user) {
+            console.log('refreshing calendar');
+            io.to(user.room).emit('refreshCalendar');
+        }
     })
 
 });

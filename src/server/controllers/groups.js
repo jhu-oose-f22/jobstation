@@ -54,7 +54,7 @@ export const getGroupByUser = async (req, res) => {
 export const createGroup = async (req, res) => {
     const { groupName, groupIntro, tags, owner } = req.body;
     console.log('tag in controller create');
-    
+
     try {
         const newGroup = await Group.createGroup({
             groupName,
@@ -130,6 +130,11 @@ export const quitGroup = async (req, res) => {
             updated.members = updated.members.filter(
                 (member) => member != userId
             );
+
+            // if the owner quit, change the owner to the first member
+            if (updated.owner == userId) {
+                updated.owner = updated.members[0];
+            }
             const updatedGroup = await Group.findByIdAndUpdate(
                 groupId,
                 updated

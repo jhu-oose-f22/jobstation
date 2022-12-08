@@ -30,12 +30,12 @@ export default function LeftSidebar() {
 
             {buttons}
 
-            {/* teamplate */}
+            {/* teamplate
             <button className="btn btn-dark p-3 text-start rounded-0"
                 data-bs-toggle="list" data-bs-target="#other" role="tab" aria-controls="other"
             >
                 ...
-            </button>
+            </button> */}
 
         </ul>
     </div>
