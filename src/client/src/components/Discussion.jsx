@@ -94,7 +94,7 @@ export default function Discussion(props) {
                     </button>
                     <button className="nav-link" onClick={handleLoadAll}>All Posts
                     </button>
-                    <form className="d-flex align-right ms-auto me-2">
+                    <form className="d-flex align-right ms-auto me-2" onSubmit={()=>handleSearch()}>
                         <input className="form-control me-2" id="post" placeholder="search for posts"
                                aria-label="Search" onChange={(e)=> setSearchInput(e.target.value)}/>
                         <button className="btn btn-outline-success" type="button" onClick={()=>handleSearch()}>GO</button>
@@ -104,7 +104,7 @@ export default function Discussion(props) {
                 <div className="mb-2 hstack gap-3">
                     <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('hot')}>Hot</button>
                     <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('new to old')}>Newest to Oldest</button>
-                    <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('like')}>Most Votes</button>
+                    <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('like')}>Most Likes</button>
                 </div>
                 <Grid container rowSpacing={2}>
                     {
@@ -127,7 +127,7 @@ export default function Discussion(props) {
                             </button>
                             <button className="nav-link active" onClick={handleLoadAll}>All Posts
                             </button>
-                            <form className="d-flex align-right ms-auto me-2">
+                            <form className="d-flex align-right ms-auto me-2" onSubmit={()=>handleSearch()}>
                                 <input className="form-control me-2" id="post" placeholder="search for posts"
                                        aria-label="Search" onChange={(e)=> setSearchInput(e.target.value)}/>
                                 <button className="btn btn-outline-success" type="button" onClick={()=>handleSearch()}>GO</button>
@@ -137,7 +137,7 @@ export default function Discussion(props) {
                         <div className="mb-2 hstack gap-3">
                             <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('hot')}>Hot</button>
                             <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('new to old')}>Newest to Oldest</button>
-                            <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('like')}>Most Votes</button>
+                            <button type="button" className="btn btn-none btn-sm" onClick={()=>handleSort('like')}>Most Likes</button>
                         </div>
                         <Grid container rowSpacing={2}>
                             {

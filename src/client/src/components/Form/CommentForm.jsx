@@ -21,7 +21,7 @@ const CommentForm = ({postId}) => {
         axios.post(`${API_URL}/discuss/comment`,newComment).then((res) => console.log(res) ,(err)=>{
             console.log(err);
         })
-        navigate(`/discussion/post/${postId}`);
+        window.history.go(0);
     };
 
     const onSubmit = (e) => {

@@ -75,7 +75,7 @@ export default function GroupList({ listName, groups = [], search = false }) {
     };
 
     return (
-        <div className="accordion-item py-5 border-0">
+        <div className="accordion-item py-2 border-0">
             <div className=" accordion-header my-2" id={listName}>
                 <button
                     className="accordion-button  rounded-3 shadow-sm bg-light "

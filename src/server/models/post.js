@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, {mongo} from "mongoose";
 
 const postSchema = mongoose.Schema({
     // ID: Number,
@@ -10,6 +10,10 @@ const postSchema = mongoose.Schema({
     creatorName: String,
     comments: [String],
     tags: [String],
+    likedPeople : {
+        type: [mongoose.ObjectId],
+        default: []
+    },
     likeCount: {
         type: Number,
         default: 0

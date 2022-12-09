@@ -46,7 +46,7 @@ export default function Group(props) {
             }}
         >
             <Banner pageName="group" />
-            <div className="accordion">
+            <div className="accordion container-lg">
                 <SearchGroup groups={groups} />
                 <GroupList listName="join" groups={groups} />
                 <GroupList listName="recommended" groups={recommendedGroups} />

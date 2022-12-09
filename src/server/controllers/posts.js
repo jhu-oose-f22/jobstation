@@ -170,7 +170,12 @@ export const likePost = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
 
     const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount + 1 }, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(id,
+        {
+            likeCount: post.likeCount + 1 ,
+            $push: { likedPeople: userId},
+        },
+        { new: true });
 
     await createLikeEvent(id, userId);
 
@@ -178,10 +183,15 @@ export const likePost = async (req, res) => {
 }
 
 export const dislikePost = async (req, res) => {
-    const { id } = req.params;
+    const { id,userId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     const post = await Post.findById(id);
-    const updatedPost = await Post.findByIdAndUpdate(id, { likeCount: post.likeCount - 1 }, { new: true });
+    const updatedPost = await Post.findByIdAndUpdate(id,
+        {
+            likeCount: post.likeCount - 1,
+            $pull: { likedPeople: userId },
+        },
+        { new: true });
     res.json(updatedPost);
 }
 
@@ -210,7 +220,7 @@ export const deleteComment = async (req, res) => {
         const { commentId, postId } = req.params;
         if (!mongoose.Types.ObjectId.isValid(commentId)) return res.status(404).send(`No comment with id: ${commentId}`);
         await Comment.findByIdAndRemove(commentId);
-        //delet dubcomment
+        //delete comment
         await Post.updateMany({ $pull: { comments: commentId } })
         res.json({ message: "Comment deleted successfully." });
     } catch (error) {
@@ -219,10 +229,32 @@ export const deleteComment = async (req, res) => {
 }
 
 export const likeComment = async (req, res) => {
-    const { id } = req.params;
+    const { id,userId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Comment with id: ${id}`);
+    if (!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).send(`No user with id: ${userId}`);
+
+    const comment = await Comment.findById(id);
+
+    const updatedComment = await Comment.findByIdAndUpdate(id,
+        {
+            likeCount: comment.likeCount + 1 ,
+            $push: { likedPeople: userId},
+        },
+        { new: true });
+
+    res.json(updatedComment);
+}
+
+export const dislikeComment = async (req, res) => {
+    const { id,userId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Comment with id: ${id}`);
     const comment = await Comment.findById(id);
-    const updatedComment = await Comment.findByIdAndUpdate(id, { likeCount: comment.likeCount + 1 }, { new: true });
+    const updatedComment = await Comment.findByIdAndUpdate(id,
+        {
+            likeCount: comment.likeCount - 1,
+            $pull: { likedPeople: userId },
+        },
+        { new: true });
     res.json(updatedComment);
 }
 
@@ -240,8 +272,9 @@ export const getComments = async (req, res) => {
         const { id } = req.params;
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
         const post = await Post.findById(id);
-        const comments = await Comment.find({ $all: { _id: post.comments } });
-
+        const comments = await Comment.find({ _id: { $in: post.comments } });
+        console.log(post);
+        console.log(comments);
         for (let i in comments){
             let creator = await User.findById(comments[i].creator);
             comments[i].creatorName = creator.username;

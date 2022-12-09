@@ -1,5 +1,3 @@
-// TODO
-// can delete this file
 import express from "express";
 
 import {
@@ -14,9 +12,9 @@ import {
     getRecommendedPosts,
     createComment,
     deleteComment,
-    likeComment,
+    likeComment,dislikeComment,
     getComments, getComment,
-    getPostsBySearch
+    getPostsBySearch, dislikePost
 } from "./controllers/posts.js";
 
 import { quitGroup, getGroupByUser, joinGroup, getGroups, createGroup, addMember, getGroupsByInput, updateGroup, getRecommendedGroups, getGroupById } from "./controllers/groups.js";
@@ -38,6 +36,7 @@ router.post('/discuss/create', createTags, createPost);
 router.get('/discuss/post/:id', getPostById);
 router.get('/discuss/tags', getPostsByTags);
 router.patch('/discuss/like/post/:id/user/:userId', likePost);
+router.patch('/discuss/dislike/post/:id/user/:userId', dislikePost);
 router.get('/discuss/search/:input', getPostsBySearch);
 router.patch('/discuss/update/:id', createTags, updatePost);
 router.delete('/discuss/post/:id', deletePost);
@@ -45,12 +44,12 @@ router.post('/discuss/comment', createComment);
 router.get('/discuss/comment/:id', getComment); //for test
 router.get('/discuss/post/:id/comments', getComments);
 router.delete('/discuss/post/:postId/comment/:commentId', deleteComment);
-router.patch('/discuss/comment/like/:id', likeComment);
+router.patch('/discuss/comment/like/:id/user/:userId', likeComment);
+router.patch('/discuss/comment/dislike/:id/user/:userId', dislikeComment);
 
 router.get('/discuss/user/:id', getRecommendedPosts);
 
 //Group
-
 router.get('/group/find/:id', getGroupById);
 router.post('/group/create', createTags, createGroup);
 router.patch('/group/:groupId/user/:userId', addMember, joinGroup);  // unused 
@@ -78,7 +77,7 @@ router.get('/groupuser/:groupId', getUserNames);
 //Tags
 router.get('/tags', getTags);
 
-//recommand
+//recommend
 router.post('/fakeusers', createFakeUsers);
 
 

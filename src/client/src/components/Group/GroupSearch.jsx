@@ -28,15 +28,15 @@ export default function SearchGroup({ groups }) {
     };
 
     return (
-        <form className="m-2 border p-4 border-2 border-primary border-opacity-25 rounded-3"
+        <form className="m-2 pb-2 pt-2 border-2 border-primary border-opacity-25 rounded-3"
             onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
         >
-            <label for="groupName">Search</label>
+            <label className="groupName pb-2">Search</label>
             <div className="form-group d-flex">
                 <input
                     className="form-control"
                     id="groupName"
-                    placeholder="search here"
+                    placeholder="search for group name or tags"
                     autoComplete="off"
                     onChange={(e) => setSearchInput(e.target.value)}
                 />

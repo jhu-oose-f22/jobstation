@@ -6,6 +6,10 @@ const commentSchema = mongoose.Schema({
         type: mongoose.ObjectId
     },
     comments: [String],
+    likedPeople : {
+        type: [mongoose.ObjectId],
+        default: []
+    },
     likeCount: {
         type: Number,
         default: 0
