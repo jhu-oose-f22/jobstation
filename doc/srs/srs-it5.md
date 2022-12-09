@@ -88,8 +88,6 @@ Multiple login method such as Google, Github and LinkedIn.
 
 Friendly user interface and smooth user interaction design.
 
-Use ngnix to control load flow.
-
 Security for live-time chat.
 
 ### Software Architecture & Technology Stack:
@@ -98,13 +96,13 @@ It is a web based application.
 Architecture: Client-Server
 And we will mainly use MERN stack.
 
-Backend: Nodejs, Express.
+Backend: Nodejs, Express. Pipeless(for recommend system)
 
-Frontend framework: React.js + Redux.js
+Frontend framework: React.js Bootstrap 
 
-Database: MongoDB + Redis
+Database: MongoDB
 
-Deployment: AWS + Docker
+Deployment: AWS
 
 
 
