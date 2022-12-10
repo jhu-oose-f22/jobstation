@@ -188,12 +188,20 @@ See the [open projects](https://github.com/jhu-oose-f22/jobstation/projects) for
 
 <!-- CONTACT -->
 ## Contact
-TBD
+If there is question about the code or using the app, please feel free to pull an [issue]([Issues · jhu-oose-f22/jobstation (github.com)](https://github.com/jhu-oose-f22/jobstation/issues)) or contact us through zliang30@jh.edu.
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
-TBD
+The recommendation system is implemented with [Pipeless APIs]([Pipeless | Recommendations and Activity Feeds API](https://pipeless.io/)).
+
+The front-end is implemented with:
+
+- [Metarial UI]([MUI: The React component library you always wanted](https://mui.com/))
+- [Bootstrap]([Bootstrap · The most popular HTML, CSS, and JS library in the world. (getbootstrap.com)](https://getbootstrap.com/))
+
+We appreciate all the supports!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
